@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symbolic Logic Learning</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Symbolic Logic</h1>
+        
+        <div id="puzzle" class="puzzle-display"></div>
+        
+        <div class="answer-section">
+            <div id="answer-display" class="answer-display" aria-live="polite"></div>
+            <button type="button" id="submit-btn" class="submit-btn">Submit</button>
+        </div>
+        
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        
+        <div class="controls-container">
+            <div class="symbol-palette" role="toolbar" aria-label="Logic Symbols">
+                <button type="button" class="symbol-btn" data-symbol="P">P</button>
+                <button type="button" class="symbol-btn" data-symbol="Q">Q</button>
+                <button type="button" class="symbol-btn" data-symbol="→">→</button>
+                <button type="button" class="symbol-btn" data-symbol="∧">∧</button>
+                <button type="button" class="symbol-btn" data-symbol="∨">∨</button>
+                <button type="button" class="symbol-btn" data-symbol="¬">¬</button>
+                <button type="button" class="symbol-btn" data-symbol="⊢">⊢</button>
+                <button type="button" class="symbol-btn" data-symbol="?">?</button>
+            </div>
+            
+            <div class="control-buttons">
+                <button type="button" id="backspace" class="control-btn" aria-label="Backspace">⌫</button>
+                <button type="button" id="clear" class="control-btn" aria-label="Clear Answer">Clear</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="puzzles/01-basic-symbols.js"></script>
+    <script src="puzzles/02-simple-implications.js"></script>
+    <script src="puzzles/03-logical-operators.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

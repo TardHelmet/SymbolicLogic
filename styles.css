@@ -1,0 +1,272 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', monospace;
+    background-color: #ffffff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    height: 90vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #333;
+    font-weight: 300;
+    margin: 0;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.puzzle-display {
+    font-size: 1.1rem;
+    padding: 1rem;
+    background-color: #fafafa;
+    border-radius: 8px;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.4;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.answer-section {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem 0;
+}
+
+.answer-display {
+    font-size: 1.4rem;
+    height: 40px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    flex: 1;
+    max-width: 300px;
+    padding: 0 1rem;
+}
+
+.submit-btn {
+    height: 40px;
+    padding: 0 1.5rem;
+    font-size: 1rem;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+    background-color: #444;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.controls-container {
+    background-color: #f8f9fa;
+    padding: 0.75rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: auto;
+}
+
+.symbol-palette {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.symbol-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    user-select: none;
+}
+
+.symbol-btn:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.control-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.control-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+    max-width: 100px;
+}
+
+#backspace {
+    color: #e74c3c;
+}
+
+#clear {
+    color: #e67e22;
+}
+
+.feedback {
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    min-height: 40px;
+    background-color: white;
+    margin: 1rem 0;
+}
+
+.feedback-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.feedback-text {
+    flex: 1;
+}
+
+.feedback-action {
+    flex: 0 0 auto;
+    padding-top: 0.25rem;
+}
+
+.feedback-content.correct {
+    color: #2ecc71;
+    background-color: #f0fff4;
+    border: 1px solid #c3e6cb;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.feedback-content.incorrect {
+    color: #e74c3c;
+    background-color: #fff5f5;
+    border: 1px solid #f5c6cb;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.next-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.next-btn:hover {
+    background-color: #27ae60;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.progress {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+button:focus {
+    outline: 2px solid #4a90e2;
+    outline-offset: 1px;
+}
+
+@media (max-height: 600px) {
+    .container {
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+    
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    .puzzle-display {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+
+    .controls-container {
+        padding: 0.5rem;
+    }
+
+    .symbol-palette {
+        gap: 0.25rem;
+        padding: 0.25rem;
+    }
+
+    .symbol-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+    }
+
+    .feedback {
+        padding: 0.5rem;
+    }
+
+    .feedback-content {
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .feedback-content {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .feedback-action {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
