@@ -249,7 +249,7 @@ MOUNTS.proof = (ex, ctx) => {
   });
   const rules = ex.allowedRules ? h('p', { class: 'small muted' }, `Rules available: ${ex.allowedRules.join(', ')}.`) : null;
   return {
-    el: [rules, editor.el],
+    el: [dictionaryList(ex.dictionary), rules, editor.el],
     extraActions: mode === 'full' ? [hintBtn] : [],
     value: () => editor.value(),
     show: (ans) => {

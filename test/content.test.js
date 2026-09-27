@@ -26,7 +26,7 @@ const FIELDS = {
   'main-operator': ['formula'],
   choice: ['options', 'answer', 'why', 'retry', 'given'],
   counterexample: ['argument', 'dictionary'],
-  proof: ['argument', 'solution', 'allowedRules', 'maxApps', 'mode', 'blanks', 'set'],
+  proof: ['argument', 'solution', 'allowedRules', 'maxApps', 'mode', 'blanks', 'set', 'dictionary'],
   enthymeme: ['argument', 'key', 'dictionary', 'alternatives'],
   countermodel: ['argument', 'formulas', 'dictionary', 'goal', 'maxSize'],
   matrix: ['logic', 'argument', 'formulas', 'question'],

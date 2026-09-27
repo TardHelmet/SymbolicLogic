@@ -100,4 +100,99 @@ export const BIB = {
     kind: 'article', author: 'Edgington, Dorothy', year: 1995, title: 'On Conditionals',
     container: 'Mind', detail: '104 (414): 235–329',
   },
+
+  // --- laws of thought, truth tables ---
+  aristotleMet: {
+    kind: 'ancient', author: 'Aristotle', year: null, title: 'Metaphysics',
+    detail: 'Γ 3–4, 1005b19–1009a5 (non-contradiction); Γ 7, 1011b23–24 (excluded middle); Ι 4, 1055a3–b29 (contrariety)',
+  },
+  leibnizMonadology: {
+    kind: 'ancient', author: 'Leibniz, G. W.', year: 1714, title: 'Monadology',
+    detail: '§§31–33 (the principles of contradiction and sufficient reason)',
+    note: 'In Philosophical Essays, trans. R. Ariew and D. Garber, Indianapolis: Hackett, 1989.',
+  },
+  messina2009: {
+    kind: 'article', author: 'Messina, James, and Donald Rutherford', year: 2009, title: 'Leibniz on Compossibility',
+    container: 'Philosophy Compass', detail: '4 (6): 962–977',
+    note: 'Surveys the logical reading of compossibility as consistency and its rivals.',
+  },
+  wittgenstein1922: {
+    kind: 'book', author: 'Wittgenstein, Ludwig', year: 1922, title: 'Tractatus Logico-Philosophicus',
+    detail: '4.31, 4.46–4.4661 (truth tables; tautology and contradiction “say nothing”)',
+    publisher: 'London: Kegan Paul', url: 'https://www.gutenberg.org/ebooks/5740', urlLabel: 'Project Gutenberg',
+  },
+  post1921: {
+    kind: 'article', author: 'Post, Emil L.', year: 1921, title: 'Introduction to a General Theory of Elementary Propositions',
+    container: 'American Journal of Mathematics', detail: '43 (3): 163–185',
+  },
+  anellis2012: {
+    kind: 'article', author: 'Anellis, Irving H.', year: 2012, title: 'Peirce’s Truth-functional Analysis and the Origin of the Truth Table',
+    container: 'History and Philosophy of Logic', detail: '33 (1): 87–97',
+  },
+
+  // --- consequence ---
+  bolzano1837: {
+    kind: 'book', author: 'Bolzano, Bernard', year: 1837, title: 'Wissenschaftslehre',
+    detail: '§155 (derivability)', note: 'Trans. as Theory of Science by P. Rusnock and R. George, Oxford University Press, 2014.',
+  },
+  tarski1936: {
+    kind: 'chapter', author: 'Tarski, Alfred', year: 1936, title: 'On the Concept of Logical Consequence',
+    container: 'Logic, Semantics, Metamathematics', detail: '2nd ed., ed. J. Corcoran, trans. J. H. Woodger',
+    publisher: 'Indianapolis: Hackett, 1983',
+  },
+  etchemendy1990: {
+    kind: 'book', author: 'Etchemendy, John', year: 1990, title: 'The Concept of Logical Consequence',
+    publisher: 'Cambridge, MA: Harvard University Press',
+  },
+  consequenceSEP: {
+    kind: 'entry', author: 'Beall, Jc, Greg Restall and Gil Sagi', year: null, title: 'Logical Consequence',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/logical-consequence/',
+  },
+
+  // --- natural deduction ---
+  carroll1895: {
+    kind: 'article', author: 'Carroll, Lewis', year: 1895, title: 'What the Tortoise Said to Achilles',
+    container: 'Mind', detail: '4 (14): 278–280', url: 'https://en.wikisource.org/wiki/What_the_Tortoise_Said_to_Achilles',
+    urlLabel: 'Wikisource',
+  },
+  ryle1950: {
+    kind: 'chapter', author: 'Ryle, Gilbert', year: 1950, title: '‘If,’ ‘So,’ and ‘Because’',
+    container: 'Philosophical Analysis', detail: 'ed. Max Black', publisher: 'Ithaca: Cornell University Press',
+  },
+  gentzen1935: {
+    kind: 'article', author: 'Gentzen, Gerhard', year: 1935, title: 'Untersuchungen über das logische Schließen',
+    container: 'Mathematische Zeitschrift', detail: '39: 176–210, 405–431',
+    note: 'Trans. as “Investigations into Logical Deduction” in The Collected Papers of Gerhard Gentzen, ed. M. E. Szabo, Amsterdam: North-Holland, 1969.',
+  },
+  jaskowski1934: {
+    kind: 'article', author: 'Jaśkowski, Stanisław', year: 1934, title: 'On the Rules of Suppositions in Formal Logic',
+    container: 'Studia Logica', detail: '1: 5–32',
+  },
+  ndSEP: {
+    kind: 'entry', author: 'Pelletier, Francis Jeffry, and Allen P. Hazen', year: null, title: 'Natural Deduction Systems in Logic',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/natural-deduction/',
+  },
+  demorgan1847: {
+    kind: 'book', author: 'De Morgan, Augustus', year: 1847, title: 'Formal Logic: or, The Calculus of Inference, Necessary and Probable',
+    publisher: 'London: Taylor and Walton', url: 'https://archive.org/details/formallogicorthe00demouoft', urlLabel: 'Internet Archive',
+  },
+  boole1854: {
+    kind: 'book', author: 'Boole, George', year: 1854, title: 'An Investigation of the Laws of Thought',
+    detail: 'ch. III (the law x² = x and the principle of contradiction)',
+    publisher: 'London: Walton and Maberly', url: 'https://www.gutenberg.org/ebooks/15114', urlLabel: 'Project Gutenberg',
+  },
+  herbrand1930: {
+    kind: 'book', author: 'Herbrand, Jacques', year: 1930, title: 'Recherches sur la théorie de la démonstration',
+    note: 'Doctoral thesis, Paris; contains the deduction theorem. Trans. in Herbrand, Logical Writings, ed. W. Goldfarb, Dordrecht: Reidel, 1971.',
+  },
+
+  // --- reductio and explosion ---
+  lewisLangford1932: {
+    kind: 'book', author: 'Lewis, C. I., and C. H. Langford', year: 1932, title: 'Symbolic Logic',
+    publisher: 'New York: Century',
+  },
+  paraconsistentSEP: {
+    kind: 'entry', author: 'Priest, Graham, Koji Tanaka and Zach Weber', year: null, title: 'Paraconsistent Logic',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/logic-paraconsistent/',
+  },
 };

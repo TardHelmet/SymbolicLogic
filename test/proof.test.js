@@ -277,3 +277,8 @@ test('hints are goal-directed', () => {
   const h2 = hints(proof(['A ⊃ B', 'A'], 'B', []));
   assert.match(h2.join(' '), /fit MP/);
 });
+
+test('undefined options keep their defaults', () => {
+  const p = proof(['~(A • B)'], '~A ∨ ~B', [['~A ∨ ~B', '1, DM']]);
+  assertComplete(p, { maxApps: undefined, allowedRules: undefined });
+});

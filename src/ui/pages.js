@@ -24,7 +24,7 @@ export function renderHome(parts) {
 
   const notes = h('div', { class: 'notes' },
     h('section', {}, h('h2', {}, 'Checked by logic'), h('p', {}, 'Answers are marked by what they mean. Any formula equivalent to the right translation is accepted; a wrong one gets a concrete situation where it and the sentence come apart.')),
-    h('section', {}, h('h2', {}, 'Hurley’s notation'), h('p', {}, inline('Type {~}, {•}, {∨}, {⊃}, {≡} with the palette or as ~ . v > <->. The switch at the top shows everything in modern notation instead, as used by most philosophy journals.'))),
+    h('section', {}, h('h2', {}, 'Hurley’s notation'), h('p', {}, inline('Type {!~}, {!•}, {!∨}, {!⊃}, {!≡} with the palette or as ~ . v > <->. The switch at the top shows everything in modern notation instead, as used by most philosophy journals.'))),
     h('section', {}, h('h2', {}, 'Margins'), h('p', {}, 'Each lesson has a margin on where its ideas come from and what has been argued about them, with sources you can follow up.')));
 
   const partEls = parts.map((part) => h('section', { class: 'part' },
@@ -154,7 +154,7 @@ export function renderReference() {
       h('p', { class: 'small muted' }, inline('Statement letters are capitals. Predicates are capitals followed by names or variables, as in {Fa} or {Rxy}. Names (individual constants) are a–u and w; lowercase v is always the wedge. Variables are x, y, z, with x₁, x₂… (typed x1, x2) when more are needed. Polish notation, due to Łukasiewicz, writes operators first and needs no brackets: {(A • B) ⊃ C} is CKabc.'))),
     h('section', { class: 'panel' }, h('h2', {}, 'The five truth functions'), staticTable(['~p', 'p • q', 'p ∨ q', 'p ⊃ q', 'p ≡ q'])),
     h('section', { class: 'panel' }, h('h2', {}, 'Rules of implication'), h('p', { class: 'small muted' }, 'Apply to whole lines only.'), ruleTable(['MP', 'MT', 'HS', 'DS', 'CD', 'Simp', 'Conj', 'Add'])),
-    h('section', { class: 'panel' }, h('h2', {}, 'Rules of replacement'), h('p', { class: 'small muted' }, inline('Apply to whole lines or to any part of a line; {::} means the two forms may replace each other.')), ruleTable(['DM', 'Com', 'Assoc', 'Dist', 'DN', 'Trans', 'Impl', 'Equiv', 'Exp', 'Taut'])),
+    h('section', { class: 'panel' }, h('h2', {}, 'Rules of replacement'), h('p', { class: 'small muted' }, inline('Apply to whole lines or to any part of a line; {!::} means the two forms may replace each other.')), ruleTable(['DM', 'Com', 'Assoc', 'Dist', 'DN', 'Trans', 'Impl', 'Equiv', 'Exp', 'Taut'])),
     h('section', { class: 'panel' }, h('h2', {}, 'Conditional and indirect proof'),
       renderBlock('**Conditional proof.** Assume the antecedent of the conditional you want (justify it ACP). Derive the consequent. Then write the conditional, citing the whole indented sequence, as in “3–7, CP”.'),
       renderBlock('**Indirect proof.** Assume the negation of what you want (AIP). Derive a contradiction of the form {p • ~p}. Then write the negation of the assumption, citing the sequence with IP, and use DN if needed.'),

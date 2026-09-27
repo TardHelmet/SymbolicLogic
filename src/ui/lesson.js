@@ -26,6 +26,10 @@ export function staticProof(text) {
   if (p.error) return h('p', { class: 'muted' }, text);
   const res = checkProof(p);
   const box = h('div', { class: 'proof', role: 'group', 'aria-label': 'Worked proof' });
+  if (!p.premises.length) {
+    box.append(h('div', { class: 'proof-row premise-last' }, h('span', { class: 'n' }, ''),
+      h('span', { class: 'body' }, h('span', { class: 'static' }, h('span', { class: 'concl' }, '/ ', formula(p.conclusion)))), h('span', {}), h('span', {})));
+  }
   res.lines.forEach((l, i) => {
     const isLastPremise = i === p.premises.length - 1;
     box.append(h('div', { class: `proof-row${isLastPremise ? ' premise-last' : ''}` },

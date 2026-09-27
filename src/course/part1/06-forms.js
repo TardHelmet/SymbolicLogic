@@ -1,0 +1,98 @@
+export default {
+  id: 'argument-forms',
+  number: 6,
+  title: 'Argument forms and fallacies',
+  hurley: '§6.6',
+  card: 'The valid forms that recur everywhere, the two invalid ones that imitate them, and supplying missing premises.',
+  summary: 'A handful of argument forms turn up again and again. Knowing them by sight, and knowing the invalid forms that look like them, is the working logician’s first skill.',
+  reading: [
+    { h: 'Forms and instances' },
+    'Lowercase *p*, *q*, *r*, *s* are **statement variables**: they stand for any statement at all, simple or compound. An **argument form** is an arrangement of statement variables, like {p ⊃ q, p / q}. An argument is a **substitution instance** of a form when it results from replacing each variable consistently by a statement. {(A • B) ⊃ ~C, A • B / ~C} is an instance of that form, with {A • B} for *p* and {~C} for *q*.',
+    'A form is **valid** when none of its instances has true premises and a false conclusion. Every instance of a valid form is a valid argument. The converse needs care: an instance of an invalid form can still be valid, because it may also be an instance of some other, valid form. ({A ⊃ A, A / A} is an instance of the invalid {p ⊃ q, q / p}, and it is valid.) An argument is valid if *any* of its forms is.',
+    { h: 'Six valid forms' },
+    { list: [
+      '**Modus ponens (MP)**: {p ⊃ q, p / q}',
+      '**Modus tollens (MT)**: {p ⊃ q, ~q / ~p}',
+      '**Hypothetical syllogism (HS)**: {p ⊃ q, q ⊃ r / p ⊃ r}',
+      '**Disjunctive syllogism (DS)**: {p ∨ q, ~p / q}',
+      '**Constructive dilemma (CD)**: {(p ⊃ q) • (r ⊃ s), p ∨ r / q ∨ s}',
+      '**Destructive dilemma (DD)**: {(p ⊃ q) • (r ⊃ s), ~q ∨ ~s / ~p ∨ ~r}',
+    ] },
+    { h: 'Two invalid forms' },
+    { list: [
+      '**Affirming the consequent**: {p ⊃ q, q / p}. “If the soul is a body it can be touched; it can be touched; so it is a body.” The premises leave open that other things can be touched too.',
+      '**Denying the antecedent**: {p ⊃ q, ~p / ~q}. “If it rains, the ground is wet; it has not rained; so the ground is not wet.” The ground may be wet for other reasons.',
+    ] },
+    'Both fallacies look like MP and MT, which is why they are common. Check which part of the conditional the second premise affirms or denies: affirm the antecedent or deny the consequent, never the reverse.',
+    'A third imitation: **affirming a disjunct**, {p ∨ q, p / ~q}. Since the wedge is inclusive, both disjuncts may be true. The argument is valid only if the “or” is meant exclusively, in which case the premise should say so: {(p ∨ q) • ~(p • q)}.',
+    { h: 'Missing premises' },
+    'Real arguments often leave a premise unstated, because the speaker takes it for granted. Such an argument is an **enthymeme**. To assess it, supply the premise that would make it valid, and then ask whether that premise is true. The premise should bridge the gap: it must not contradict the stated premises, and it must not simply assert the conclusion.',
+    { example: 'An enthymeme', steps: [
+      '“The soul acts on the body, so the soul is a body.” With A for “the soul acts on the body” and B for “the soul is a body”: {A / B}.',
+      'The missing premise is {A ⊃ B}: whatever acts on a body is a body. With it, the argument is an instance of MP.',
+      'Now the real question is visible. Is it true that only bodies act on bodies? That was the Stoics’ premise; a Platonist rejects it.',
+    ], stepwise: true },
+  ],
+  exercises: [
+    {
+      id: 'fm-name-1', type: 'choice', prompt: 'Name the form of: {~A ⊃ (B • C), ~(B • C) / ~~A}',
+      options: ['modus ponens', 'modus tollens', 'affirming the consequent', 'denying the antecedent'], answer: 1,
+      explain: 'The second premise denies the consequent, {B • C}, and the conclusion denies the antecedent, {~A}.',
+    },
+    {
+      id: 'fm-name-2', type: 'choice', prompt: 'Name the form of: {(A ∨ B) ⊃ C, C / A ∨ B}',
+      options: ['modus ponens', 'modus tollens', 'affirming the consequent', 'denying the antecedent'], answer: 2,
+      explain: 'The second premise affirms the consequent. The form is invalid.',
+    },
+    {
+      id: 'fm-name-3', type: 'choice', prompt: 'Name the form of: {(A ⊃ B) • (C ⊃ D), A ∨ C / B ∨ D}',
+      options: ['constructive dilemma', 'destructive dilemma', 'hypothetical syllogism', 'disjunctive syllogism'], answer: 0,
+    },
+    {
+      id: 'fm-name-4', type: 'choice', prompt: 'Name the form of: {~A ∨ B, ~~A / B}',
+      options: ['modus ponens', 'disjunctive syllogism', 'affirming a disjunct', 'denying the antecedent'], answer: 1,
+      explain: 'With {~A} for *p* and {B} for *q*, it is {p ∨ q, ~p / q}.',
+    },
+    {
+      id: 'fm-name-5', type: 'choice', prompt: 'Name the form of: {A ⊃ B, ~A / ~B}',
+      options: ['modus tollens', 'affirming the consequent', 'denying the antecedent', 'destructive dilemma'], answer: 2,
+    },
+    { id: 'fm-v1', type: 'classify', mode: 'argument', prompt: 'Is the argument valid?', argument: '(A ⊃ B) • (C ⊃ D), ~B ∨ ~D / ~A ∨ ~C' },
+    { id: 'fm-v2', type: 'classify', mode: 'argument', prompt: 'Is the argument valid?', argument: 'A ∨ B, B / ~A' },
+    {
+      id: 'fm-v3', type: 'classify', mode: 'argument',
+      prompt: '“If Seneca is a Stoic, then he is a Roman and a Stoic. He is a Roman and a Stoic. So he is a Stoic.” This affirms the consequent. Is it valid?',
+      dictionary: { S: 'Seneca is a Stoic', R: 'Seneca is a Roman' },
+      argument: 'S ⊃ (R • S), R • S / S',
+    },
+    { id: 'fm-ce', type: 'counterexample', prompt: 'Show by counterexample that this argument, an instance of denying the antecedent, is invalid.', argument: '(A • B) ⊃ C, ~(A • B) / ~C' },
+    {
+      id: 'fm-e1', type: 'enthymeme',
+      prompt: '“Sense is not a body, since it cannot act.” Supply the missing premise.',
+      dictionary: { B: 'sense is a body', A: 'sense can act' },
+      argument: '~A / ~B', key: 'B ⊃ A', alternatives: ['~A ⊃ ~B'], wrong: ['~B', 'A'],
+    },
+    {
+      id: 'fm-e2', type: 'enthymeme',
+      prompt: '“Either the dog went left or right. So it went right.” Supply the missing premise.',
+      dictionary: { L: 'the dog went left', R: 'the dog went right' },
+      argument: 'L ∨ R / R', key: '~L', wrong: ['R', 'L ⊃ ~R'],
+    },
+    {
+      id: 'fm-e3', type: 'enthymeme',
+      prompt: '“If virtue can be taught, there are teachers of virtue. So virtue cannot be taught.” Supply the missing premise.',
+      dictionary: { V: 'virtue can be taught', T: 'there are teachers of virtue' },
+      argument: 'V ⊃ T / ~V', key: '~T', wrong: ['~V'],
+    },
+  ],
+  margin: {
+    title: 'The five indemonstrables',
+    body: [
+      'Chrysippus reduced Stoic logic to five basic argument forms that need no demonstration, the *anapodeiktoi*. The Stoics wrote them with ordinal numbers as variables, “the first” and “the second”, much as we use *p* and *q*:',
+      '1. If the first, the second; the first; therefore the second. (MP) 2. If the first, the second; not the second; therefore not the first. (MT) 3. Not both the first and the second; the first; therefore not the second. 4. Either the first or the second; the first; therefore not the second. 5. Either the first or the second; not the first; therefore the second.',
+      'The fourth is affirming a disjunct, which is valid for them because their “either … or” was exclusive. The third, {~(p • q), p / ~q}, has no name in Hurley’s list; it is valid with the dot. Other valid arguments were to be reduced to these by a small set of rules, the *themata*.',
+      'Sextus reports, to mock the Stoics, that Chrysippus credited even dogs with the fifth: a hound tracking an animal reaches a fork of three roads, sniffs two, and takes the third without sniffing, reasoning that the animal went this way or that way or the other, not this way, not that way, so the other.',
+    ],
+    sources: ['dl7', 'sextusPH', 'mates1953', 'bobzien2003', 'bobzienSEP', 'kneale1962', 'hurley2018'],
+  },
+};

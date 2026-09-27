@@ -220,7 +220,7 @@ function checkStep(rule, cited, target, ctx) {
     const cost = replacementCost(rule, cited[0], target);
     if (cost === 0) return [`This line is identical to line ${ctx.citedNos[0]}; the rule changes nothing.`];
     if (cost <= ctx.opts.maxApps) return [];
-    if (cost < Infinity) return [`That takes ${cost} applications of ${rule}; in this exercise, apply it once per line.`];
+    if (cost < Infinity) return [`That takes ${cost} applications of ${rule}; in this exercise, apply it ${ctx.opts.maxApps === 1 ? 'once' : `at most ${ctx.opts.maxApps} times`} per line.`];
     return diagnoseReplacement(rule, cited[0], target);
   }
   if (['UI', 'UG', 'EI', 'EG'].includes(rule)) {
@@ -240,7 +240,9 @@ function isContradiction(n, eitherOrder) {
 // ---------------------------------------------------------------------------
 
 export function checkProof({ premises, conclusion, lines }, options = {}) {
-  const opts = { ...DEFAULTS, ...options };
+  // Options left undefined keep their defaults.
+  const given = Object.fromEntries(Object.entries(options).filter(([, v]) => v !== undefined && v !== null));
+  const opts = { ...DEFAULTS, ...given };
   const out = [];
   const stack = []; // open blocks
   let blockId = 0;
@@ -402,10 +404,12 @@ export function parseProofText(text) {
     const just = rest.join(' ').trim();
     if (!lines.length && (!just || just.startsWith('/'))) {
       const slash = line.indexOf('/');
-      const body = slash >= 0 ? line.slice(0, slash) : formula;
-      const p = parseFormula(body.trim());
-      if (!p.ok) return { error: `Premise “${body.trim()}”: ${p.error.message}` };
-      premises.push(p.ast);
+      const body = (slash >= 0 ? line.slice(0, slash) : formula).trim();
+      if (body) {
+        const p = parseFormula(body);
+        if (!p.ok) return { error: `Premise “${body}”: ${p.error.message}` };
+        premises.push(p.ast);
+      }
       if (slash >= 0) {
         const c = parseFormula(line.slice(slash + 1).trim());
         if (!c.ok) return { error: `Conclusion: ${c.error.message}` };
@@ -477,7 +481,25 @@ export function hints(proof, options = {}) {
       }
     }
   }
-  out.push(...tactics.slice(0, 3));
+  // Working backward from an atomic or other goal: where could it come from?
+  if (g.kind === 'formula') {
+    const goal = g.goal;
+    for (const l of avail) {
+      const f = l.formula;
+      if (f.type === 'imp' && A.equal(f.right, goal) && !have(f.left)) {
+        tactics.push(`Line ${l.n} has ${print(goal)} as its consequent: if you can get ${print(f.left)}, MP gives the goal.`);
+        if (f.left.type === 'or') {
+          const d = avail.find((m) => A.equal(m.formula, f.left.left) || A.equal(m.formula, f.left.right));
+          if (d) tactics.push(`Line ${d.n} is a disjunct of ${print(f.left)}, so Add (with Com if needed) gives it.`);
+        }
+      }
+      if (f.type === 'or' && (A.equal(f.right, goal) || A.equal(f.left, goal))) {
+        const other = A.equal(f.right, goal) ? f.left : f.right;
+        tactics.push(`Line ${l.n} is a disjunction containing ${print(goal)}: get ${print(A.not(other))} and use DS (with Com if needed).`);
+      }
+    }
+  }
+  out.push(...[...new Set(tactics)].slice(0, 3));
   return out;
 }
 
