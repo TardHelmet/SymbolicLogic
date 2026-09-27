@@ -1,46 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Symbolic Logic Learning</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Symbolic Logic</title>
+  <meta name="description" content="A course in sentential, predicate and non-classical logic in Hurley notation, with truth tables, proofs and countermodels checked as you work.">
+  <link rel="stylesheet" href="./fonts/fonts.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./src/ui/app.js"></script>
 </head>
 <body>
-    <main class="container">
-        <h1>Symbolic Logic</h1>
-        
-        <div id="puzzle" class="puzzle-display"></div>
-        
-        <div class="answer-section">
-            <div id="answer-display" class="answer-display" aria-live="polite"></div>
-            <button type="button" id="submit-btn" class="submit-btn">Submit</button>
-        </div>
-        
-        <div id="feedback" class="feedback" aria-live="polite"></div>
-        
-        <div class="controls-container">
-            <div class="symbol-palette" role="toolbar" aria-label="Logic Symbols">
-                <button type="button" class="symbol-btn" data-symbol="P">P</button>
-                <button type="button" class="symbol-btn" data-symbol="Q">Q</button>
-                <button type="button" class="symbol-btn" data-symbol="→">→</button>
-                <button type="button" class="symbol-btn" data-symbol="∧">∧</button>
-                <button type="button" class="symbol-btn" data-symbol="∨">∨</button>
-                <button type="button" class="symbol-btn" data-symbol="¬">¬</button>
-                <button type="button" class="symbol-btn" data-symbol="⊢">⊢</button>
-                <button type="button" class="symbol-btn" data-symbol="?">?</button>
-            </div>
-            
-            <div class="control-buttons">
-                <button type="button" id="backspace" class="control-btn" aria-label="Backspace">⌫</button>
-                <button type="button" id="clear" class="control-btn" aria-label="Clear Answer">Clear</button>
-            </div>
-        </div>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar">
+    <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="course-map">Contents</button>
+    <a class="brand" href="#/">
+      <span class="brand-mark" aria-hidden="true">⊃</span>
+      <span class="brand-name">Symbolic Logic</span>
+      <span class="brand-sub">in Hurley notation</span>
+    </a>
+    <span class="spacer"></span>
+    <div class="segmented" role="group" aria-label="Notation">
+      <button type="button" id="notation-hurley" aria-pressed="true"><span class="label-long">Hurley</span><span class="glyph" aria-hidden="true">⊃</span></button>
+      <button type="button" id="notation-modern" aria-pressed="false"><span class="label-long">Modern</span><span class="glyph" aria-hidden="true">→</span></button>
+    </div>
+  </header>
+  <div class="shell">
+    <nav class="course-map" id="course-map" aria-label="Course contents"></nav>
+    <main class="page" id="main" tabindex="-1">
+      <noscript><p>This course runs in the browser and needs JavaScript. Serve the folder over HTTP (for example with <code>npm start</code>); browsers do not load modules from a file:// URL.</p></noscript>
     </main>
-
-    <script src="puzzles/01-basic-symbols.js"></script>
-    <script src="puzzles/02-simple-implications.js"></script>
-    <script src="puzzles/03-logical-operators.js"></script>
-    <script src="script.js"></script>
+  </div>
 </body>
 </html>

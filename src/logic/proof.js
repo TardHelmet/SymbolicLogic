@@ -149,7 +149,7 @@ function checkQuantifier(rule, [c], target, ctx) {
       const x = target.v;
       const B = target.body;
       if (!A.freeVars(B).has(x) && A.equal(B, c)) return [];
-      for (const y of ['x', 'y', 'z']) {
+      for (const y of new Set(['x', 'y', 'z', ...A.freeVars(c)])) {
         if (!A.equal(A.subst(B, x, y), c)) continue;
         if (y !== x && A.freeVars(B).has(y)) continue;
         if (!A.freeFor(B, x, y)) continue;
@@ -367,6 +367,10 @@ export function checkProof({ premises, conclusion, lines }, options = {}) {
 
   const last = out.at(-1);
   const allOk = out.every((i) => i.ok);
+  const bad = out.filter((i) => !i.ok).map((i) => i.n);
+  const summary = bad.length
+    ? `Line${bad.length > 1 ? 's' : ''} ${bad.length > 1 ? `${bad.slice(0, -1).join(', ')} and ${bad.at(-1)}` : bad[0]} ${bad.length > 1 ? 'need' : 'needs'} attention.`
+    : null;
   const reached = lines.length > 0 && last.depth === 0 && last.formula && A.equal(last.formula, conclusion);
   const problems = [];
   for (const b of stack) problems.push(`The assumption on line ${b.start} is still open; discharge it with ${b.kind === 'ACP' ? 'CP' : 'IP'}.`);
@@ -376,6 +380,7 @@ export function checkProof({ premises, conclusion, lines }, options = {}) {
       ? `You reached the conclusion on line ${early.n}; the proof should end there.`
       : `The proof is not finished: the last line should be the conclusion, ${print(conclusion)}, outside any indented sequence.`);
   }
+  if (summary) problems.unshift(summary);
   return { lines: out, complete: allOk && reached && !stack.length, problems };
 }
 

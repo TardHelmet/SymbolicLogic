@@ -21,7 +21,7 @@ export const isBinary = (n) => BINARY.includes(n.type);
 export const isQuant = (n) => QUANT.includes(n.type);
 export const isUnary = (n) => UNARY.includes(n.type);
 
-export const isVar = (t) => /^[xyz]$/.test(t);
+export const isVar = (t) => /^[xyz](\d+|'+)?$/.test(t);
 export const isConst = (t) => /^[a-uw]$/.test(t);
 export const isTermMeta = (t) => typeof t === 'string' && t.startsWith('?');
 

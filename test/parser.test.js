@@ -116,6 +116,13 @@ test('identity', () => {
   assert.equal(print(ok('(∃x)[Fx • (y)(Fy ⊃ y = x)]')), '(∃x)[Fx • (y)(Fy ⊃ y = x)]');
 });
 
+test('subscripted variables', () => {
+  const n = ok('(x1)(∃x₂)Rx1x2');
+  assert.equal(n.v, 'x1');
+  assert.equal(n.body.v, 'x2');
+  assert.equal(print(n), '(x₁)(∃x₂)Rx₁x₂');
+});
+
 test('relational atoms and arity checks', () => {
   const n = ok('(x)(∃y)Lxy');
   assert.equal(n.body.body.terms.join(''), 'xy');

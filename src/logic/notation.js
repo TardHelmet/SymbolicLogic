@@ -62,6 +62,14 @@ export function tokenize(input) {
       i++;
       continue;
     }
+    if (/[xyz]/.test(ch)) {
+      // Variables may carry a subscript (x1, x₁) or primes (x′) when x, y, z run out.
+      const m = /^[xyz](?:[0-9₀-₉]+|['′]+)?/.exec(src.slice(i));
+      const value = m[0].replace(/[₀-₉]/g, (d) => String(d.charCodeAt(0) - 0x2080)).replace(/′/g, "'");
+      tokens.push({ kind: 'LOWER', text: m[0], value, pos: i, end: i + m[0].length });
+      i += m[0].length;
+      continue;
+    }
     if (/[a-z]/.test(ch)) {
       // Lowercase v is always the wedge, as in Hurley.
       tokens.push(ch === 'v'
