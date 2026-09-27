@@ -15,12 +15,12 @@ import { parseProofText, checkProof } from '../src/logic/proof.js';
 import { ALL_RULES } from '../src/logic/rules.js';
 import { isSentential, validity } from '../src/logic/semantics.js';
 import * as FO from '../src/logic/models.js';
-import { flaggedLine } from '../src/logic/extra-types.js';
+import { flaggedLine, flaggedLineFor, consistentSet } from '../src/logic/extra-types.js';
 
 const FIELDS = {
   common: ['id', 'type', 'prompt', 'explain', 'wrong'],
-  translate: ['dictionary', 'key', 'alternatives', 'set'],
-  readings: ['dictionary', 'keys'],
+  translate: ['dictionary', 'key', 'alternatives', 'set', 'modal', 'logic'],
+  readings: ['dictionary', 'keys', 'modal', 'logic'],
   'truth-table': ['formulas', 'columns'],
   classify: ['mode', 'formulas', 'argument', 'dictionary', 'given'],
   'main-operator': ['formula'],
@@ -29,9 +29,10 @@ const FIELDS = {
   proof: ['argument', 'solution', 'allowedRules', 'maxApps', 'mode', 'blanks', 'set', 'dictionary'],
   enthymeme: ['argument', 'key', 'dictionary', 'alternatives'],
   countermodel: ['argument', 'formulas', 'dictionary', 'maxSize'],
+  matrix: ['logic', 'question', 'formulas', 'argument', 'dictionary'],
+  kripke: ['logic', 'question', 'model', 'formula', 'world', 'argument', 'dictionary'],
+  deny: ['premises', 'statements', 'notes', 'dictionary'],
   'flag-step': ['argument', 'lines', 'dictionary', 'logic'],
-  matrix: ['logic', 'argument', 'formulas', 'question'],
-  kripke: ['model', 'formula', 'world', 'question', 'frame', 'logic'],
 };
 
 const REQUIRED = {
@@ -46,6 +47,9 @@ const REQUIRED = {
   enthymeme: ['argument', 'key'],
   countermodel: [],
   'flag-step': ['argument', 'lines'],
+  matrix: ['logic', 'question'],
+  kripke: ['question'],
+  deny: ['premises', 'notes'],
 };
 
 const allExercises = LESSONS.flatMap((l) => (l.exercises ?? []).map((ex) => ({ lesson: l, ex })));
@@ -107,6 +111,25 @@ test('flag-the-step exercises have exactly one faulty line', () => {
   }
 });
 
+test('intuitionistic flag-the-step: classically sound, exactly one line rejected', () => {
+  for (const { lesson, ex } of allExercises.filter(({ ex }) => ex.type === 'flag-step' && ex.logic === 'intuitionistic')) {
+    assert.equal(flaggedLine(ex).bad.length, 0, `${lesson.id}/${ex.id}: the proof should be classically correct`);
+    const { bad } = flaggedLineFor(ex);
+    assert.equal(bad.length, 1, `${lesson.id}/${ex.id}: ${bad.length} lines rejected intuitionistically`);
+  }
+});
+
+test('which-premise-to-deny sets are inconsistent, with coherent ways out', () => {
+  for (const { lesson, ex } of allExercises.filter(({ ex }) => ex.type === 'deny')) {
+    const fs = ex.premises.map((t) => parseFormula(t, { closed: true }).ast);
+    assert.equal(consistentSet(fs).consistent, false, `${lesson.id}/${ex.id}: the set is consistent, so there is no paradox`);
+    assert.equal(ex.notes.length, ex.premises.length, `${lesson.id}/${ex.id}: one note per premise`);
+    if (ex.statements) assert.equal(ex.statements.length, ex.premises.length);
+    const exits = fs.filter((_, i) => consistentSet(fs.filter((__, j) => j !== i)).consistent).length;
+    assert.ok(exits >= 2, `${lesson.id}/${ex.id}: fewer than two coherent ways out`);
+  }
+});
+
 test('countermodel exercises have a model', () => {
   for (const { lesson, ex } of allExercises.filter(({ ex }) => ex.type === 'countermodel')) {
     const m = modelAnswer(ex);
@@ -144,6 +167,7 @@ test('every formula in the text parses', () => {
     for (const b of l.reading ?? []) {
       if (b.display && !b.plain) assert.ok(parseAny(b.display), `${l.id}: cannot parse display “${b.display}”`);
       if (b.table) for (const t of b.table) assert.ok(parseAny(t), `${l.id}: cannot parse table formula “${t}”`);
+      if (b.mvtable) for (const t of b.mvtable) assert.ok(parseAny(t), `${l.id}: cannot parse table formula “${t}”`);
       if (b.rules) for (const r of b.rules) assert.ok(ALL_RULES[r], `${l.id}: unknown rule ${r}`);
       if (b.proof) {
         const p = parseProofText(b.proof);
@@ -158,7 +182,7 @@ test('every formula in the text parses', () => {
 test('translation keys use only their dictionary', () => {
   for (const { lesson, ex } of allExercises.filter(({ ex }) => ex.type === 'translate')) {
     const letters = Object.keys(ex.dictionary).filter((k) => /^[A-Z]$/.test(k));
-    const r = parseFormula(ex.key, { closed: true, letters });
+    const r = parseFormula(ex.key, { closed: true, letters, modal: !!ex.modal });
     assert.ok(r.ok, `${lesson.id}/${ex.id}: key “${ex.key}” — ${r.error?.message}`);
   }
 });

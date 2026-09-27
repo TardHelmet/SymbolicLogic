@@ -10,6 +10,7 @@ import {
 } from './semantics.js';
 import { checkProof } from './proof.js';
 import * as FO from './models.js';
+import * as KR from './kripke.js';
 
 export const CLASSIFY_OPTIONS = {
   statement: ['tautologous', 'self-contradictory', 'contingent'],
@@ -52,10 +53,17 @@ function joinWords(xs) {
 function checkTranslate(ex, input) {
   const dict = ex.dictionary ?? {};
   const letters = Object.keys(dict).filter((k) => /^[A-Z]$/.test(k));
-  const parsed = parseFormula(input ?? '', { closed: true, letters: letters.length ? letters : undefined });
+  const parsed = parseFormula(input ?? '', { closed: true, letters: letters.length ? letters : undefined, modal: !!ex.modal });
   if (!parsed.ok) return { ok: false, kind: 'parse', message: parsed.error.message, hint: parsed.error.hint, suggestions: parsed.error.suggestions };
   const ans = parsed.ast;
-  const key = parseFormula(ex.key, { closed: true }).ast;
+  const key = parseFormula(ex.key, { closed: true, modal: !!ex.modal }).ast;
+  if (A.hasModal(key) || A.hasModal(ans)) {
+    const logic = ex.logic ?? 'K';
+    const c = KR.countermodel(logic, [], A.iff(ans, key));
+    if (!c) return { ok: true, certainty: 'proved', message: A.equal(ans, key) ? 'Correct.' : `Correct: your formula is equivalent to ${print(key)}.` };
+    const yours = KR.truthAt(logic, ans, c.model, c.world);
+    return { ok: false, kind: 'countermodel', message: `They come apart here: ${KR.describe(c.model, logic)} At world ${c.world} your formula is ${tv(yours)} but the sentence is ${tv(!yours)}.` };
+  }
   if (isSentential(key) && isSentential(ans)) {
     const e = equivalence(ans, key);
     if (e.equivalent) {
@@ -83,14 +91,17 @@ function checkTranslate(ex, input) {
 
 // Two readings of an ambiguous sentence: both must be given, in any order.
 function checkReadings(ex, inputs) {
-  const keys = ex.keys.map((k) => parseFormula(k, { closed: true }).ast);
+  const keys = ex.keys.map((k) => parseFormula(k, { closed: true, modal: !!ex.modal }).ast);
   const got = [];
   for (const text of inputs) {
-    const p = parseFormula(text ?? '', { closed: true });
+    const p = parseFormula(text ?? '', { closed: true, modal: !!ex.modal });
     if (!p.ok) return { ok: false, kind: 'parse', message: p.error.message };
     got.push(p.ast);
   }
-  const same = (a, b) => (isSentential(a) && isSentential(b) ? equivalence(a, b).equivalent : FO.compare(a, b).equivalent === true);
+  const same = (a, b) => {
+    if (A.hasModal(a) || A.hasModal(b)) return !KR.countermodel(ex.logic ?? 'K', [], A.iff(a, b));
+    return isSentential(a) && isSentential(b) ? equivalence(a, b).equivalent : FO.compare(a, b).equivalent === true;
+  };
   const matched = keys.map((k) => got.findIndex((g) => same(g, k)));
   if (matched.every((i) => i >= 0) && new Set(matched).size === keys.length) return { ok: true, message: 'Both readings are right.' };
   const found = matched.filter((i) => i >= 0).length;

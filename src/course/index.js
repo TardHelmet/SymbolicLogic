@@ -17,6 +17,12 @@ import l14 from './part2/14-change-of-quantifier.js';
 import l15 from './part2/15-invalidity.js';
 import l16 from './part2/16-relations.js';
 import l17 from './part2/17-identity.js';
+import l18 from './part3/18-paradox.js';
+import l19 from './part3/19-three-values.js';
+import l20 from './part3/20-worlds.js';
+import l21 from './part3/21-implication.js';
+import l22 from './part3/22-intuitionism.js';
+import l23 from './part3/23-capstone.js';
 
 export const PARTS = [
   {
@@ -32,6 +38,13 @@ export const PARTS = [
     title: 'Predicate logic',
     blurb: 'Names, predicates, relations and the quantifiers “all” and “some”; the square of opposition; proofs with quantifier rules; countermodels; and identity, with Russell’s theory of descriptions.',
     lessons: [l11, l12, l13, l14, l15, l16, l17],
+  },
+  {
+    id: 'beyond',
+    numeral: 'III',
+    title: 'Beyond the classical',
+    blurb: 'Paradoxes; logics with a third truth value, where contradictions need not explode; possible worlds; stricter conditionals; and intuitionistic logic, where excluded middle fails. Each is tested against the classical laws of Parts I and II.',
+    lessons: [l18, l19, l20, l21, l22, l23],
   },
 ];
 

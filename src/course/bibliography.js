@@ -22,9 +22,13 @@ export const BIB = {
   },
 
   // --- ancient ---
+  aristotlePostAn: {
+    kind: 'ancient', author: 'Aristotle', year: null, title: 'Posterior Analytics',
+    detail: 'I.3, 72b5–25 (the regress of demonstration; not all knowledge is demonstrable)',
+  },
   aristotlePrA: {
     kind: 'ancient', author: 'Aristotle', year: null, title: 'Prior Analytics',
-    detail: 'I.1, 24b18–20 (the definition of a deduction, syllogismos)',
+    detail: 'I.1, 24b18–20 (the definition of a deduction, syllogismos); I.23, 41a23–30 (proof through the impossible); II.4, 57b3–14 (Aristotle’s thesis)',
   },
   dl7: {
     kind: 'ancient', author: 'Diogenes Laertius', year: null, title: 'Lives of Eminent Philosophers',
@@ -356,5 +360,179 @@ export const BIB = {
   indiscerniblesSEP: {
     kind: 'entry', author: 'Forrest, Peter', year: null, title: 'The Identity of Indiscernibles',
     container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/identity-indiscernible/',
+  },
+
+  // --- paradox ---
+  russell1902: {
+    kind: 'chapter', author: 'Russell, Bertrand', year: 1902, title: 'Letter to Frege',
+    container: 'From Frege to Gödel', detail: 'ed. J. van Heijenoort, with Frege’s reply', publisher: 'Cambridge, MA: Harvard University Press, 1967',
+  },
+  grelling1908: {
+    kind: 'article', author: 'Grelling, Kurt, and Leonard Nelson', year: 1908, title: 'Bemerkungen zu den Paradoxieen von Russell und Burali-Forti',
+    container: 'Abhandlungen der Fries’schen Schule', detail: 'n.s. 2: 301–334',
+  },
+  curry1942: {
+    kind: 'article', author: 'Curry, Haskell B.', year: 1942, title: 'The Inconsistency of Certain Formal Logics',
+    container: 'Journal of Symbolic Logic', detail: '7 (3): 115–117',
+  },
+  quine1966: {
+    kind: 'chapter', author: 'Quine, W. V. O.', year: 1966, title: 'The Ways of Paradox',
+    container: 'The Ways of Paradox and Other Essays', publisher: 'New York: Random House',
+  },
+  sainsbury2009: {
+    kind: 'book', author: 'Sainsbury, R. M.', year: 2009, title: 'Paradoxes', detail: '3rd ed.',
+    publisher: 'Cambridge: Cambridge University Press',
+  },
+  unger1979: {
+    kind: 'article', author: 'Unger, Peter', year: 1979, title: 'There Are No Ordinary Things',
+    container: 'Synthese', detail: '41 (2): 117–154',
+  },
+  williamson1994: {
+    kind: 'book', author: 'Williamson, Timothy', year: 1994, title: 'Vagueness', publisher: 'London: Routledge',
+  },
+  liarSEP: {
+    kind: 'entry', author: 'Beall, Jc, Michael Glanzberg and David Ripley', year: null, title: 'Liar Paradox',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/liar-paradox/',
+  },
+  russellParadoxSEP: {
+    kind: 'entry', author: 'Irvine, A. D., and Harry Deutsch', year: null, title: 'Russell’s Paradox',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/russell-paradox/',
+  },
+  currySEP: {
+    kind: 'entry', author: 'Shapiro, Lionel, and Jc Beall', year: null, title: 'Curry’s Paradox',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/curry-paradox/',
+  },
+  soritesSEP: {
+    kind: 'entry', author: 'Hyde, Dominic, and Diana Raffman', year: null, title: 'Sorites Paradox',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/sorites-paradox/',
+  },
+
+  // --- many values ---
+  lukasiewicz1920: {
+    kind: 'article', author: 'Łukasiewicz, Jan', year: 1920, title: 'On Three-Valued Logic (O logice trójwartościowej)',
+    container: 'Ruch Filozoficzny', detail: '5: 170–171', note: 'English in Łukasiewicz, Selected Works, ed. L. Borkowski, Amsterdam: North-Holland, 1970.',
+  },
+  bochvar1938: {
+    kind: 'article', author: 'Bochvar, D. A.', year: 1938, title: 'On a Three-Valued Logical Calculus and Its Application to the Analysis of Contradictories',
+    container: 'Matematicheskii Sbornik', detail: '4 (46): 287–308',
+    note: 'Trans. M. Bergmann in History and Philosophy of Logic 2 (1981): 87–112.',
+  },
+  kleene1952: {
+    kind: 'book', author: 'Kleene, Stephen Cole', year: 1952, title: 'Introduction to Metamathematics',
+    detail: '§64 (the three-valued logic of partial recursive predicates)', publisher: 'Amsterdam: North-Holland; New York: Van Nostrand',
+  },
+  priest1979: {
+    kind: 'article', author: 'Priest, Graham', year: 1979, title: 'The Logic of Paradox',
+    container: 'Journal of Philosophical Logic', detail: '8 (1): 219–241',
+  },
+  kripke1975: {
+    kind: 'article', author: 'Kripke, Saul', year: 1975, title: 'Outline of a Theory of Truth',
+    container: 'Journal of Philosophy', detail: '72 (19): 690–716',
+  },
+  priest2008: {
+    kind: 'book', author: 'Priest, Graham', year: 2008, title: 'An Introduction to Non-Classical Logic: From If to Is',
+    detail: '2nd ed.', publisher: 'Cambridge: Cambridge University Press',
+  },
+  manyValuedSEP: {
+    kind: 'entry', author: 'Gottwald, Siegfried', year: null, title: 'Many-Valued Logic',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/logic-manyvalued/',
+  },
+  dialetheismSEP: {
+    kind: 'entry', author: 'Priest, Graham, Francesco Berto and Zach Weber', year: null, title: 'Dialetheism',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/dialetheism/',
+  },
+
+  // --- modality ---
+  leibnizTheodicy: {
+    kind: 'ancient', author: 'Leibniz, G. W.', year: 1710, title: 'Theodicy',
+    detail: '§§414–417 (the palace of the Fates: possible worlds as rooms of a pyramid)',
+    note: 'Trans. E. M. Huggard, London: Routledge & Kegan Paul, 1951.',
+  },
+  kripke1963: {
+    kind: 'article', author: 'Kripke, Saul', year: 1963, title: 'Semantical Considerations on Modal Logic',
+    container: 'Acta Philosophica Fennica', detail: '16: 83–94',
+  },
+  epictetus: {
+    kind: 'ancient', author: 'Epictetus', year: null, title: 'Discourses',
+    detail: 'II.19.1–5 (the Master Argument)', note: 'Trans. R. Hard, Oxford World’s Classics, 2014.',
+  },
+  prior1955: {
+    kind: 'article', author: 'Prior, A. N.', year: 1955, title: 'Diodoran Modalities',
+    container: 'Philosophical Quarterly', detail: '5 (20): 205–213',
+  },
+  prior1967: {
+    kind: 'book', author: 'Prior, A. N.', year: 1967, title: 'Past, Present and Future', publisher: 'Oxford: Clarendon Press',
+  },
+  modalSEP: {
+    kind: 'entry', author: 'Garson, James', year: null, title: 'Modal Logic',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/logic-modal/',
+  },
+  dialecticalSEP: {
+    kind: 'entry', author: 'Bobzien, Susanne', year: null, title: 'Dialectical School',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/dialectical-school/',
+  },
+  futureSEP: {
+    kind: 'entry', author: 'Øhrstrøm, Peter, and Per Hasle', year: null, title: 'Future Contingents',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/future-contingents/',
+  },
+
+  // --- implication ---
+  andersonBelnap1975: {
+    kind: 'book', author: 'Anderson, Alan Ross, and Nuel D. Belnap', year: 1975, title: 'Entailment: The Logic of Relevance and Necessity',
+    detail: 'vol. 1', publisher: 'Princeton: Princeton University Press',
+  },
+  mccall1966: {
+    kind: 'article', author: 'McCall, Storrs', year: 1966, title: 'Connexive Implication',
+    container: 'Journal of Symbolic Logic', detail: '31 (3): 415–433',
+  },
+  relevanceSEP: {
+    kind: 'entry', author: 'Mares, Edwin', year: null, title: 'Relevance Logic',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/logic-relevance/',
+  },
+  connexiveSEP: {
+    kind: 'entry', author: 'Wansing, Heinrich', year: null, title: 'Connexive Logic',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/logic-connexive/',
+  },
+
+  // --- intuitionism ---
+  brouwer1908: {
+    kind: 'article', author: 'Brouwer, L. E. J.', year: 1908, title: 'The Unreliability of the Logical Principles (De onbetrouwbaarheid der logische principes)',
+    container: 'Tijdschrift voor Wijsbegeerte', detail: '2: 152–158', note: 'English in Brouwer, Collected Works, vol. 1, ed. A. Heyting, Amsterdam: North-Holland, 1975.',
+  },
+  heyting1930: {
+    kind: 'article', author: 'Heyting, Arend', year: 1930, title: 'Die formalen Regeln der intuitionistischen Logik',
+    container: 'Sitzungsberichte der Preussischen Akademie der Wissenschaften, Physikalisch-mathematische Klasse', detail: '42–56',
+  },
+  kripke1965: {
+    kind: 'chapter', author: 'Kripke, Saul', year: 1965, title: 'Semantical Analysis of Intuitionistic Logic I',
+    container: 'Formal Systems and Recursive Functions', detail: 'ed. J. N. Crossley and M. A. E. Dummett', publisher: 'Amsterdam: North-Holland',
+  },
+  dummett1977: {
+    kind: 'book', author: 'Dummett, Michael', year: 1977, title: 'Elements of Intuitionism', detail: '2nd ed. 2000',
+    publisher: 'Oxford: Clarendon Press',
+  },
+  dummett1973: {
+    kind: 'chapter', author: 'Dummett, Michael', year: 1973, title: 'The Philosophical Basis of Intuitionistic Logic',
+    container: 'Truth and Other Enigmas', publisher: 'London: Duckworth, 1978',
+  },
+  intuitionisticSEP: {
+    kind: 'entry', author: 'Moschovakis, Joan', year: null, title: 'Intuitionistic Logic',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/logic-intuitionistic/',
+  },
+
+  // --- capstone ---
+  hartshorne1962: {
+    kind: 'book', author: 'Hartshorne, Charles', year: 1962, title: 'The Logic of Perfection', publisher: 'La Salle, IL: Open Court',
+  },
+  plantinga1974: {
+    kind: 'book', author: 'Plantinga, Alvin', year: 1974, title: 'The Nature of Necessity', publisher: 'Oxford: Clarendon Press',
+  },
+  klein1999: {
+    kind: 'article', author: 'Klein, Peter', year: 1999, title: 'Human Knowledge and the Infinite Regress of Reasons',
+    container: 'Philosophical Perspectives', detail: '13: 297–325',
+  },
+  bonjour1985: {
+    kind: 'book', author: 'BonJour, Laurence', year: 1985, title: 'The Structure of Empirical Knowledge',
+    publisher: 'Cambridge, MA: Harvard University Press',
   },
 };

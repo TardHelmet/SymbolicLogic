@@ -8,6 +8,7 @@ import { parseFormula } from '../logic/parser.js';
 import { parseProofText, checkProof } from '../logic/proof.js';
 import { IMPLICATION, REPLACEMENT, OTHER } from '../logic/rules.js';
 import * as A from '../logic/ast.js';
+import * as MV from '../logic/manyvalued.js';
 
 export function staticTable(formulaTexts, cols = 'main') {
   const fs = formulaTexts.map((t) => parseFormula(t, { schema: /\b[pqrs]\b/.test(t) && !/[A-Z]/.test(t) }).ast);
@@ -19,6 +20,18 @@ export function staticTable(formulaTexts, cols = 'main') {
     h('tbody', {}, rows.map((r) => h('tr', {},
       letters.map((l) => h('td', { class: `letters ${r.v[l] ? 'T' : 'F'}` }, r.v[l] ? 'T' : 'F')),
       r.values.map((v, j) => h('td', { class: [j === 0 ? 'sep' : '', v ? 'T' : 'F', mains.has(A.key(all[j])) ? 'main' : ''].join(' ') }, v ? 'T' : 'F')))))));
+}
+
+export function staticManyValued(formulaTexts, logic) {
+  const fs = formulaTexts.map((t) => parseFormula(t, { schema: /\b[pqrs]\b/.test(t) && !/[A-Z]/.test(t) }).ast);
+  const { letters, rows } = MV.table(logic, fs);
+  const cls = (x) => `v${String(x).replace('.', '')}`;
+  return h('div', { class: 'tt-wrap' }, h('table', { class: 'tt' },
+    h('caption', { class: 'small muted' }, MV.LOGICS[logic].name),
+    h('thead', {}, h('tr', {}, letters.map((l) => h('th', { class: 'letters' }, l)), fs.map((f, j) => h('th', { class: j === 0 ? 'sep' : null }, formula(f))))),
+    h('tbody', {}, rows.map((r) => h('tr', {},
+      letters.map((l) => h('td', { class: `letters ${cls(r.v[l])}` }, MV.label(logic, r.v[l]))),
+      r.values.map((v, j) => h('td', { class: `${j === 0 ? 'sep ' : ''}main ${cls(v)}` }, MV.label(logic, v))))))));
 }
 
 export function staticProof(text) {
@@ -95,6 +108,7 @@ export function renderBlock(b) {
   if (b.example !== undefined) return example(b);
   if (b.quote) return h('blockquote', { class: 'quote' }, h('p', {}, inline(b.quote)), b.source ? h('footer', {}, inline(b.source)) : null);
   if (b.table) return staticTable(b.table, b.columns);
+  if (b.mvtable) return staticManyValued(b.mvtable, b.logic);
   if (b.proof) return staticProof(b.proof);
   if (b.rules) return ruleTable(b.rules);
   if (b.aside) return h('div', { class: 'definition' }, h('span', { class: 'term' }, b.label ?? 'Note'), inline(b.aside));

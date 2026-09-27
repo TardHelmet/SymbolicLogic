@@ -1,0 +1,71 @@
+const M = { worlds: ['1', '2', '3'], R: [['1', '2'], ['1', '3'], ['2', '2']], V: { A: ['2'], B: ['2', '3'] } };
+const DAY = { D: 'it is day', L: 'it is light' };
+
+export default {
+  id: 'possible-worlds',
+  number: 20,
+  title: 'Possible worlds',
+  hurley: 'beyond Hurley',
+  card: 'Necessity and possibility, Kripke models, and how properties of a relation fix a modal logic.',
+  summary: '“Necessarily” and “possibly” are not truth-functional: whether it is possible that A does not depend only on whether A is true. Possible-worlds semantics evaluates a statement across a family of worlds, and the shape of the family decides which modal laws hold.',
+  reading: [
+    { h: 'Box and diamond' },
+    '{□A} means “necessarily A”, and {◇A} means “possibly A”. Type them as [] and <>. They are *duals*: {◇A} says the same as {~□~A}, “not necessarily not A”.',
+    { h: 'Kripke models' },
+    'A **Kripke model** has a set of worlds, a relation saying which worlds each world *sees* (can access), and a record of which statement letters are true at each world.',
+    { list: [
+      '{□A} is true at a world w when A is true at **every** world w sees.',
+      '{◇A} is true at w when A is true at **some** world w sees.',
+      'The other operators work at each world as usual.',
+    ] },
+    'A world that sees nothing makes every {□A} true there (there is no world where A fails) and every {◇A} false.',
+    { h: 'Frames and laws' },
+    'Which modal laws hold depends on the relation. You met these properties of relations in lesson 16.',
+    { list: [
+      '**T**: if the relation is **reflexive** (every world sees itself), {□A ⊃ A} holds: what is necessary is true.',
+      '**S4**: if it is also **transitive**, {□A ⊃ □□A} holds: what is necessary is necessarily necessary.',
+      '**S5**: if it is also **symmetric**, so an equivalence, {◇A ⊃ □◇A} holds: what is possible is necessarily possible.',
+      '**K**, with no conditions, still has {□(A ⊃ B) ⊃ (□A ⊃ □B)}.',
+    ] },
+    'Choosing a modal logic is choosing what “possible” means. If possibilities are what is compatible with the laws of nature, or with what someone knows, the relations differ, and so do the laws.',
+    { h: 'Scope' },
+    '“If it is day, it must be light” has two readings: {□(D ⊃ L)}, it is necessary that if it is day it is light, and {D ⊃ □L}, if it is day then it is necessarily light. Medieval logicians distinguished the *necessity of the consequence* from the *necessity of the consequent*. Confusing them makes whatever is true look necessary.',
+    { h: 'Compossibility again' },
+    'On one reading, Leibniz’s compossibles are possibilities true together at one world. Lesson 4 read compossibility as joint consistency; possible-worlds semantics adds the thought that a world is a complete way things could be. As before, this is one interpretation among several.',
+    { h: 'The Master Argument' },
+    'Epictetus reports an argument of Diodorus Cronus built on three propositions that cannot all be true: (1) every truth about the past is necessary; (2) the impossible does not follow from the possible; (3) something is possible that neither is nor will be true. Diodorus kept the first two and rejected the third, concluding that the possible is what is or will be true. Cleanthes rejected the first; Chrysippus rejected the second. The argument cannot be reconstructed with □ and ◇ alone, because it turns on time; Prior built tense logic partly to reconstruct it.',
+  ],
+  exercises: [
+    { id: 'pw-e1', type: 'kripke', question: 'evaluate', prompt: 'In the model shown, is {□B} true at world 1?', model: M, formula: '□B', world: '1' },
+    { id: 'pw-e2', type: 'kripke', question: 'evaluate', prompt: 'Is {□A} true at world 1?', model: M, formula: '□A', world: '1' },
+    { id: 'pw-e3', type: 'kripke', question: 'evaluate', prompt: 'Is {◇A} true at world 1?', model: M, formula: '◇A', world: '1' },
+    { id: 'pw-e4', type: 'kripke', question: 'evaluate', prompt: 'Is {□◇A} true at world 1?', model: M, formula: '□◇A', world: '1' },
+    { id: 'pw-e5', type: 'kripke', question: 'evaluate', prompt: 'World 3 sees nothing. Is {□A} true there?', model: M, formula: '□A', world: '3' },
+    { id: 'pw-c1', type: 'kripke', logic: 'K', question: 'countermodel', prompt: 'Build a K model where {□A ⊃ A} fails at some world.', argument: '/ □A ⊃ A' },
+    { id: 'pw-c2', type: 'kripke', logic: 'T', question: 'countermodel', prompt: 'Build a T model (every world sees itself) where {□A ⊃ □□A} fails.', argument: '/ □A ⊃ □□A' },
+    { id: 'pw-v1', type: 'kripke', logic: 'S4', question: 'validity', prompt: 'Is {□A ⊃ □□A} valid in S4?', argument: '/ □A ⊃ □□A' },
+    { id: 'pw-v2', type: 'kripke', logic: 'K', question: 'validity', prompt: 'Is this valid in K?', argument: '□(A ⊃ B), □A / □B' },
+    { id: 'pw-v3', type: 'kripke', logic: 'S4', question: 'validity', prompt: 'Is {◇A ⊃ □◇A} valid in S4?', argument: '/ ◇A ⊃ □◇A' },
+    { id: 'pw-read', type: 'readings', modal: true, prompt: '“If it is day, it must be light.” Give both readings.', dictionary: DAY, keys: ['□(D ⊃ L)', 'D ⊃ □L'] },
+    { id: 'pw-t1', type: 'translate', modal: true, prompt: 'Symbolize: “It is possible that it is day and not light.”', dictionary: DAY, key: '◇(D • ~L)', alternatives: ['~□(D ⊃ L)'], wrong: ['◇D • ~L'] },
+    {
+      id: 'pw-frame', type: 'choice', prompt: 'Which property of the relation makes {□A ⊃ A} valid?',
+      options: ['reflexive', 'symmetric', 'transitive'], answer: 0,
+      explain: 'If every world sees itself, a world where □A is true is one of the worlds where A must be true.',
+    },
+    {
+      id: 'pw-master', type: 'choice', prompt: 'Which of the three propositions of the Master Argument did Diodorus himself reject?',
+      options: ['Every truth about the past is necessary.', 'The impossible does not follow from the possible.', 'Something is possible that neither is nor will be true.'],
+      answer: 2,
+      explain: 'Diodorus concluded that the possible is exactly what is or will be true. Cleanthes rejected the first proposition, Chrysippus the second.',
+    },
+  ],
+  margin: {
+    title: 'The palace of the Fates',
+    body: [
+      'At the end of the *Theodicy* Leibniz tells a story: Pallas shows Theodorus a palace of countless rooms, each a possible world, in which the life of Sextus Tarquinius runs differently; the rooms form a pyramid whose apex, the best, is the actual world. Possible worlds entered twentieth-century logic through Kripke’s 1963 semantics, which made the modal systems of C. I. Lewis tractable by treating necessity as truth at all accessible worlds.',
+      'The Master Argument is reported by Epictetus. Whether it can be reconstructed as valid, and what its premises mean, has occupied commentators since Prior’s 1955 paper; Bobzien’s entry on the Dialectical School sets out the evidence. Aristotle’s sea battle, in *De Interpretatione* 9, is the other ancient source for the logic of future possibility, and Øhrstrøm and Hasle survey the modern debate.',
+    ],
+    sources: ['leibnizTheodicy', 'kripke1963', 'epictetus', 'prior1955', 'prior1967', 'dialecticalSEP', 'futureSEP', 'modalSEP', 'aristotleDeInt', 'messina2009'],
+  },
+};

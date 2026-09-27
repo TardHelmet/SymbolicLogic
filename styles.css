@@ -492,3 +492,17 @@ table.model-table input { width: 1.1rem; height: 1.1rem; accent-color: var(--acc
 /* In running text a long formula may wrap at its spaces rather than push the page wider. */
 p .f, li .f, .feedback .f, .definition .f, .prompt .f, .choices .f { white-space: normal; }
 .model-row > .segmented { justify-self: start; }
+
+/* Kripke diagrams */
+.kripke-wrap { overflow-x: auto; }
+svg.kripke { width: 100%; max-width: 20rem; height: auto; display: block; }
+.kripke-edge { stroke: var(--ink-2); stroke-width: 1.6; fill: none; }
+.kripke-head { fill: var(--ink-2); }
+.kripke-world { fill: var(--sheet); stroke: var(--ink-2); stroke-width: 1.6; }
+.kripke-world.here { stroke: var(--accent); stroke-width: 3; fill: var(--accent-soft); }
+.kripke-name { font: 600 15px var(--font-ui); fill: var(--ink); }
+.kripke-val { font: 14px var(--font-formula); fill: var(--accent); }
+table.tt .v05, table.tt button.v05 { color: var(--warn); }
+table.tt .v1 { color: var(--true); }
+table.tt .v0 { color: var(--false); }
+.valuation .tv button[aria-pressed="true"].u { background: var(--warn-bg); color: var(--warn); border-color: var(--warn); }

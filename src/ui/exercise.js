@@ -47,7 +47,7 @@ MOUNTS.translate = (ex, ctx) => {
   return {
     el: [dictionaryList(ex.dictionary), fin.el],
     value: () => fin.value,
-    show: (a) => { fin.value = print(parseFormula(a).ast, { notation: settings.notation }); },
+    show: (a) => { fin.value = print(parseFormula(a, { modal: !!ex.modal }).ast, { notation: settings.notation }); },
     focus: () => fin.focus(),
   };
 };
@@ -57,7 +57,7 @@ MOUNTS.enthymeme = (ex, ctx) => {
   return {
     el: [dictionaryList(ex.dictionary), givenLine(formulaText(ex.argument)), fin.el],
     value: () => fin.value,
-    show: (a) => { fin.value = print(parseFormula(a).ast, { notation: settings.notation }); },
+    show: (a) => { fin.value = print(parseFormula(a, { modal: !!ex.modal }).ast, { notation: settings.notation }); },
   };
 };
 
