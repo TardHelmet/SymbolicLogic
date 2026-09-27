@@ -10,6 +10,7 @@ export function evaluate(n, v) {
       if (!(n.pred in v)) throw new Error(`evaluate: no value for ${n.pred}`);
       return v[n.pred];
     case 'meta':
+      if (!(n.name in v)) throw new Error(`evaluate: no value for ${n.name}`);
       return v[n.name];
     case 'not': return !evaluate(n.arg, v);
     case 'and': return evaluate(n.left, v) && evaluate(n.right, v);
@@ -27,8 +28,19 @@ export function isSentential(n) {
 /** Statement letters across several formulas, alphabetised (Hurley's column order). */
 export function lettersIn(formulas) {
   const all = new Set();
-  for (const f of formulas) for (const l of lettersOf(f)) all.add(l);
+  for (const f of formulas) {
+    for (const l of lettersOf(f)) all.add(l);
+    for (const m of metaNames(f)) all.add(m);
+  }
   return [...all].sort();
+}
+
+// Schema metavariables (p, q, r, s) are columns too, so rule schemas can be
+// checked for soundness with the same machinery.
+function metaNames(n, out = new Set()) {
+  if (n.type === 'meta') out.add(n.name);
+  for (const c of children(n)) metaNames(c, out);
+  return out;
 }
 
 /**
