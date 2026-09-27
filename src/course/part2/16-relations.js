@@ -30,8 +30,8 @@ export default {
       '**Transitive**: {(x)(y)(z)[(Rxy • Ryz) ⊃ Rxz]}. “Is an ancestor of.”',
     ] },
     'A relation that is irreflexive and transitive orders what it relates into a **series**: earlier than, greater than, ancestor of. Such relations are always asymmetric (one of the exercises proves it), and they cannot be analysed into properties of their terms taken one at a time. That fact is the subject of the margin.',
-    { h: 'The horse’s head' },
-    'De Morgan’s famous example: “Horses are animals; therefore the head of a horse is the head of an animal.” Every logician before the 1870s could see that it is valid, and no syllogism could prove it, because the inference turns on the relation “is the head of”. In predicate logic it is {(x)(Hx ⊃ Ax) / (x)[(∃y)(Hy • Txy) ⊃ (∃y)(Ay • Txy)]}, with {Txy} for “x is the head of y”, and it is provable, as one of the exercises shows.',
+    { h: 'The head of an animal' },
+    'De Morgan’s example, from his *Formal Logic* of 1847: “Man is animal; therefore the head of a man is the head of an animal.” (It is often retold with horses.) Every logician could see that it is valid, and no syllogism could prove it, because the inference turns on the relation “is the head of”. In predicate logic it is {(x)(Hx ⊃ Ax) / (x)[(∃y)(Hy • Txy) ⊃ (∃y)(Ay • Txy)]}, with {Hx} for “x is a man” and {Txy} for “x is the head of y”, and it is provable, as one of the exercises shows.',
   ],
   exercises: [
     { id: 're-1', type: 'translate', prompt: 'Symbolize: “Everyone loves someone.” (The domain is people.)', dictionary: LOVE, key: '(x)(∃y)Lxy', wrong: ['(∃y)(x)Lxy'] },
@@ -51,8 +51,8 @@ export default {
       solution: [['Rxy', 'ACP'], ['Ryx', 'AIP'], ['(y)(z)[(Rxy • Ryz) ⊃ Rxz]', '1, UI'], ['(z)[(Rxy • Ryz) ⊃ Rxz]', '5, UI'], ['(Rxy • Ryx) ⊃ Rxx', '6, UI'],
         ['Rxy • Ryx', '3, 4, Conj'], ['Rxx', '7, 8, MP'], ['~Rxx', '2, UI'], ['Rxx • ~Rxx', '9, 10, Conj'], ['~Ryx', '4–11, IP'], ['Rxy ⊃ ~Ryx', '3–12, CP'],
         ['(y)(Rxy ⊃ ~Ryx)', '13, UG'], ['(x)(y)(Rxy ⊃ ~Ryx)', '14, UG']] },
-    { id: 're-horse', type: 'proof', mode: 'justify', prompt: 'De Morgan’s horse’s head. The proof is given; supply the justifications. (It goes by indirect proof, because Hurley’s UG restriction blocks the more obvious route through EI and CP.)',
-      dictionary: { H: 'x is a horse', A: 'x is an animal', T: 'x is the head of y' },
+    { id: 're-head', type: 'proof', mode: 'justify', prompt: 'De Morgan’s head of an animal. The proof is given; supply the justifications. (It goes by indirect proof, because Hurley’s UG restriction blocks the more obvious route through EI and CP.)',
+      dictionary: { H: 'x is a man', A: 'x is an animal', T: 'x is the head of y' },
       argument: '(x)(Hx ⊃ Ax) / (x)[(∃y)(Hy • Txy) ⊃ (∃y)(Ay • Txy)]',
       solution: [
         ['(∃x)~[(∃y)(Hy • Txy) ⊃ (∃y)(Ay • Txy)]', 'AIP'],
@@ -89,8 +89,8 @@ export default {
     body: [
       'Leibniz held that every truth about a thing is grounded in that thing’s own nature, and so tried to reduce relational statements to non-relational ones: “Paris loves Helen” to a statement about Paris and one about Helen. Relations themselves, he wrote to Clarke, are “merely ideal”, things of the mind. Mugnai reconstructs the theory in detail.',
       'Hume listed seven “philosophical relations” and divided them into those that depend wholly on the ideas compared (resemblance, degrees in quality, proportions in number) and those that can change while the ideas stay the same (identity, relations of time and place, causation). Bradley argued in 1893 that relations are incoherent: to relate A to B, a relation R must itself be related to A and to B, by further relations, and so on without end. It is a cousin of Carroll’s regress in lesson 7.',
-      'Russell’s answer, in *The Principles of Mathematics* (1903), rested on logic: asymmetric relations, the ones that generate series, cannot be reduced to properties of their terms, so relations must be accepted as real and irreducible. William James argued from experience to the same end: the “and”, the “with”, the “next to” between things are as directly experienced as the things. Peirce, and De Morgan with the horse’s head, had already shown that logic needed relations to be first-class. The debate over whether relations are external to their terms, or grounded in them, remains open; MacBride’s and Perovic’s encyclopedia entries set out the positions.',
+      'Russell’s answer, in *The Principles of Mathematics* (1903), rested on logic: asymmetric relations, the ones that generate series, cannot be reduced to properties of their terms, so relations must be accepted as real and irreducible. William James argued from experience to the same end: the “and”, the “with”, the “next to” between things are as directly experienced as the things. Peirce, and De Morgan with the head of an animal, had already shown that logic needed relations to be first-class. The debate over whether relations are external to their terms, or grounded in them, remains open; MacBride’s and Perovic’s encyclopedia entries set out the positions.',
     ],
-    sources: ['mugnai1992', 'leibnizClarke', 'humeTreatise', 'bradley1893', 'bradleySEP', 'russell1903', 'moore1919', 'james1912', 'peirce1870', 'demorganHorse', 'relationsSEP', 'hurley2018'],
+    sources: ['mugnai1992', 'leibnizClarke', 'humeTreatise', 'bradley1893', 'bradleySEP', 'russell1903', 'moore1919', 'james1912', 'peirce1870', 'demorganHead', 'relationsSEP', 'hurley2018'],
   },
 };

@@ -32,12 +32,12 @@ export const BIB = {
   },
   dl7: {
     kind: 'ancient', author: 'Diogenes Laertius', year: null, title: 'Lives of Eminent Philosophers',
-    detail: 'Book VII (Zeno and the Stoics), §§41–83 on Stoic dialectic', note: 'Trans. R. D. Hicks, Loeb Classical Library, 1925.',
+    detail: 'Book VII (Zeno and the Stoics), §§41–83 on Stoic dialectic, §69 on negation, §180 on Chrysippus’s 705 books', note: 'Trans. R. D. Hicks, Loeb Classical Library, 1925.',
     url: 'https://en.wikisource.org/wiki/Lives_of_the_Eminent_Philosophers/Book_VII', urlLabel: 'Hicks translation',
   },
   sextusM: {
     kind: 'ancient', author: 'Sextus Empiricus', year: null, title: 'Against the Logicians',
-    detail: '(Adversus Mathematicos VII–VIII); VIII.11–12 on signifier, signified and object; VIII.112–117 on the conditional',
+    detail: '(Adversus Mathematicos VII–VIII); VIII.11–12 on signifier, signified and object; VIII.89–90 on negation; VIII.112–117 on the conditional',
     note: 'Trans. Richard Bett, Cambridge University Press, 2005.',
   },
   sextusM1: {
@@ -217,7 +217,7 @@ export const BIB = {
   },
   peirce1885: {
     kind: 'article', author: 'Peirce, Charles S.', year: 1885, title: 'On the Algebra of Logic: A Contribution to the Philosophy of Notation',
-    container: 'American Journal of Mathematics', detail: '7 (2): 180–202',
+    container: 'American Journal of Mathematics', detail: '7 (2–3): 180–202',
   },
   quine1948: {
     kind: 'article', author: 'Quine, W. V. O.', year: 1948, title: 'On What There Is',
@@ -273,17 +273,17 @@ export const BIB = {
   },
   turing1936: {
     kind: 'article', author: 'Turing, Alan M.', year: 1936, title: 'On Computable Numbers, with an Application to the Entscheidungsproblem',
-    container: 'Proceedings of the London Mathematical Society', detail: '2nd series, 42: 230–265',
+    container: 'Proceedings of the London Mathematical Society', detail: '2nd series, 42: 230–265', note: 'Read November 1936; the volume is dated 1937.',
   },
 
   // --- relations ---
-  demorganHorse: {
-    kind: 'book', author: 'De Morgan, Augustus', year: 1847, title: 'Formal Logic', detail: 'p. 114 (the head of a horse)',
+  demorganHead: {
+    kind: 'book', author: 'De Morgan, Augustus', year: 1847, title: 'Formal Logic', detail: 'p. 114 (“the head of a man is the head of an animal”)',
     publisher: 'London: Taylor and Walton', url: 'https://archive.org/details/formallogicorthe00demouoft', urlLabel: 'Internet Archive',
   },
   peirce1870: {
     kind: 'article', author: 'Peirce, Charles S.', year: 1870, title: 'Description of a Notation for the Logic of Relatives',
-    container: 'Memoirs of the American Academy of Arts and Sciences', detail: '9: 317–378',
+    container: 'Memoirs of the American Academy of Arts and Sciences', detail: 'n.s. 9: 317–378', note: 'Read 26 January 1870; the volume was printed in 1873.',
   },
   mugnai1992: {
     kind: 'book', author: 'Mugnai, Massimo', year: 1992, title: 'Leibniz’ Theory of Relations',
@@ -302,7 +302,7 @@ export const BIB = {
     detail: 'Part IV (Order), especially ch. 26 (Asymmetrical Relations)', publisher: 'Cambridge: Cambridge University Press',
   },
   moore1919: {
-    kind: 'article', author: 'Moore, G. E.', year: 1919, title: 'External and Internal Relations',
+    kind: 'article', author: 'Moore, G. E.', year: '1919–20', title: 'External and Internal Relations',
     container: 'Proceedings of the Aristotelian Society', detail: '20: 40–62',
   },
   james1912: {
@@ -444,8 +444,8 @@ export const BIB = {
 
   // --- modality ---
   leibnizTheodicy: {
-    kind: 'ancient', author: 'Leibniz, G. W.', year: 1710, title: 'Theodicy',
-    detail: '§§414–417 (the palace of the Fates: possible worlds as rooms of a pyramid)',
+    kind: 'ancient', author: 'Leibniz, G. W.', year: 1710, title: 'Theodicy', url: 'https://www.gutenberg.org/ebooks/17147', urlLabel: 'Project Gutenberg',
+    detail: '§§405–417 (Valla’s dialogue continued: Sextus Tarquinius, Theodorus, and the palace of the Fates, whose pyramid of worlds is at §416)',
     note: 'Trans. E. M. Huggard, London: Routledge & Kegan Paul, 1951.',
   },
   kripke1963: {
@@ -454,7 +454,8 @@ export const BIB = {
   },
   epictetus: {
     kind: 'ancient', author: 'Epictetus', year: null, title: 'Discourses',
-    detail: 'II.19.1–5 (the Master Argument)', note: 'Trans. R. Hard, Oxford World’s Classics, 2014.',
+    detail: 'II.19.1–5 (the Master Argument)', note: 'In Discourses, Fragments, Handbook, trans. R. Hard, Oxford World’s Classics, 2014.',
+    url: 'https://en.wikisource.org/wiki/Epictetus,_the_Discourses_as_reported_by_Arrian,_the_Manual,_and_Fragments/Book_2/Chapter_19', urlLabel: 'Oldfather translation',
   },
   prior1955: {
     kind: 'article', author: 'Prior, A. N.', year: 1955, title: 'Diodoran Modalities',
@@ -505,7 +506,7 @@ export const BIB = {
   },
   kripke1965: {
     kind: 'chapter', author: 'Kripke, Saul', year: 1965, title: 'Semantical Analysis of Intuitionistic Logic I',
-    container: 'Formal Systems and Recursive Functions', detail: 'ed. J. N. Crossley and M. A. E. Dummett', publisher: 'Amsterdam: North-Holland',
+    container: 'Formal Systems and Recursive Functions', detail: 'ed. J. N. Crossley and M. A. E. Dummett, 92–130', publisher: 'Amsterdam: North-Holland',
   },
   dummett1977: {
     kind: 'book', author: 'Dummett, Michael', year: 1977, title: 'Elements of Intuitionism', detail: '2nd ed. 2000',

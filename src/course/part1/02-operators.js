@@ -77,6 +77,6 @@ export default {
       'They were careful about scope. A negation, for them, was formed by putting the negative particle in front of the whole proposition, “Not: it is day”, so that it plainly denies the whole. Hurley’s rule that a tilde governs the smallest formula to its right, and the brackets that extend it, do the same work.',
       'Stoic disjunction was exclusive, and more than that: “either it is day or it is night” was true when, necessarily, exactly one disjunct is true, so it was not truth-functional at all. Gellius also reports two kinds of quasi-disjunction (*paradiezeugmenon*): one true when at most one part is true, the other when at least one part is. The second is the closest ancient relative of the wedge, though neither was defined by a truth table. Textbooks often add that Latin had two words, *vel* for inclusive and *aut* for exclusive “or”, and that the wedge ∨ descends from *vel*. Jennings argues that this tidy story is largely a myth, and that English “or” is not simply ambiguous between two senses. Exercise: is “you may have soup or salad” exclusive because of “or”, or because of what a menu is for?',
     ],
-    sources: ['dl7', 'gellius', 'bobzien2003', 'mates1953', 'jennings1994', 'kneale1962', 'hurley2018'],
+    sources: ['dl7', 'sextusM', 'gellius', 'bobzien2003', 'mates1953', 'jennings1994', 'kneale1962', 'hurley2018'],
   },
 };
