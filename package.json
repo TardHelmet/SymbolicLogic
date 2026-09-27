@@ -1,0 +1,16 @@
+{
+  "name": "symbolic-logic",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A course in sentential, predicate and non-classical logic, in Hurley notation.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "start": "node scripts/serve.js",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT"
+}
