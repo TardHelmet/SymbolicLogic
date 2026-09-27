@@ -16,6 +16,7 @@ export const CLASSIFY_OPTIONS = {
   pair: ['equivalent', 'contradictory', 'consistent', 'inconsistent'],
   argument: ['valid', 'invalid'],
   set: ['consistent', 'inconsistent'],
+  opposition: ['contradictory', 'contrary', 'subcontrary', 'the first implies the second', 'the second implies the first', 'equivalent', 'independent'],
 };
 
 const tv = (b) => (b ? 'true' : 'false');
@@ -126,7 +127,16 @@ export function classifyAnswer(ex) {
     const [a, b] = formulasOf(ex);
     return relations(a, b);
   }
-  if (ex.mode === 'set') return [consistency(formulasOf(ex)).consistent ? 'consistent' : 'inconsistent'];
+  if (ex.mode === 'set') {
+    const fs = formulasOf(ex);
+    const ok = fs.every(isSentential) ? consistency(fs).consistent : FO.satisfiable(fs).satisfiable;
+    return [ok ? 'consistent' : 'inconsistent'];
+  }
+  if (ex.mode === 'opposition') {
+    const [a, b] = formulasOf(ex);
+    const given = (ex.given ?? []).map((t) => parseFormula(t, { closed: true }).ast);
+    return [FO.opposition(a, b, given)];
+  }
   if (ex.mode === 'argument') {
     const { premises, conclusion } = argumentOf(ex);
     return [validityOf(premises, conclusion).valid ? 'valid' : 'invalid'];
@@ -140,7 +150,18 @@ function validityOf(premises, conclusion) {
   return { valid: r.valid, model: r.model, certainty: r.certainty };
 }
 
+const OPPOSITION_REASON = {
+  contradictory: 'They always have opposite truth values: exactly one is true.',
+  contrary: 'They cannot both be true, but they can both be false.',
+  subcontrary: 'They cannot both be false, but they can both be true.',
+  'the first implies the second': 'Whenever the first is true, so is the second, but not conversely.',
+  'the second implies the first': 'Whenever the second is true, so is the first, but not conversely.',
+  equivalent: 'They are true in exactly the same situations.',
+  independent: 'Every combination of truth values is possible.',
+};
+
 function classifyReason(ex, answer) {
+  if (ex.mode === 'opposition') return OPPOSITION_REASON[answer[0]] + (ex.given?.length ? ' (Assuming the stated existential import.)' : '');
   if (ex.mode === 'statement') {
     const [f] = formulasOf(ex);
     const { rows } = truthTable([f]);
@@ -158,7 +179,12 @@ function classifyReason(ex, answer) {
     return `A counterexample: ${FO.describeModel(v.model, ex.dictionary)}`;
   }
   if (ex.mode === 'set') {
-    const c = consistency(formulasOf(ex));
+    const fs = formulasOf(ex);
+    if (!fs.every(isSentential)) {
+      const s = FO.satisfiable(fs);
+      return s.satisfiable ? `All are true together in this situation: ${FO.describeModel(s.model, ex.dictionary)}` : 'No situation makes them all true together.';
+    }
+    const c = consistency(fs);
     return c.consistent ? `All are true together when ${describeRow(c.row).join(', ')}.` : 'No row makes them all true together.';
   }
   const [a, b] = formulasOf(ex);

@@ -274,3 +274,32 @@ export function describeModel(m, dict = {}) {
 }
 
 export { bell };
+
+/**
+ * How two statements are related on the traditional square, given some
+ * background assumptions (for example existential import, (∃x)Sx). Decided by
+ * model search, which is complete for the monadic formulas the square uses.
+ */
+export function opposition(a, b, given = []) {
+  const sat = (fs) => satisfiable([...given, ...fs]).satisfiable;
+  const bothTrue = sat([a, b]);
+  const bothFalse = sat([A.not(a), A.not(b)]);
+  const aNotB = sat([a, A.not(b)]);
+  const bNotA = sat([A.not(a), b]);
+  if (!aNotB && !bNotA) return 'equivalent';
+  if (!bothTrue && !bothFalse) return 'contradictory';
+  if (!bothTrue) return 'contrary';
+  if (!bothFalse) return 'subcontrary';
+  if (!aNotB) return 'the first implies the second';
+  if (!bNotA) return 'the second implies the first';
+  return 'independent';
+}
+
+/** Check a student-built model against a goal. */
+export function checkModel(model, { premises = [], conclusion = null, formulas = [] }) {
+  const results = [];
+  for (const p of premises) results.push({ f: p, role: 'premise', value: evaluate(p, model), want: true });
+  if (conclusion) results.push({ f: conclusion, role: 'conclusion', value: evaluate(conclusion, model), want: false });
+  for (const f of formulas) results.push({ f, role: 'formula', value: evaluate(f, model), want: true });
+  return { ok: results.every((r) => r.value === r.want), results };
+}

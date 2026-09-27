@@ -195,4 +195,166 @@ export const BIB = {
     kind: 'entry', author: 'Priest, Graham, Koji Tanaka and Zach Weber', year: null, title: 'Paraconsistent Logic',
     container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/logic-paraconsistent/',
   },
+
+  // --- predicates and quantifiers ---
+  frege1879: {
+    kind: 'book', author: 'Frege, Gottlob', year: 1879, title: 'Begriffsschrift, eine der arithmetischen nachgebildete Formelsprache des reinen Denkens',
+    publisher: 'Halle: Louis Nebert',
+    note: 'Trans. S. Bauer-Mengelberg in J. van Heijenoort (ed.), From Frege to Gödel, Cambridge, MA: Harvard University Press, 1967.',
+  },
+  frege1891: {
+    kind: 'article', author: 'Frege, Gottlob', year: 1891, title: 'Function and Concept',
+    note: 'Lecture, Jena. Trans. P. Geach in Translations from the Philosophical Writings of Gottlob Frege, ed. P. Geach and M. Black, Oxford: Blackwell, 1952.',
+  },
+  frege1892: {
+    kind: 'article', author: 'Frege, Gottlob', year: 1892, title: 'On Sense and Reference (Über Sinn und Bedeutung)',
+    container: 'Zeitschrift für Philosophie und philosophische Kritik', detail: '100: 25–50',
+    note: 'Trans. in Geach and Black (eds.), Translations from the Philosophical Writings of Gottlob Frege.',
+  },
+  peirce1885: {
+    kind: 'article', author: 'Peirce, Charles S.', year: 1885, title: 'On the Algebra of Logic: A Contribution to the Philosophy of Notation',
+    container: 'American Journal of Mathematics', detail: '7 (2): 180–202',
+  },
+  quine1948: {
+    kind: 'article', author: 'Quine, W. V. O.', year: 1948, title: 'On What There Is',
+    container: 'Review of Metaphysics', detail: '2 (5): 21–38',
+  },
+  vanheijenoort1967: {
+    kind: 'book', author: 'van Heijenoort, Jean (ed.)', year: 1967, title: 'From Frege to Gödel: A Source Book in Mathematical Logic, 1879–1931',
+    publisher: 'Cambridge, MA: Harvard University Press',
+  },
+
+  // --- the square ---
+  aristotleDeInt: {
+    kind: 'ancient', author: 'Aristotle', year: null, title: 'De Interpretatione',
+    detail: 'chs. 6–7 (contradictories and contraries); ch. 9 (future contingents: the sea battle)',
+  },
+  squareSEP: {
+    kind: 'entry', author: 'Parsons, Terence', year: null, title: 'The Traditional Square of Opposition',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/square/',
+  },
+
+  // --- arbitrary objects, negation ---
+  berkeley1710: {
+    kind: 'book', author: 'Berkeley, George', year: 1710, title: 'A Treatise Concerning the Principles of Human Knowledge',
+    detail: 'Introduction, §§15–16 (the demonstration about a triangle)',
+    url: 'https://www.gutenberg.org/ebooks/4723', urlLabel: 'Project Gutenberg',
+  },
+  fine1985: {
+    kind: 'book', author: 'Fine, Kit', year: 1985, title: 'Reasoning with Arbitrary Objects',
+    publisher: 'Oxford: Blackwell (Aristotelian Society Series 3)',
+  },
+  horn1989: {
+    kind: 'book', author: 'Horn, Laurence R.', year: 1989, title: 'A Natural History of Negation',
+    publisher: 'Chicago: University of Chicago Press', note: 'Reissued Stanford: CSLI, 2001.',
+  },
+
+  // --- models and decidability ---
+  tarski1933: {
+    kind: 'chapter', author: 'Tarski, Alfred', year: 1933, title: 'The Concept of Truth in Formalized Languages',
+    container: 'Logic, Semantics, Metamathematics', detail: '2nd ed., ed. J. Corcoran, trans. J. H. Woodger',
+    publisher: 'Indianapolis: Hackett, 1983', note: 'Polish original 1933; German 1935.',
+  },
+  lowenheim1915: {
+    kind: 'article', author: 'Löwenheim, Leopold', year: 1915, title: 'Über Möglichkeiten im Relativkalkül',
+    container: 'Mathematische Annalen', detail: '76: 447–470', note: 'Trans. in van Heijenoort, From Frege to Gödel.',
+  },
+  behmann1922: {
+    kind: 'article', author: 'Behmann, Heinrich', year: 1922, title: 'Beiträge zur Algebra der Logik, insbesondere zum Entscheidungsproblem',
+    container: 'Mathematische Annalen', detail: '86: 163–229',
+  },
+  church1936: {
+    kind: 'article', author: 'Church, Alonzo', year: 1936, title: 'A Note on the Entscheidungsproblem',
+    container: 'Journal of Symbolic Logic', detail: '1 (1): 40–41',
+  },
+  turing1936: {
+    kind: 'article', author: 'Turing, Alan M.', year: 1936, title: 'On Computable Numbers, with an Application to the Entscheidungsproblem',
+    container: 'Proceedings of the London Mathematical Society', detail: '2nd series, 42: 230–265',
+  },
+
+  // --- relations ---
+  demorganHorse: {
+    kind: 'book', author: 'De Morgan, Augustus', year: 1847, title: 'Formal Logic', detail: 'p. 114 (the head of a horse)',
+    publisher: 'London: Taylor and Walton', url: 'https://archive.org/details/formallogicorthe00demouoft', urlLabel: 'Internet Archive',
+  },
+  peirce1870: {
+    kind: 'article', author: 'Peirce, Charles S.', year: 1870, title: 'Description of a Notation for the Logic of Relatives',
+    container: 'Memoirs of the American Academy of Arts and Sciences', detail: '9: 317–378',
+  },
+  mugnai1992: {
+    kind: 'book', author: 'Mugnai, Massimo', year: 1992, title: 'Leibniz’ Theory of Relations',
+    publisher: 'Stuttgart: Franz Steiner (Studia Leibnitiana Supplementa 28)',
+  },
+  humeTreatise: {
+    kind: 'ancient', author: 'Hume, David', year: 1739, title: 'A Treatise of Human Nature',
+    detail: '1.1.5 (Of relations), 1.3.1 (Of knowledge)', url: 'https://www.gutenberg.org/ebooks/4705', urlLabel: 'Project Gutenberg',
+  },
+  bradley1893: {
+    kind: 'book', author: 'Bradley, F. H.', year: 1893, title: 'Appearance and Reality',
+    detail: 'ch. III (Relation and Quality)', publisher: 'London: Swan Sonnenschein',
+  },
+  russell1903: {
+    kind: 'book', author: 'Russell, Bertrand', year: 1903, title: 'The Principles of Mathematics',
+    detail: 'Part IV (Order), especially ch. 26 (Asymmetrical Relations)', publisher: 'Cambridge: Cambridge University Press',
+  },
+  moore1919: {
+    kind: 'article', author: 'Moore, G. E.', year: 1919, title: 'External and Internal Relations',
+    container: 'Proceedings of the Aristotelian Society', detail: '20: 40–62',
+  },
+  james1912: {
+    kind: 'book', author: 'James, William', year: 1912, title: 'Essays in Radical Empiricism',
+    detail: 'ch. II (A World of Pure Experience) on conjunctive relations', publisher: 'New York: Longmans, Green',
+  },
+  relationsSEP: {
+    kind: 'entry', author: 'MacBride, Fraser', year: null, title: 'Relations',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/relations/',
+  },
+  bradleySEP: {
+    kind: 'entry', author: 'Perovic, Katarina', year: null, title: 'Bradley’s Regress',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/bradley-regress/',
+  },
+
+  // --- identity and descriptions ---
+  leibnizDiscourse: {
+    kind: 'ancient', author: 'Leibniz, G. W.', year: 1686, title: 'Discourse on Metaphysics',
+    detail: '§§8–9 (complete concepts; no two substances entirely alike), §13 (Caesar and the Rubicon)',
+    note: 'In Philosophical Essays, trans. R. Ariew and D. Garber, Indianapolis: Hackett, 1989.',
+  },
+  leibnizClarke: {
+    kind: 'ancient', author: 'Leibniz, G. W., and Samuel Clarke', year: 1717, title: 'The Leibniz–Clarke Correspondence',
+    detail: 'Leibniz’s fourth paper, §§4–6 (no two leaves alike); fifth paper, §47 (relations)',
+    note: 'Ed. H. G. Alexander, Manchester: Manchester University Press, 1956.',
+  },
+  black1952: {
+    kind: 'article', author: 'Black, Max', year: 1952, title: 'The Identity of Indiscernibles',
+    container: 'Mind', detail: '61 (242): 153–164',
+  },
+  russell1905: {
+    kind: 'article', author: 'Russell, Bertrand', year: 1905, title: 'On Denoting',
+    container: 'Mind', detail: '14 (56): 479–493', url: 'https://en.wikisource.org/wiki/On_Denoting', urlLabel: 'Wikisource',
+  },
+  meinong1904: {
+    kind: 'chapter', author: 'Meinong, Alexius', year: 1904, title: 'The Theory of Objects (Über Gegenstandstheorie)',
+    container: 'Realism and the Background of Phenomenology', detail: 'ed. R. Chisholm', publisher: 'Glencoe, IL: Free Press, 1960',
+  },
+  strawson1950: {
+    kind: 'article', author: 'Strawson, P. F.', year: 1950, title: 'On Referring',
+    container: 'Mind', detail: '59 (235): 320–344',
+  },
+  descriptionsSEP: {
+    kind: 'entry', author: 'Ludlow, Peter', year: null, title: 'Descriptions',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/descriptions/',
+  },
+  nonexistentSEP: {
+    kind: 'entry', author: 'Reicher, Maria', year: null, title: 'Nonexistent Objects',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/nonexistent-objects/',
+  },
+  freeLogicSEP: {
+    kind: 'entry', author: 'Nolt, John', year: null, title: 'Free Logic',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/logic-free/',
+  },
+  indiscerniblesSEP: {
+    kind: 'entry', author: 'Forrest, Peter', year: null, title: 'The Identity of Indiscernibles',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/identity-indiscernible/',
+  },
 };

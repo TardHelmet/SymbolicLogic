@@ -125,19 +125,20 @@ MOUNTS['truth-table'] = (ex) => {
 
 MOUNTS.classify = (ex) => {
   let given;
+  const assume = ex.given?.length ? h('p', { class: 'small muted' }, 'Assume: ', ex.given.map((g, i) => [i ? ', ' : '', formulaText(g)])) : null;
   if (ex.mode === 'argument') given = givenLine(formulaText(ex.argument));
-  else given = givenLine(formulasOf(ex).flatMap((f, i) => (i ? [h('span', { class: 'muted' }, ex.mode === 'pair' ? '   and   ' : ',   '), formula(f)] : [formula(f)])));
+  else given = givenLine(formulasOf(ex).flatMap((f, i) => (i ? [h('span', { class: 'muted' }, ex.mode === 'pair' || ex.mode === 'opposition' ? '   and   ' : ',   '), formula(f)] : [formula(f)])));
   const multi = ex.mode === 'pair';
   const opts = CLASSIFY_OPTIONS[ex.mode];
   const inputs = [];
-  const box = h('fieldset', { class: 'choices inline' }, h('legend', { class: 'small muted' }, multi ? 'Select all that apply.' : 'Select one.'));
+  const box = h('fieldset', { class: `choices${ex.mode === 'opposition' ? '' : ' inline'}` }, h('legend', { class: 'small muted' }, multi ? 'Select all that apply.' : 'Select one.'));
   opts.forEach((o) => {
     const input = h('input', { type: multi ? 'checkbox' : 'radio', name: `c-${ex.id}`, value: o });
     inputs.push(input);
     box.append(h('label', {}, input, h('span', {}, o)));
   });
   return {
-    el: [dictionaryList(ex.dictionary), given, box],
+    el: [dictionaryList(ex.dictionary), given, assume, box],
     value: () => inputs.filter((i) => i.checked).map((i) => i.value),
     show: (ans) => inputs.forEach((i) => { i.checked = ans.includes(i.value); }),
     mark: (res) => inputs.forEach((i) => {

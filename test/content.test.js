@@ -15,20 +15,21 @@ import { parseProofText, checkProof } from '../src/logic/proof.js';
 import { ALL_RULES } from '../src/logic/rules.js';
 import { isSentential, validity } from '../src/logic/semantics.js';
 import * as FO from '../src/logic/models.js';
-import '../src/logic/extra-types.js';
+import { flaggedLine } from '../src/logic/extra-types.js';
 
 const FIELDS = {
   common: ['id', 'type', 'prompt', 'explain', 'wrong'],
   translate: ['dictionary', 'key', 'alternatives', 'set'],
   readings: ['dictionary', 'keys'],
   'truth-table': ['formulas', 'columns'],
-  classify: ['mode', 'formulas', 'argument', 'dictionary'],
+  classify: ['mode', 'formulas', 'argument', 'dictionary', 'given'],
   'main-operator': ['formula'],
   choice: ['options', 'answer', 'why', 'retry', 'given'],
   counterexample: ['argument', 'dictionary'],
   proof: ['argument', 'solution', 'allowedRules', 'maxApps', 'mode', 'blanks', 'set', 'dictionary'],
   enthymeme: ['argument', 'key', 'dictionary', 'alternatives'],
-  countermodel: ['argument', 'formulas', 'dictionary', 'goal', 'maxSize'],
+  countermodel: ['argument', 'formulas', 'dictionary', 'maxSize'],
+  'flag-step': ['argument', 'lines', 'dictionary', 'logic'],
   matrix: ['logic', 'argument', 'formulas', 'question'],
   kripke: ['model', 'formula', 'world', 'question', 'frame', 'logic'],
 };
@@ -43,6 +44,8 @@ const REQUIRED = {
   counterexample: ['argument'],
   proof: ['argument', 'solution'],
   enthymeme: ['argument', 'key'],
+  countermodel: [],
+  'flag-step': ['argument', 'lines'],
 };
 
 const allExercises = LESSONS.flatMap((l) => (l.exercises ?? []).map((ex) => ({ lesson: l, ex })));
@@ -94,6 +97,20 @@ test('choice answers point at real options', () => {
   for (const { lesson, ex } of allExercises.filter(({ ex }) => ex.type === 'choice')) {
     for (const a of [ex.answer].flat()) assert.ok(Number.isInteger(a) && a >= 0 && a < ex.options.length, `${lesson.id}/${ex.id}: bad answer index ${a}`);
     if (ex.why) assert.equal(ex.why.length, ex.options.length, `${lesson.id}/${ex.id}: why[] must match options`);
+  }
+});
+
+test('flag-the-step exercises have exactly one faulty line', () => {
+  for (const { lesson, ex } of allExercises.filter(({ ex }) => ex.type === 'flag-step' && ex.logic !== 'intuitionistic')) {
+    const { bad } = flaggedLine(ex);
+    assert.equal(bad.length, 1, `${lesson.id}/${ex.id}: ${bad.length} faulty lines (${bad.map((l) => `${l.n}: ${l.errors.join(' ')}`).join(' | ')})`);
+  }
+});
+
+test('countermodel exercises have a model', () => {
+  for (const { lesson, ex } of allExercises.filter(({ ex }) => ex.type === 'countermodel')) {
+    const m = modelAnswer(ex);
+    assert.ok(m.size <= (ex.maxSize ?? 4), `${lesson.id}/${ex.id}: smallest model has ${m.size} individuals, more than the builder offers`);
   }
 });
 
