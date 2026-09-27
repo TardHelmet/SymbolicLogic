@@ -91,6 +91,42 @@ await locked.waitForSelector('.lesson');
 await locked.locator('#ex-tf-value-1').getByRole('button', { name: 'Show answer' }).click();
 console.log('✓ runs with storage blocked');
 
+// 6. Keyboard only: a translation, a truth table and a proof.
+const kb = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+watch(kb, 'keyboard');
+const okFeedback = async (sel, label) => {
+  const cls = await kb.locator(`${sel} .feedback`).getAttribute('class');
+  if (!cls?.includes('ok')) fail(`keyboard: ${label} not accepted (${await kb.locator(`${sel} .feedback`).innerText()})`);
+};
+await kb.goto(`${base}#/lesson/operators`);
+await kb.focus('#in-op-t1');
+await kb.keyboard.type('D . ~N');
+await kb.keyboard.press('Enter');
+await okFeedback('#ex-op-t1', 'typed translation');
+
+await kb.goto(`${base}#/lesson/truth-functions`);
+await kb.locator('#ex-tf-table-2 table.tt button').first().focus();
+for (const key of ['t', 't', 'f', 't', 't', 'f', 't', 't']) {
+  await kb.keyboard.press(key);
+  await kb.keyboard.press('Tab');
+}
+await kb.keyboard.press('Enter'); // focus has moved to Check
+await okFeedback('#ex-tf-table-2', 'truth table by keys');
+
+await kb.goto(`${base}#/lesson/implication-rules`);
+await kb.locator('#ex-ir-2 .proof-row input').first().focus();
+await kb.keyboard.type('B v C');
+await kb.keyboard.press('Enter');
+await kb.keyboard.type('1, 2, MP');
+await kb.keyboard.press('Enter');
+await kb.keyboard.type('C');
+await kb.keyboard.press('Enter');
+await kb.keyboard.type('4, 3, DS');
+await kb.locator('#ex-ir-2').getByRole('button', { name: 'Check' }).focus();
+await kb.keyboard.press('Enter');
+await okFeedback('#ex-ir-2', 'proof by keys');
+console.log('✓ keyboard-only completion');
+
 await browser.close();
 server.close();
 if (failures.length) {

@@ -52,7 +52,7 @@ export const BIB = {
   gellius: {
     kind: 'ancient', author: 'Aulus Gellius', year: null, title: 'Attic Nights',
     detail: '16.8 (a digest of Stoic logic, including disjunction)', note: 'Trans. J. C. Rolfe, Loeb Classical Library, 1927.',
-    url: 'https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Gellius/16*.html', urlLabel: 'Rolfe translation',
+    url: 'http://www.perseus.tufts.edu/hopper/text?doc=Gel.+16.8', urlLabel: 'Perseus',
   },
 
   // --- Stoic logic, secondary ---
