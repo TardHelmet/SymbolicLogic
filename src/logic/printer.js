@@ -1,11 +1,23 @@
-// Printing formulas. Hurley style: no outer brackets; binary subformulas are
-// bracketed; bracket kind follows nesting height from the inside out,
-// ( ) then [ ] then { }, as in (x)[Fx ⊃ (∃y)(Gy • Rxy)].
+// Printing formulas.
+//
+// Copi (and Hurley): no outer brackets; binary subformulas are bracketed;
+// bracket kind follows nesting height from the inside out, ( ) then [ ] then
+// { }, as in (x)[Fx ⊃ (∃y)(Gy • Rxy)].
+//
+// Modern: the same structure with ¬ ∧ → ↔ ∀ and round brackets only.
+//
+// Principia (Langer, ch. VII §5; Copi, Symbolic Logic §9.3): dots instead of
+// brackets. A group of dots has a count and a force: I beside ∨ ⊃ ≡, II after
+// a quantifier, III for "and". A group's scope runs past any weaker group and
+// stops at the first group, on its side, that is at least as strong; strength
+// is 3·count + force, with III = 0, II = 1, I = 2. So `p . q . ⊃ . r` is
+// (p • q) ⊃ r, as in Principia. Negated compounds keep their parentheses,
+// ~(p ∨ q), and a quantifier gets more dots than anything in its scope.
 
 import { isBinary } from './ast.js';
-import { GLYPH } from './notation.js';
+import { GLYPH, normalizeNotation } from './notation.js';
 
-const BRACKETS = { hurley: ['()', '[]', '{}'], modern: ['()'] };
+const BRACKETS = { copi: ['()', '[]', '{}'], modern: ['()'], principia: ['()'] };
 
 // x1 prints as x₁.
 const SUB = '₀₁₂₃₄₅₆₇₈₉';
@@ -16,49 +28,8 @@ function quantPrefix(n, notation) {
   return n.type === 'all' ? `(${term(n.v)})` : `(∃${term(n.v)})`;
 }
 
-function render(n, notation) {
-  const g = GLYPH[notation];
-  switch (n.type) {
-    case 'atom':
-      return { s: n.pred + n.terms.map(term).join(''), h: 0 };
-    case 'eq':
-      return { s: `${term(n.left)} = ${term(n.right)}`, h: 0 };
-    case 'meta':
-      return { s: n.name, h: 0 };
-    case 'not':
-    case 'box':
-    case 'dia': {
-      const r = operand(n.arg, notation);
-      return { s: g[n.type] + r.s, h: r.h };
-    }
-    case 'all':
-    case 'some': {
-      const r = operand(n.body, notation);
-      return { s: quantPrefix(n, notation) + r.s, h: r.h };
-    }
-    default: {
-      const l = isBinary(n.left) ? wrap(render(n.left, notation), notation) : render(n.left, notation);
-      const r = isBinary(n.right) ? wrap(render(n.right, notation), notation) : render(n.right, notation);
-      return { s: `${l.s} ${g[n.type]} ${r.s}`, h: Math.max(l.h, r.h) };
-    }
-  }
-}
-
-// The operand of ~, a quantifier, □ or ◇ is bracketed when it is binary or
-// an identity, so that ~(a = b) and (x)(x = a) read unambiguously.
-function operand(n, notation) {
-  const r = render(n, notation);
-  return isBinary(n) || n.type === 'eq' ? wrap(r, notation) : r;
-}
-
-function wrap({ s, h }, notation) {
-  const kinds = BRACKETS[notation];
-  const b = kinds[h % kinds.length];
-  return { s: b[0] + s + b[1], h: h + 1 };
-}
-
 export function print(n, opts = {}) {
-  return render(n, opts.notation === 'modern' ? 'modern' : 'hurley').s;
+  return printTokens(n, opts).map((t) => t.s).join('');
 }
 
 export function printArgument(premises, conclusion, opts = {}) {
@@ -116,7 +87,11 @@ export function mainOperator(n) {
  * let students click an operator and learn its scope.
  */
 export function printTokens(n, opts = {}) {
-  const notation = opts.notation === 'modern' ? 'modern' : 'hurley';
+  const notation = normalizeNotation(opts.notation);
+  return notation === 'principia' ? dotTokens(n, []).toks : bracketTokens(n, notation);
+}
+
+function bracketTokens(n, notation) {
   const g = GLYPH[notation];
   const kinds = BRACKETS[notation];
   const wrapT = ({ toks, h }) => {
@@ -149,9 +124,69 @@ export function printTokens(n, opts = {}) {
       }
     }
   };
+  // The operand of ~, a quantifier, □ or ◇ is bracketed when it is binary or
+  // an identity, so that ~(a = b) and (x)(x = a) read unambiguously.
   const operandT = (m, path) => {
     const r = rt(m, path);
     return isBinary(m) || m.type === 'eq' ? wrapT(r) : r;
   };
   return rt(n, []).toks;
+}
+
+// --- Principia dots -----------------------------------------------------------
+
+export const FORCE = { and: 0, quant: 1, conn: 2 };
+export const rank = (g) => 3 * g.count + g.force;
+export const dotGlyph = (count) => ':'.repeat(count >> 1) + (count & 1 ? '.' : '');
+const higher = (a, b) => (!a ? b : !b ? a : rank(a) >= rank(b) ? a : b);
+
+// Returns { toks, top }, where top is the strongest group of dots outside any
+// parentheses (null if none), which decides how many dots the parent needs.
+function dotTokens(m, path) {
+  const g = GLYPH.principia;
+  switch (m.type) {
+    case 'atom':
+      return { toks: [{ s: m.pred + m.terms.map(term).join('') }], top: null };
+    case 'eq':
+      return { toks: [{ s: `${term(m.left)} = ${term(m.right)}` }], top: null };
+    case 'meta':
+      return { toks: [{ s: m.name, meta: true }], top: null };
+    case 'not':
+    case 'box':
+    case 'dia': {
+      const r = dotTokens(m.arg, [...path, 0]);
+      if (isBinary(m.arg) || m.arg.type === 'eq') {
+        return { toks: [{ s: g[m.type], op: true, path }, { s: '(' }, ...r.toks, { s: ')' }], top: null };
+      }
+      return { toks: [{ s: g[m.type], op: true, path }, ...r.toks], top: r.top };
+    }
+    case 'all':
+    case 'some': {
+      const r = dotTokens(m.body, [...path, 0]);
+      if (m.body.type === 'eq') {
+        return { toks: [{ s: quantPrefix(m, 'copi'), op: true, path }, { s: '(' }, ...r.toks, { s: ')' }], top: null };
+      }
+      if (!isBinary(m.body)) return { toks: [{ s: quantPrefix(m, 'copi'), op: true, path }, ...r.toks], top: r.top };
+      const count = (r.top?.count ?? 0) + 1;
+      return {
+        toks: [{ s: `${quantPrefix(m, 'copi')} ${dotGlyph(count)} `, op: true, path }, ...r.toks],
+        top: { count, force: FORCE.quant },
+      };
+    }
+    default: {
+      const l = dotTokens(m.left, [...path, 0]);
+      const r = dotTokens(m.right, [...path, 1]);
+      const top = higher(l.top, r.top);
+      if (m.type === 'and') {
+        const count = top ? top.count + 1 : 1;
+        return { toks: [...l.toks, { s: ` ${dotGlyph(count)} `, op: true, path }, ...r.toks], top: { count, force: FORCE.and } };
+      }
+      const count = !top ? 0 : top.force === FORCE.and ? top.count : top.count + 1;
+      const d = count ? ` ${dotGlyph(count)} ` : ' ';
+      return {
+        toks: [...l.toks, { s: `${d}${g[m.type]}${d}`, op: true, path }, ...r.toks],
+        top: { count, force: FORCE.conn },
+      };
+    }
+  }
 }

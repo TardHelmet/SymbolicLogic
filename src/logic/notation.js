@@ -1,11 +1,19 @@
-// Tokenizer for formulas written in Hurley notation, with generous ASCII and
+// Tokenizer for formulas written in Copi's notation (Hurley's is the same), with generous ASCII and
 // modern-notation aliases. The tokenizer never guesses at structure; all
 // disambiguation happens in the parser.
 
 export const GLYPH = {
-  hurley: { not: '~', and: '•', or: '∨', imp: '⊃', iff: '≡', box: '□', dia: '◇', some: '∃', all: '' },
+  copi: { not: '~', and: '•', or: '∨', imp: '⊃', iff: '≡', box: '□', dia: '◇', some: '∃', all: '' },
+  // Principia Mathematica, as Langer writes it: a dot for "and", and dots as brackets.
+  principia: { not: '~', and: '.', or: '∨', imp: '⊃', iff: '≡', box: '□', dia: '◇', some: '∃', all: '' },
   modern: { not: '¬', and: '∧', or: '∨', imp: '→', iff: '↔', box: '□', dia: '◇', some: '∃', all: '∀' },
 };
+GLYPH.hurley = GLYPH.copi;
+
+/** The notations: 'copi' (Hurley's is the same), 'principia', 'modern'. */
+export function normalizeNotation(n) {
+  return n === 'modern' || n === 'principia' ? n : 'copi';
+}
 
 // Multi-character aliases, longest first.
 const MULTI = [
@@ -71,7 +79,7 @@ export function tokenize(input) {
       continue;
     }
     if (/[a-z]/.test(ch)) {
-      // Lowercase v is always the wedge, as in Hurley.
+      // Lowercase v is always the wedge, as in Copi and Hurley.
       tokens.push(ch === 'v'
         ? { kind: 'OR', text: ch, pos: i, end: i + 1 }
         : { kind: 'LOWER', text: ch, value: ch, pos: i, end: i + 1 });

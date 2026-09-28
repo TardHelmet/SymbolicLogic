@@ -11,6 +11,9 @@ import { BIB } from '../src/course/bibliography.js';
 import { parseAny, inlineFormulas, inlineRefs, resolveRef } from '../src/course/markup.js';
 import { checkAnswer, modelAnswer, argumentOf, formulasOf } from '../src/logic/check.js';
 import { parseFormula } from '../src/logic/parser.js';
+import { parseDots } from '../src/logic/dots.js';
+import { print } from '../src/logic/printer.js';
+import { equal } from '../src/logic/ast.js';
 import { parseProofText, checkProof } from '../src/logic/proof.js';
 import { ALL_RULES } from '../src/logic/rules.js';
 import { isSentential, validity } from '../src/logic/semantics.js';
@@ -162,6 +165,26 @@ test('part blurbs: cross-references resolve and numbers are not hard-coded', () 
     for (const ref of inlineRefs(part.blurb)) assert.ok(resolveRef(ref), `${part.id}: unknown cross-reference {${ref}}`);
     assert.ok(!/\b[Ll]essons? \d|\bParts? I/.test(part.blurb.replace(/\{[^}]*\}/g, '')), `${part.id}: hard-coded number in blurb`);
   }
+});
+
+test('every formula in the text reads back from Principia’s dots', () => {
+  let n = 0;
+  for (const l of LESSONS) {
+    const texts = [l.summary, ...(l.reading ?? []).flatMap(blockTexts), ...(l.margin?.body ?? [])];
+    for (const ex of l.exercises ?? []) texts.push(ex.prompt, ex.explain, ...(ex.options ?? []));
+    for (const t of texts) {
+      for (const src of inlineFormulas(t)) {
+        const r = parseAny(src);
+        for (const phi of r?.ast ? [r.ast] : [...(r?.premises ?? []), r?.conclusion].filter(Boolean)) {
+          const dots = print(phi, { notation: 'principia' });
+          const reads = [false, true].map((schema) => parseDots(dots, { schema, modal: true }));
+          assert.ok(reads.some((b) => b.ok && equal(b.ast, phi)), `${l.id}: {${src}} prints as “${dots}”, which reads back differently`);
+          n++;
+        }
+      }
+    }
+  }
+  assert.ok(n > 400, `only ${n} formulas checked`);
 });
 
 test('every formula in the text parses', () => {

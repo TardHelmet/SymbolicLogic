@@ -1,7 +1,7 @@
-// Recursive-descent parser for Hurley notation.
+// Recursive-descent parser for Copi's notation (Hurley's is the same).
 //
 // Grammar (binary connectives have no precedence: at most one unbracketed
-// binary connective per level, as Hurley requires):
+// binary connective per level, as Copi and Hurley require):
 //
 //   argument ::= [formula {',' formula}] SEP formula
 //   formula  ::= unary [BINOP unary]
@@ -273,7 +273,7 @@ export function parseList(text, opts = {}) {
   });
 }
 
-function checkFormula(ast, opts) {
+export function checkFormula(ast, opts) {
   if (opts.closed) {
     const free = [...A.freeVars(ast)];
     if (free.length) {
