@@ -351,11 +351,12 @@ function costWith(rule, s, t, memo) {
       let total = 1;
       for (const [k, sv] of sx) {
         const tv = ty.get(k);
+        // A variable on one side of a law only (a in a + −a = 1) is absorbed.
+        if (tv === undefined) continue;
         if (typeof sv === 'string') {
           if (sv !== tv) { total = Infinity; break; }
           continue;
         }
-        if (!tv) { total = Infinity; break; }
         total += costWith(rule, sv, tv, memo);
         if (total >= best) break;
       }
@@ -380,6 +381,11 @@ function ruleObject(id) {
 /** Minimum applications of replacement rule id turning s into t (Infinity if impossible). */
 export function replacementCost(id, s, t) {
   return costWith(ruleObject(id), s, t, new Map());
+}
+
+/** The same, for any law given as pairs of interchangeable patterns. */
+export function rewriteCost(formPats, s, t) {
+  return costWith({ formPats }, s, t, new Map());
 }
 
 /** Every formula reachable from s by exactly one application of rule id. */
