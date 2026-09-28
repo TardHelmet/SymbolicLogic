@@ -42,7 +42,7 @@ needs Playwright with Chromium. It serves the site under `/SymbolicLogic/` as Gi
 ## Layout
 
 - `src/logic/`: parser, printer, truth tables, rules, proof checker, finite models, three-valued matrices, Kripke models and answer checking. No DOM access.
-- `src/course/`: the lessons (`part1/`, `part2/`, `part3/`), the course map and the bibliography.
+- `src/course/`: the lessons (`part1/` to `part4/`), the course map and the bibliography.
 - `src/ui/`: the browser interface.
 - `fonts/`: self-hosted subsets of Source Serif 4, IBM Plex Sans and STIX Two Text (SIL Open Font License).
 

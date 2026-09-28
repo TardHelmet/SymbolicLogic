@@ -1,6 +1,9 @@
 // The proof editor: numbered lines, a formula and a justification on each,
-// with Hurley's vertical scope lines drawn from the block structure that the
-// checker derives from ACP/AIP and CP/IP. Students never indent by hand.
+// with vertical scope lines drawn from the block structure that the checker
+// derives from the assumptions and their discharges. Students never indent
+// by hand. The same editor serves derivations of other kinds (equations in
+// the algebra of classes, axiomatic proofs) through the options parse, tidy,
+// layout and head.
 
 import { h, clear, formula } from './dom.js';
 import { palette } from './formula-input.js';
@@ -18,7 +21,13 @@ let uid = 0;
  * given: for 'justify' and 'fill', the reference lines [[text, just], ...];
  * blanks: for 'fill', indexes of lines whose formula is left blank.
  */
-export function proofEditor({ premises, conclusion, mode = 'full', given = [], blanks = [], set = 'sentential', onEnterLast }) {
+export function proofEditor({
+  premises = [], conclusion, mode = 'full', given = [], blanks = [], set = 'sentential', onEnterLast,
+  parse = (t) => { const r = parseFormula(t); return r.ok ? { ok: true, value: r.ast } : r; },
+  tidy = (ast) => print(ast, { notation: settings.inputNotation }),
+  layout = (lines) => checkProof({ premises, conclusion, lines }).lines.slice(premises.length).map((l) => l.depth),
+  head = null, assumptions = true, placeholders = { text: 'formula', just: '1, 2, MP' },
+}) {
   const id = `pf${++uid}`;
   let lastFocused = null;
   let rows = [];
@@ -26,7 +35,8 @@ export function proofEditor({ premises, conclusion, mode = 'full', given = [], b
   const premiseBox = h('div', {});
   const body = h('div', {});
 
-  premises.forEach((p, i) => {
+  if (head) premiseBox.append(head);
+  else premises.forEach((p, i) => {
     const last = i === premises.length - 1;
     premiseBox.append(h('div', { class: `proof-row${last ? ' premise-last' : ''}` },
       h('span', { class: 'n' }, `${i + 1}.`),
@@ -34,7 +44,7 @@ export function proofEditor({ premises, conclusion, mode = 'full', given = [], b
       h('span', { class: 'just-static' }, ''),
       h('span', {})));
   });
-  if (!premises.length) {
+  if (!head && !premises.length) {
     premiseBox.append(h('div', { class: 'proof-row premise-last' },
       h('span', { class: 'n' }, ''),
       h('span', { class: 'body' }, h('span', { class: 'static' }, h('span', { class: 'concl' }, '/∴ ', formula(conclusion)))),
@@ -48,12 +58,12 @@ export function proofEditor({ premises, conclusion, mode = 'full', given = [], b
     const text = h('input', {
       type: 'text', id: `${id}-f${k}`, autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false',
       'aria-label': 'Formula', value: line.text ?? '', readonly: fixed.text ? true : null,
-      placeholder: fixed.text ? null : 'formula',
+      placeholder: fixed.text ? null : placeholders.text,
     });
     const just = h('input', {
       type: 'text', id: `${id}-j${k}`, class: 'just', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false',
       'aria-label': 'Justification', value: line.just ?? '', readonly: fixed.just ? true : null,
-      placeholder: fixed.just ? null : '1, 2, MP',
+      placeholder: fixed.just ? null : placeholders.just,
     });
     const scope = h('span', { class: 'scope', 'aria-hidden': 'true' });
     const n = h('span', { class: 'n' });
@@ -66,8 +76,9 @@ export function proofEditor({ premises, conclusion, mode = 'full', given = [], b
     text.addEventListener('input', () => { clearMark(row); relayout(); });
     just.addEventListener('input', () => { clearMark(row); relayout(); });
     text.addEventListener('blur', () => {
-      const r = parseFormula(text.value.trim());
-      if (r.ok) text.value = print(r.ast, { notation: settings.inputNotation });
+      if (text.readOnly) return;
+      const r = parse(text.value.trim());
+      if (r.ok) text.value = tidy(r.value);
     });
     text.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') { e.preventDefault(); if (!just.readOnly) just.focus(); else nextFrom(row); }
@@ -118,8 +129,8 @@ export function proofEditor({ premises, conclusion, mode = 'full', given = [], b
   // Scope lines follow the structure the checker derives, live.
   function relayout() {
     const lines = rows.map((r) => ({ text: r.text.value.trim(), just: r.just.value.trim() }));
-    const res = checkProof({ premises, conclusion, lines });
-    rows.forEach((r, i) => r.scope.style.setProperty('--depth', res.lines[premises.length + i]?.depth ?? 0));
+    const depths = layout(lines) ?? [];
+    rows.forEach((r, i) => r.scope.style.setProperty('--depth', depths[i] ?? 0));
   }
 
   function clearMark(row) {
@@ -186,7 +197,14 @@ export function proofEditor({ premises, conclusion, mode = 'full', given = [], b
     };
     tools.append(
       h('span', { class: 'sep', 'aria-hidden': 'true' }),
-      h('button', { type: 'button', class: 'btn quiet', onclick: add('') }, '+ Line'),
+      h('button', { type: 'button', class: 'btn quiet', onclick: add('') }, '+ Line'));
+  }
+  if (mode === 'full' && assumptions) {
+    const add = (just) => () => {
+      const row = addRow({ just });
+      row.text.focus();
+    };
+    tools.append(
       h('button', { type: 'button', class: 'btn quiet', onclick: add('ACP'), title: 'Assume a formula for conditional proof' }, '+ Assumption (C.P.)'),
       h('button', { type: 'button', class: 'btn quiet', onclick: add('AIP'), title: 'Assume a formula for indirect proof' }, '+ Assumption (I.P.)'),
     );

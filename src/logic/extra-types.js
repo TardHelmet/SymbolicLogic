@@ -9,6 +9,7 @@ import { checkProof } from './proof.js';
 import * as MV from './manyvalued.js';
 import * as K from './kripke.js';
 import { isSentential, consistency, showRow } from './semantics.js';
+import * as AL from './algebra.js';
 
 function goalOf(ex) {
   if (ex.argument) {
@@ -265,4 +266,100 @@ EXTRA_TYPES.deny = {
     const fs = denySet(ex);
     return fs.findIndex((_, i) => consistentSet(fs.filter((__, j) => j !== i)).consistent);
   },
+};
+
+// --- Form and system (Langer) ------------------------------------------------------
+
+// A derivation of an equation from Huntington's postulates and Langer's theorems.
+EXTRA_TYPES.equational = {
+  check(ex, input) {
+    const goal = AL.parseEquation(ex.goal).eq;
+    const result = AL.checkDerivation({ goal, lines: input ?? [] }, { laws: ex.laws ?? AL.POSTULATES, maxApps: ex.maxApps });
+    return {
+      ok: result.complete,
+      result,
+      message: result.complete ? 'The derivation is complete and every line checks.' : (result.problems[0] ?? 'Some lines need attention.'),
+    };
+  },
+  answer: (ex) => ex.solution.map(([text, just]) => ({ text, just })),
+};
+
+// Describe a model of class equations as membership of individuals in classes.
+function describeClasses(m, dict) {
+  const ids = Array.from({ length: m.size }, (_, i) => i);
+  const letters = Object.keys(m.preds).filter((p) => /^[A-Z]$/.test(p)).sort();
+  const parts = [`Take ${m.size === 1 ? 'a single individual' : `${m.size} individuals`}.`];
+  for (const i of ids) {
+    const inside = letters.filter((p) => m.preds[p].has(String(i))).map((p) => p.toLowerCase());
+    const gloss = (c) => (dict?.[c] ? ` (${dict[c]})` : '');
+    parts.push(`Individual ${i + 1} is ${inside.length ? `in ${inside.map((c) => `${c}${gloss(c)}`).join(' and ')}` : 'in none of the classes'}.`);
+  }
+  return parts.join(' ');
+}
+
+// Writing a categorical statement (or any statement about classes) as a class equation.
+EXTRA_TYPES.classeq = {
+  check(ex, input) {
+    const r = AL.parseEquation(input ?? '');
+    if (!r.ok) return { ok: false, kind: 'parse', message: r.error.message };
+    const keys = [ex.key, ...(ex.alternatives ?? [])].map((k) => AL.parseEquation(k).eq);
+    const ans = AL.classFormula(r.eq);
+    const key = AL.classFormula(keys[0]);
+    if (keys.some((k) => AL.equalEq(k, r.eq))) return { ok: true, certainty: 'proved', message: 'Correct.' };
+    const c = FO.compare(ans, key);
+    if (c.equivalent === true) return { ok: true, certainty: 'proved', message: `Correct: the same as ${AL.printEquation(keys[0])}.` };
+    if (c.equivalent === false) {
+      const yours = FO.evaluate(ans, c.model);
+      return {
+        ok: false, kind: 'countermodel',
+        message: `They come apart here. ${describeClasses(c.model, ex.dictionary)} Your equation is ${yours ? 'true' : 'false'} of this universe, but the statement is ${yours ? 'false' : 'true'}.`,
+      };
+    }
+    return { ok: false, message: 'That could not be decided.' };
+  },
+  answer: (ex) => ex.key,
+};
+
+// A finite structure: a formal context (individuals and relations), or an
+// algebra given by tables. The student marks what holds.
+export function structureModel(s) {
+  const index = new Map(s.individuals.map((x, i) => [x, i]));
+  const preds = {};
+  for (const [p, tuples] of Object.entries(s.relations ?? {})) {
+    preds[p] = new Set(tuples.map((t) => [t].flat().map((x) => index.get(x)).join(',')));
+  }
+  const consts = Object.fromEntries(Object.entries(s.names ?? {}).map(([c, x]) => [c, index.get(x)]));
+  return { size: s.individuals.length, consts, preds, letters: {} };
+}
+
+export function structureAnswer(ex) {
+  if (ex.algebra) {
+    const r = AL.checkPostulates(AL.algebraFrom(ex.algebra));
+    return Object.keys(r).filter((k) => !r[k].holds);
+  }
+  const m = structureModel(ex.structure);
+  return ex.statements.map((t, i) => [t, i]).filter(([t]) => FO.evaluate(parseFormula(t).ast, m)).map(([, i]) => i);
+}
+
+EXTRA_TYPES.structure = {
+  check(ex, input) {
+    const want = structureAnswer(ex);
+    const got = [...(input ?? [])].sort();
+    const same = want.length === got.length && [...want].sort().every((x, i) => String(x) === String(got[i]));
+    if (same) return { ok: true, message: ex.explain ?? 'Correct.' };
+    if (ex.algebra) {
+      const r = AL.checkPostulates(AL.algebraFrom(ex.algebra));
+      const wrong = got.filter((g) => r[g]?.holds).concat(want.filter((w) => !got.includes(w)));
+      const w = wrong[0];
+      const detail = r[w]?.holds
+        ? `Postulate ${w} holds for every choice of elements in this system.`
+        : `Postulate ${w} fails: ${r[w].statement}${r[w].env ? ` is false when ${Object.entries(r[w].env).map(([k, v]) => `${k} = ${v}`).join(', ')}` : ''}.`;
+      return { ok: false, message: `Not quite. ${detail}` };
+    }
+    const m = structureModel(ex.structure);
+    const wrong = ex.statements.map((t, i) => i).find((i) => want.includes(i) !== got.map(Number).includes(i));
+    const truth = FO.evaluate(parseFormula(ex.statements[wrong]).ast, m);
+    return { ok: false, message: `Look again at statement ${wrong + 1}: in this context it is ${truth ? 'true' : 'false'}.` };
+  },
+  answer: structureAnswer,
 };

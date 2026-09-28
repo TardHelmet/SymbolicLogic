@@ -1,5 +1,7 @@
 // Exercise widgets beyond the sentential core: countermodels (predicate
-// logic), many-valued tables and Kripke models (the non-classical part).
+// logic), derivations in the algebra of classes, class equations and finite
+// structures (form and system), many-valued tables and Kripke models (the
+// non-classical part).
 
 import { h, clear, formula, formulaText, inline } from './dom.js';
 import { registerType } from './exercise.js';
@@ -10,6 +12,9 @@ import { parseFormula, parseArgument } from '../logic/parser.js';
 import { checkProof } from '../logic/proof.js';
 import * as MV from '../logic/manyvalued.js';
 import * as K from '../logic/kripke.js';
+import * as AL from '../logic/algebra.js';
+import { proofEditor } from './proof-editor.js';
+import { palette } from './formula-input.js';
 
 function dictionaryList(dict) {
   if (!dict || !Object.keys(dict).length) return null;
@@ -397,5 +402,124 @@ registerType('deny', 'Which to give up?', (ex) => {
     el: [dictionaryList(ex.dictionary), box],
     value: () => { const c = inputs.find((i) => i.checked); return c ? +c.value : null; },
     show: (ans) => inputs.forEach((i) => { i.checked = +i.value === ans; }),
+  };
+});
+
+// --- Form and system (Langer) ----------------------------------------------------
+
+function lawTable(ids) {
+  return h('div', { class: 'ref-table-wrap' }, h('table', { class: 'ref laws' },
+    h('thead', {}, h('tr', {}, h('th', {}, 'Law'), h('th', {}, 'Statement'))),
+    h('tbody', {}, ids.map((id) => h('tr', {},
+      h('td', { class: 'abbr' }, /^\d/.test(id) ? `Th. ${id}` : id),
+      h('td', { class: 'f' }, AL.LAWS[id].statements.join('   ')))))));
+}
+
+function equationSpan(e) {
+  return h('span', { class: 'f' }, AL.printEquation(e));
+}
+
+registerType('equational', 'Derive an equation', (ex, ctx) => {
+  const laws = ex.laws ?? AL.POSTULATES;
+  const goal = AL.parseEquation(ex.goal).eq;
+  const editor = proofEditor({
+    mode: ex.mode ?? 'full',
+    given: ex.solution,
+    set: 'algebra',
+    parse: (t) => { const r = AL.parseEquation(t); return r.ok ? { ok: true, value: r.eq } : r; },
+    tidy: AL.printEquation,
+    layout: () => null,
+    assumptions: false,
+    head: h('div', { class: 'proof-row premise-last' }, h('span', { class: 'n' }, ''),
+      h('span', { class: 'body' }, h('span', { class: 'static' }, h('span', { class: 'concl' }, 'Prove: ', equationSpan(goal)))), h('span', {}), h('span', {})),
+    placeholders: { text: 'a = a × 1', just: 'IIb  or  3, V' },
+    onEnterLast: () => ctx.check(),
+  });
+  return {
+    el: [h('details', { class: 'laws-box' }, h('summary', {}, 'Laws you may cite'), lawTable(laws),
+      h('p', { class: 'small muted' }, inline('Each line is an equation. Justify it by a law (**IIb**), by a line and a law (**3, V**: line 3 with one side rewritten once), by **Sym 3**, **Trans 3, 5**, or **Compl 3, 4** (from {!a + x = 1} and {!a × x = 0}, {!x = −a}).'))),
+    editor.el],
+    value: () => editor.value(),
+    show: (ans) => (ex.mode === 'justify' ? editor.setJustifications(ans.map((l) => l.just)) : editor.setLines(ans)),
+    mark: (res) => editor.mark(res.result),
+    focus: () => editor.focus(),
+  };
+});
+
+registerType('classeq', 'Class equation', (ex, ctx) => {
+  const input = h('input', {
+    type: 'text', id: `in-${ex.id}`, autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false',
+    'aria-label': 'Class equation', placeholder: 'e.g. s × −p = 0', 'aria-describedby': `in-${ex.id}-preview`,
+  });
+  const preview = h('div', { class: 'fin-preview', id: `in-${ex.id}-preview`, 'aria-live': 'polite' });
+  const update = () => {
+    clear(preview);
+    preview.classList.remove('error');
+    const t = input.value.trim();
+    if (!t) return;
+    const r = AL.parseEquation(t);
+    if (r.ok) preview.append('Read as ', equationSpan(r.eq), ': ', formula(AL.classFormula(r.eq)));
+    else { preview.classList.add('error'); preview.append(r.error.message); }
+  };
+  input.addEventListener('input', update);
+  input.addEventListener('blur', () => { const r = AL.parseEquation(input.value.trim()); if (r.ok) input.value = AL.printEquation(r.eq); });
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); ctx.check(); } });
+  const pal = palette('algebra', () => input);
+  return {
+    el: [dictionaryList(ex.dictionary), h('div', { class: 'fin' }, pal, input, preview)],
+    value: () => input.value,
+    show: (a) => { input.value = a; update(); },
+    focus: () => input.focus(),
+  };
+});
+
+function relationTable(s) {
+  const rows = [];
+  for (const [p, tuples] of Object.entries(s.relations ?? {})) {
+    const gloss = s.glosses?.[p] ? ` (${s.glosses[p]})` : '';
+    rows.push(h('li', {}, h('span', { class: 'f' }, p), gloss, ': ',
+      tuples.length ? tuples.map((t) => [t].flat().join(' ')).join(', ') : 'nothing'));
+  }
+  const names = Object.entries(s.names ?? {});
+  return h('div', { class: 'given structure' },
+    h('p', {}, `Individuals: ${s.individuals.join(', ')}.`),
+    names.length ? h('p', {}, `Names: ${names.map(([c, x]) => `${c} for ${x}`).join(', ')}.`) : null,
+    h('ul', {}, rows));
+}
+
+function operationTables(alg) {
+  const table = (title, cells) => h('table', { class: 'tt optable' },
+    h('thead', {}, h('tr', {}, h('th', {}, title), alg.elements.map((e) => h('th', {}, e)))),
+    h('tbody', {}, alg.elements.map((x, i) => h('tr', {}, h('th', {}, x), alg.elements.map((_, j) => h('td', {}, cells[i][j]))))));
+  return h('div', { class: 'given structure' },
+    h('p', {}, `Elements: ${alg.elements.join(', ')}. The element playing 0 is ${alg.zero}; the element playing 1 is ${alg.one}.`),
+    h('div', { class: 'optables' }, table('+', alg.plus), table('×', alg.times),
+      h('table', { class: 'tt optable' }, h('thead', {}, h('tr', {}, h('th', {}, 'a'), h('th', {}, '−a'))),
+        h('tbody', {}, alg.elements.map((x, i) => h('tr', {}, h('th', {}, x), h('td', {}, alg.comp[i])))))));
+}
+
+registerType('structure', 'In this system', (ex) => {
+  const multi = h('fieldset', { class: 'choices' });
+  const inputs = [];
+  if (ex.algebra) {
+    multi.append(h('legend', { class: 'small muted' }, 'Select every postulate that fails.'));
+    for (const id of [...AL.POSTULATES, 'VI']) {
+      const input = h('input', { type: 'checkbox', value: id });
+      inputs.push(input);
+      const st = id === 'VI' ? 'there are at least two distinct elements' : AL.LAWS[id].statements.join(';  ');
+      multi.append(h('label', {}, input, h('span', {}, h('strong', {}, id), '  ', h('span', { class: 'f' }, st))));
+    }
+  } else {
+    multi.append(h('legend', { class: 'small muted' }, 'Select every statement that is true here.'));
+    ex.statements.forEach((t, i) => {
+      const input = h('input', { type: 'checkbox', value: String(i) });
+      inputs.push(input);
+      multi.append(h('label', {}, input, h('span', {}, formulaText(t))));
+    });
+  }
+  return {
+    el: [ex.algebra ? operationTables(ex.algebra) : relationTable(ex.structure), dictionaryList(ex.dictionary), multi],
+    value: () => inputs.filter((i) => i.checked).map((i) => (ex.algebra ? i.value : +i.value)),
+    show: (ans) => inputs.forEach((i) => { i.checked = ans.map(String).includes(i.value); }),
   };
 });

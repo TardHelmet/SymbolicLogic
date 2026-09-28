@@ -12,6 +12,7 @@ const SETS = {
   sentential: ['~', '•', '∨', '⊃', '≡', '(', ')', '[', ']'],
   predicate: ['~', '•', '∨', '⊃', '≡', '(', ')', '[', ']', '(x)', '(∃x)', '='],
   modal: ['~', '•', '∨', '⊃', '≡', '(', ')', '□', '◇'],
+  algebra: ['+', '×', '−', '0', '1', '=', '≠', '(', ')'],
 };
 
 const MODERN = { '~': '¬', '•': '∧', '⊃': '→', '≡': '↔', '(x)': '∀x', '(∃x)': '∃x' };
@@ -19,8 +20,9 @@ const NAMES = {
   '~': 'tilde (not)', '•': 'dot (and)', '∨': 'wedge (or)', '⊃': 'horseshoe (if…then)', '≡': 'triple bar (if and only if)',
   '(x)': 'universal quantifier', '(∃x)': 'existential quantifier', '=': 'identity', '□': 'box (necessarily)', '◇': 'diamond (possibly)',
   '(': 'open bracket', ')': 'close bracket', '[': 'open square bracket', ']': 'close square bracket',
+  '+': 'plus (sum of classes)', '×': 'times (product of classes)', '−': 'minus (complement)', '0': 'the null class 0', '1': 'the universe class 1', '≠': 'not equal',
 };
-const SPACED = new Set(['•', '∨', '⊃', '≡', '=']);
+const SPACED = new Set(['•', '∨', '⊃', '≡', '=', '+', '×', '≠']);
 
 export function insertAtCaret(input, text) {
   const start = input.selectionStart ?? input.value.length;
