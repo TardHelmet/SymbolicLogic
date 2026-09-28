@@ -67,7 +67,7 @@ export function proofEditor({ premises, conclusion, mode = 'full', given = [], b
     just.addEventListener('input', () => { clearMark(row); relayout(); });
     text.addEventListener('blur', () => {
       const r = parseFormula(text.value.trim());
-      if (r.ok) text.value = print(r.ast, { notation: settings.notation });
+      if (r.ok) text.value = print(r.ast, { notation: settings.inputNotation });
     });
     text.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') { e.preventDefault(); if (!just.readOnly) just.focus(); else nextFrom(row); }

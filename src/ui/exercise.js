@@ -6,7 +6,7 @@ import { formulaInput } from './formula-input.js';
 import { proofEditor } from './proof-editor.js';
 import { checkAnswer, modelAnswer, CLASSIFY_OPTIONS, formulasOf, argumentOf } from '../logic/check.js';
 import { parseFormula } from '../logic/parser.js';
-import { printTokens, print } from '../logic/printer.js';
+import { printTokens, print, mainOperator, nodeAt } from '../logic/printer.js';
 import { truthTable, columns, lettersIn } from '../logic/semantics.js';
 import { hints } from '../logic/proof.js';
 import * as A from '../logic/ast.js';
@@ -47,7 +47,7 @@ MOUNTS.translate = (ex, ctx) => {
   return {
     el: [dictionaryList(ex.dictionary), fin.el],
     value: () => fin.value,
-    show: (a) => { fin.value = print(parseFormula(a, { modal: !!ex.modal }).ast, { notation: settings.notation }); },
+    show: (a) => { fin.value = print(parseFormula(a, { modal: !!ex.modal }).ast, { notation: settings.inputNotation }); },
     focus: () => fin.focus(),
   };
 };
@@ -57,7 +57,7 @@ MOUNTS.enthymeme = (ex, ctx) => {
   return {
     el: [dictionaryList(ex.dictionary), givenLine(formulaText(ex.argument)), fin.el],
     value: () => fin.value,
-    show: (a) => { fin.value = print(parseFormula(a, { modal: !!ex.modal }).ast, { notation: settings.notation }); },
+    show: (a) => { fin.value = print(parseFormula(a, { modal: !!ex.modal }).ast, { notation: settings.inputNotation }); },
   };
 };
 
@@ -159,7 +159,7 @@ MOUNTS['main-operator'] = (ex) => {
     clear(wrap);
     for (const t of printTokens(ast, { notation: settings.notation })) {
       if (!t.op) { wrap.append(t.s); continue; }
-      const b = h('button', { type: 'button', 'aria-pressed': String(JSON.stringify(chosen) === JSON.stringify(t.path)), 'aria-label': `Operator ${t.s.trim()}` }, t.s);
+      const b = h('button', { type: 'button', 'aria-pressed': String(JSON.stringify(chosen) === JSON.stringify(t.path)), 'aria-label': `Operator: ${mainOperator(nodeAt(ast, t.path)).name}` }, t.s);
       b.addEventListener('click', () => { chosen = t.path; none.setAttribute('aria-pressed', 'false'); draw(); });
       wrap.append(b);
     }

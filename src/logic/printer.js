@@ -81,6 +81,13 @@ export function mainOperator(n) {
   return { type: n.type, name: names[n.type] };
 }
 
+/** The subformula at a token path: 0 is the left side (or the only operand), 1 the right. */
+export function nodeAt(n, path) {
+  let m = n;
+  for (const i of path) m = m.type === 'not' || m.type === 'box' || m.type === 'dia' ? m.arg : m.body ?? (i ? m.right : m.left);
+  return m;
+}
+
 /**
  * The printed formula as tokens: { s, op?: true, path?, meta?: true }.
  * Operator tokens carry the path of the node they belong to, so a UI can

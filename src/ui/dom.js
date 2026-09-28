@@ -76,12 +76,13 @@ export function formulaText(src) {
     if (i) span.append(', ');
     span.append(tokenSpan(p, settings.notation));
   });
-  span.append(r.premises.length ? ' /∴ ' : '/∴ ', tokenSpan(r.conclusion, settings.notation));
+  span.append(r.premises.length ? ' ∴ ' : '∴ ', tokenSpan(r.conclusion, settings.notation));
   return span;
 }
 
 // --- inline markup ---------------------------------------------------------
 // {formula}  {!raw symbols, not parsed}  {@lesson-id} cross-reference
+// {%formula in Principia's dots, shown as written}
 // **strong**  *emphasis*  [label](https://…)
 
 const INLINE = /\{([^}]+)\}|\*\*(.+?)\*\*|\*(.+?)\*|\[([^\]]+)\]\((https?:[^)\s]+|#[^)\s]*)\)/;
@@ -96,7 +97,7 @@ export function inline(text, opts = {}) {
   while ((m = re.exec(text))) {
     if (m.index > last) frag.append(text.slice(last, m.index));
     if (m[1] !== undefined) {
-      if (m[1].startsWith('!')) frag.append(h('span', { class: 'f' }, m[1].slice(1)));
+      if (m[1].startsWith('!') || m[1].startsWith('%')) frag.append(h('span', { class: 'f' }, m[1].slice(1)));
       else if (m[1].startsWith('@')) {
         const ref = resolveRef(m[1]);
         frag.append(!ref ? m[1] : opts.links === false ? ref.text : h('a', { href: ref.href }, ref.text));

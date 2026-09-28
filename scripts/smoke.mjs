@@ -79,6 +79,33 @@ for (const route of ['', '#/sandbox', '#/reference', '#/sources', ...LESSONS.map
 }
 console.log('✓ phone layout');
 
+// 4b. The same at phone width in Principia's dots, which print longer.
+const dotsCtx = await browser.newContext({ viewport: { width: 375, height: 800 } });
+await dotsCtx.addInitScript(() => {
+  try { localStorage.setItem('symbolic-logic.v1', JSON.stringify({ version: 1, settings: { notation: 'principia' }, solved: {} })); } catch { /* ignore */ }
+});
+const dotsPage = await dotsCtx.newPage();
+watch(dotsPage, 'principia');
+for (const route of ['', '#/reference', ...LESSONS.map((l) => `#/lesson/${l.id}`)]) {
+  await dotsPage.goto(base + route);
+  await dotsPage.waitForTimeout(50);
+  const [sw, iw] = await dotsPage.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]);
+  if (sw > iw) fail(`principia phone: ${route || 'home'} scrolls horizontally (${sw} > ${iw})`);
+}
+console.log('✓ phone layout in Principia notation');
+
+// 4c. Switching notation redraws formulas and keeps typed work in Copi's symbols.
+await page.goto(`${base}#/lesson/operators`);
+await page.fill('#in-op-t10', 'B > (A . P)');
+await page.click('#notation-principia');
+const shown = await page.locator('#ex-op-t10 .fin-preview').innerText();
+const typed = await page.inputValue('#in-op-t10');
+if (!/B \. ⊃ \. A \. P/.test(shown)) fail(`Principia preview not redrawn: ${shown}`);
+// Leaving the box tidies it into Copi's symbols, never into dots.
+if (typed !== 'B ⊃ (A • P)') fail(`switching notation changed typed work: ${typed}`);
+await page.click('#notation-copi');
+console.log('✓ notation switch redraws and keeps typed work');
+
 // 5. Storage that throws.
 const ctx = await browser.newContext();
 await ctx.addInitScript(() => {

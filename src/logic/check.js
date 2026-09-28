@@ -57,6 +57,15 @@ function checkTranslate(ex, input) {
   if (!parsed.ok) return { ok: false, kind: 'parse', message: parsed.error.message, hint: parsed.error.hint, suggestions: parsed.error.suggestions };
   const ans = parsed.ast;
   const key = parseFormula(ex.key, { closed: true, modal: !!ex.modal }).ast;
+  // Rewriting a formula in another notation: the grouping itself is the
+  // answer, so an equivalent formula with different brackets is wrong.
+  if (ex.structural) {
+    if (A.equal(ans, key)) return { ok: true, certainty: 'proved', message: 'Correct: the same formula, bracketed.' };
+    if (isSentential(key) && isSentential(ans) && equivalence(ans, key).equivalent) {
+      return { ok: false, kind: 'structure', message: `Your formula is equivalent to the given one, but it is not the same formula: the main connective or the grouping differs. The dots say ${print(key)}.` };
+    }
+    return { ok: false, kind: 'structure', message: `That is a different formula. Find the largest group of dots first: it marks the main connective.` };
+  }
   if (A.hasModal(key) || A.hasModal(ans)) {
     const logic = ex.logic ?? 'K';
     const c = KR.countermodel(logic, [], A.iff(ans, key));

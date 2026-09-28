@@ -69,12 +69,12 @@ function render({ keepScroll = false } = {}) {
 }
 
 function paintNotation() {
-  for (const n of ['hurley', 'modern']) {
+  for (const n of ['copi', 'principia', 'modern']) {
     document.getElementById(`notation-${n}`).setAttribute('aria-pressed', String(settings.notation === n));
   }
 }
 
-for (const n of ['hurley', 'modern']) {
+for (const n of ['copi', 'principia', 'modern']) {
   document.getElementById(`notation-${n}`).addEventListener('click', () => {
     if (settings.notation === n) return;
     settings.notation = n;

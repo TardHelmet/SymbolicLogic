@@ -50,7 +50,7 @@ export function palette(set, target) {
   return bar;
 }
 
-const glyphFor = (sym) => (settings.notation === 'modern' ? MODERN[sym] ?? sym : sym);
+const glyphFor = (sym) => (settings.inputNotation === 'modern' ? MODERN[sym] ?? sym : sym);
 
 export function redrawPalettes(root = document) {
   for (const b of root.querySelectorAll('.palette button[data-sym]')) b.textContent = glyphFor(b.dataset.sym);
@@ -80,7 +80,7 @@ export function formulaInput({ id, label = 'Your formula', set = 'sentential', p
   input.addEventListener('input', update);
   input.addEventListener('blur', () => {
     const r = parseFormula(input.value.trim(), { modal: set === 'modal', ...parseOpts });
-    if (r.ok) input.value = print(r.ast, { notation: settings.notation });
+    if (r.ok) input.value = print(r.ast, { notation: settings.inputNotation });
   });
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') { e.preventDefault(); onEnter?.(); }

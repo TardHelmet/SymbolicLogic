@@ -30,6 +30,16 @@ export function inlineFormulas(text) {
   return out;
 }
 
+/** Every {%dots} formula in a piece of content text, without the braces and %. */
+export function inlineDots(text) {
+  const out = [];
+  if (!text) return out;
+  const re = /\{%([^}]+)\}/g;
+  let m;
+  while ((m = re.exec(text))) out.push(m[1]);
+  return out;
+}
+
 /** Every {@ref} in a piece of content text, without the braces. */
 export function inlineRefs(text) {
   const out = [];
