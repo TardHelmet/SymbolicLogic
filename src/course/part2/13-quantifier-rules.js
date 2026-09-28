@@ -1,6 +1,5 @@
 export default {
   id: 'quantifier-rules',
-  number: 13,
   title: 'Proofs with quantifiers',
   hurley: '§8.2',
   card: 'UI, EI, UG and EG: taking quantifiers off, working in sentential logic, and putting them back on.',

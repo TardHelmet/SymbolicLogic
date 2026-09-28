@@ -73,7 +73,7 @@ class Parser {
         return A.not(this.unary());
       case 'BOX':
       case 'DIA':
-        if (!this.opts.modal) this.error('□ and ◇ belong to modal logic, introduced in Part III.');
+        if (!this.opts.modal) this.error('□ and ◇ belong to modal logic, introduced with possible worlds.');
         this.next();
         return A.unary(t.kind === 'BOX' ? 'box' : 'dia', this.unary());
       case 'EX':

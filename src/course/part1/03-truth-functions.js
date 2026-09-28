@@ -1,6 +1,5 @@
 export default {
   id: 'truth-functions',
-  number: 3,
   title: 'Truth functions',
   hurley: '§6.2',
   card: 'The truth tables for the five operators, computing the truth value of any compound, and the puzzle of the horseshoe.',
@@ -30,7 +29,7 @@ export default {
     { h: 'The horseshoe' },
     'The table for the horseshoe surprises almost everyone. It makes “if A then B” true whenever A is false, and whenever B is true. So “If the moon is made of cheese, then 2 + 2 = 4” comes out true, and so does “If 2 + 2 = 5, then Paris is in Spain.”',
     'The table is fixed by what a truth-functional “if” must do. A conditional is a claim that the antecedent is never true without the consequent. The one situation that plainly refutes “if A then B” is A true with B false, so that row gets F. Suppose the promise “if you finish the book, I will lend you the next one” and you do not finish the book: whatever I do, I have not broken the promise. Every other row gets T.',
-    'This **material conditional** is weaker than many English conditionals. It says nothing about any connection between antecedent and consequent: {A ⊃ B} is equivalent to {~(A • ~B)}, “not A without B”. Whether the English “if” means more than this, and if so what, is one of the oldest disputes in logic (see the margin). For the rest of Part I, “if” is translated by the horseshoe, and you should read {A ⊃ B} as nothing more than “not A without B”.',
+    'This **material conditional** is weaker than many English conditionals. It says nothing about any connection between antecedent and consequent: {A ⊃ B} is equivalent to {~(A • ~B)}, “not A without B”. Whether the English “if” means more than this, and if so what, is one of the oldest disputes in logic (see the margin). For the rest of {@part:sentential}, “if” is translated by the horseshoe, and you should read {A ⊃ B} as nothing more than “not A without B”.',
     { h: 'Exclusive “or”' },
     'The wedge is inclusive. When a sentence clearly means “one or the other but not both”, say so with the operators you have: {(A ∨ B) • ~(A • B)}.',
   ],
@@ -87,7 +86,7 @@ export default {
     body: [
       'So wrote the poet Callimachus, as Sextus Empiricus reports, of a debate among the dialecticians of the fourth and third centuries BCE. Sextus sets out the rival criteria.',
       '**Philo** the Dialectician held that a conditional is true unless it begins with a truth and ends with a falsehood. That is exactly the table for the horseshoe; the material conditional is sometimes called the *Philonian* conditional. **Diodorus** Cronus, Philo’s teacher, demanded more: a conditional is true only if it neither was nor is *possible* for it to begin with a truth and end with a falsehood, a criterion involving time and modality. The Stoic **Chrysippus** is associated with a criterion of *connection*: a conditional is true when the contradictory of its consequent conflicts with its antecedent.',
-      'The dispute returned in the twentieth century. C. I. Lewis attacked the material conditional in 1912 for its “paradoxes” (a false statement implies anything; a true one is implied by anything) and proposed *strict* implication, a descendant of Diodorus’s criterion; we meet it in Part III. Grice defended the material reading of the indicative “if”, arguing that its oddities are matters of what it is misleading to say, not of what is true. Edgington argues that indicative conditionals have no truth conditions at all, and that believing “if A, B” is being confident of B on the supposition that A.',
+      'The dispute returned in the twentieth century. C. I. Lewis attacked the material conditional in 1912 for its “paradoxes” (a false statement implies anything; a true one is implied by anything) and proposed *strict* implication, a descendant of Diodorus’s criterion; we meet it in {@part:beyond}. Grice defended the material reading of the indicative “if”, arguing that its oddities are matters of what it is misleading to say, not of what is true. Edgington argues that indicative conditionals have no truth conditions at all, and that believing “if A, B” is being confident of B on the supposition that A.',
     ],
     sources: ['sextusM', 'sextusPH', 'sextusM1', 'kneale1962', 'lewis1912', 'grice1989', 'edgington1995', 'edgingtonSEP', 'hurley2018'],
   },

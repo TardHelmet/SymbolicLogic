@@ -1,6 +1,5 @@
 export default {
   id: 'intuitionism',
-  number: 22,
   title: 'Excluded middle and constructive proof',
   hurley: 'beyond Hurley',
   card: 'Intuitionistic logic: proof as construction, why excluded middle and double negation fail, and Kripke models of growing knowledge.',
@@ -16,7 +15,7 @@ export default {
     ] },
     'On this reading {A ∨ ~A} would require, for every A, either a proof of A or a refutation of it, which nobody has for unsolved problems. So excluded middle is not a law. And {~~A} only says that A cannot be refuted, which is not the same as having a proof of A. So {~~A} does not yield {A}.',
     { h: 'What survives' },
-    'Most of Part I survives: every rule of implication (including DS and MT), Com, Assoc, Dist, Exp, Taut, conditional proof, and indirect proof when its conclusion is a negation. What goes is a handful of replacement directions:',
+    'Most of {@part:sentential} survives: every rule of implication (including DS and MT), Com, Assoc, Dist, Exp, Taut, conditional proof, and indirect proof when its conclusion is a negation. What goes is a handful of replacement directions:',
     { list: [
       'DN from {~~p} to {p}. The other direction, {p} to {~~p}, is fine.',
       'DM from {~(p • q)} to {~p ∨ ~q}. The other three DM directions are fine.',
@@ -41,7 +40,7 @@ export default {
     { id: 'in-v1', type: 'kripke', logic: 'INT', question: 'validity', prompt: 'Is double negation *introduction* intuitionistically valid?', argument: 'A / ~~A' },
     { id: 'in-v2', type: 'kripke', logic: 'INT', question: 'validity', prompt: 'Is this direction of De Morgan’s rule intuitionistically valid?', argument: '~(A ∨ B) / ~A • ~B' },
     { id: 'in-v3', type: 'kripke', logic: 'INT', question: 'validity', prompt: 'Is disjunctive syllogism intuitionistically valid?', argument: 'A ∨ B, ~A / B' },
-    { id: 'in-f1', type: 'flag-step', logic: 'intuitionistic', prompt: 'Lesson 10’s proof of excluded middle. Every line is classically correct. Which one would an intuitionist reject?',
+    { id: 'in-f1', type: 'flag-step', logic: 'intuitionistic', prompt: '{@^indirect-proof}’s proof of excluded middle. Every line is classically correct. Which one would an intuitionist reject?',
       argument: '/ A ∨ ~A',
       lines: [['~(A ∨ ~A)', 'AIP'], ['~A • ~~A', '1, DM'], ['~~(A ∨ ~A)', '1–2, IP'], ['A ∨ ~A', '3, DN']] },
     { id: 'in-f2', type: 'flag-step', logic: 'intuitionistic', prompt: 'Which line would an intuitionist reject?',

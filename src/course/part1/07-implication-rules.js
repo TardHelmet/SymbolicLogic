@@ -2,7 +2,6 @@ const IMPL = ['MP', 'MT', 'HS', 'DS', 'CD', 'Simp', 'Conj', 'Add'];
 
 export default {
   id: 'implication-rules',
-  number: 7,
   title: 'Proofs I: the rules of implication',
   hurley: '§§7.1–7.2',
   card: 'Natural deduction: deriving a conclusion step by step with eight valid argument forms.',
@@ -18,7 +17,7 @@ export default {
 4. B          1, 3, MP
 5. C          2, 4, MP` },
     { h: 'The eight rules of implication' },
-    'Each rule is one of the valid forms from lesson 6, or an obvious relative.',
+    'Each rule is one of the valid forms from {@argument-forms}, or an obvious relative.',
     { rules: IMPL },
     { list: [
       'The variables match any statement, however complex. {(A • B) ⊃ ~C} and {A • B} give {~C} by MP, with {A • B} for *p*.',

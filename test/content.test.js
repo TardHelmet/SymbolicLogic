@@ -8,7 +8,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { PARTS, LESSONS } from '../src/course/index.js';
 import { BIB } from '../src/course/bibliography.js';
-import { parseAny, inlineFormulas } from '../src/course/markup.js';
+import { parseAny, inlineFormulas, inlineRefs, resolveRef } from '../src/course/markup.js';
 import { checkAnswer, modelAnswer, argumentOf, formulasOf } from '../src/logic/check.js';
 import { parseFormula } from '../src/logic/parser.js';
 import { parseProofText, checkProof } from '../src/logic/proof.js';
@@ -157,12 +157,21 @@ function blockTexts(b) {
   return out;
 }
 
+test('part blurbs: cross-references resolve and numbers are not hard-coded', () => {
+  for (const part of PARTS) {
+    for (const ref of inlineRefs(part.blurb)) assert.ok(resolveRef(ref), `${part.id}: unknown cross-reference {${ref}}`);
+    assert.ok(!/\b[Ll]essons? \d|\bParts? I/.test(part.blurb.replace(/\{[^}]*\}/g, '')), `${part.id}: hard-coded number in blurb`);
+  }
+});
+
 test('every formula in the text parses', () => {
   for (const l of LESSONS) {
     const texts = [l.summary, l.card, l.exercisesIntro, ...(l.reading ?? []).flatMap(blockTexts), ...(l.margin?.body ?? []), l.margin?.title];
     for (const ex of l.exercises ?? []) texts.push(ex.prompt, ex.explain, ...(ex.options ?? []), ...(ex.why ?? []).filter(Boolean), ...Object.values(ex.dictionary ?? {}));
     for (const t of texts) {
       for (const src of inlineFormulas(t)) assert.ok(parseAny(src), `${l.id}: cannot parse {${src}}`);
+      for (const ref of inlineRefs(t)) assert.ok(resolveRef(ref), `${l.id}: unknown cross-reference {${ref}}`);
+      if (t) assert.ok(!/\b[Ll]essons? \d|\bParts? I/.test(t.replace(/\{[^}]*\}/g, '')), `${l.id}: write lesson and part numbers as {@id} or {@part:id}: “${t.slice(0, 80)}…”`);
     }
     for (const b of l.reading ?? []) {
       if (b.display && !b.plain) assert.ok(parseAny(b.display), `${l.id}: cannot parse display “${b.display}”`);

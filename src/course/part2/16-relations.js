@@ -2,7 +2,6 @@ const LOVE = { L: 'x loves y' };
 
 export default {
   id: 'relations',
-  number: 16,
   title: 'Relations and overlapping quantifiers',
   hurley: '§8.6',
   card: 'Two-place predicates, the order of quantifiers, and properties of relations such as transitivity.',
@@ -88,7 +87,7 @@ export default {
     title: 'Are relations real?',
     body: [
       'Leibniz held that every truth about a thing is grounded in that thing’s own nature, and so tried to reduce relational statements to non-relational ones: “Paris loves Helen” to a statement about Paris and one about Helen. Relations themselves, he wrote to Clarke, are “merely ideal”, things of the mind. Mugnai reconstructs the theory in detail.',
-      'Hume listed seven “philosophical relations” and divided them into those that depend wholly on the ideas compared (resemblance, degrees in quality, proportions in number) and those that can change while the ideas stay the same (identity, relations of time and place, causation). Bradley argued in 1893 that relations are incoherent: to relate A to B, a relation R must itself be related to A and to B, by further relations, and so on without end. It is a cousin of Carroll’s regress in lesson 7.',
+      'Hume listed seven “philosophical relations” and divided them into those that depend wholly on the ideas compared (resemblance, degrees in quality, proportions in number) and those that can change while the ideas stay the same (identity, relations of time and place, causation). Bradley argued in 1893 that relations are incoherent: to relate A to B, a relation R must itself be related to A and to B, by further relations, and so on without end. It is a cousin of Carroll’s regress in {@implication-rules}.',
       'Russell’s answer, in *The Principles of Mathematics* (1903), rested on logic: asymmetric relations, the ones that generate series, cannot be reduced to properties of their terms, so relations must be accepted as real and irreducible. William James argued from experience to the same end: the “and”, the “with”, the “next to” between things are as directly experienced as the things. Peirce, and De Morgan with the head of an animal, had already shown that logic needed relations to be first-class. The debate over whether relations are external to their terms, or grounded in them, remains open; MacBride’s and Perovic’s encyclopedia entries set out the positions.',
     ],
     sources: ['mugnai1992', 'leibnizClarke', 'humeTreatise', 'bradley1893', 'bradleySEP', 'russell1903', 'moore1919', 'james1912', 'peirce1870', 'demorganHead', 'relationsSEP', 'hurley2018'],

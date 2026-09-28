@@ -1,6 +1,5 @@
 export default {
   id: 'invalidity',
-  number: 15,
   title: 'Proving invalidity',
   hurley: '§8.5',
   card: 'Counterexamples in predicate logic: small worlds where the premises are true and the conclusion false.',
@@ -15,7 +14,7 @@ export default {
       'The argument is invalid. Notice that no world with a single individual would do: this counterexample needs two.',
     ], stepwise: true },
     { h: 'The finite universe method' },
-    'Hurley’s version of the same idea replaces the quantifiers by what they amount to in a small domain. In a domain of two individuals, a and b, {(x)Fx} amounts to {Fa • Fb}, and {(∃x)Fx} to {Fa ∨ Fb}. The argument becomes a sentential one about {Fa}, {Fb} and so on, and the indirect truth table method from lesson 5 finds a counterexample if one exists in that domain. If none exists with one individual, try two, then three.',
+    'Hurley’s version of the same idea replaces the quantifiers by what they amount to in a small domain. In a domain of two individuals, a and b, {(x)Fx} amounts to {Fa • Fb}, and {(∃x)Fx} to {Fa ∨ Fb}. The argument becomes a sentential one about {Fa}, {Fb} and so on, and the indirect truth table method from {@argument-tables} finds a counterexample if one exists in that domain. If none exists with one individual, try two, then three.',
     { h: 'What this method cannot do' },
     'For arguments using only one-place predicates, checking domains up to a known size settles validity: if no counterexample exists with up to 2ᵏ individuals (for k predicates), none exists at all. The exercises in this course are checked that way. But once relations enter, some invalid arguments have counterexamples only in infinite domains, and there is no general method that always decides validity. Church and Turing proved this in 1936.',
     'So in predicate logic, validity and invalidity are established by different kinds of evidence: a proof for one, a model for the other. When you cannot find either, you may simply not have looked hard enough.',

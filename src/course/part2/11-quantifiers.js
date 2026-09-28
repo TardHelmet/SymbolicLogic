@@ -2,7 +2,6 @@ const PHIL = { P: 'x is a philosopher', S: 'x is a Stoic', E: 'x is an Epicurean
 
 export default {
   id: 'quantifiers',
-  number: 11,
   title: 'Predicates and quantifiers',
   hurley: '§8.1',
   card: 'Looking inside simple statements: names, predicates, “all” and “some”, and translating them.',
@@ -20,7 +19,7 @@ export default {
     { h: 'The quantifiers' },
     'The **universal quantifier** {!(x)} means “for every x”, and the **existential quantifier** {!(∃x)} means “there is at least one x such that”. A quantifier governs the smallest formula after it, so brackets set its scope, just as with the tilde. A variable inside a quantifier’s scope is **bound**; one outside every quantifier’s scope is **free**. A formula with no free variables is a statement.',
     { display: '(x)(Hx ⊃ Mx)' },
-    'This says: for every x, if x is human then x is mortal, that is, all humans are mortal. The argument above becomes {(x)(Hx ⊃ Mx), Hs / Ms}, which is valid, and lesson 13 proves it.',
+    'This says: for every x, if x is human then x is mortal, that is, all humans are mortal. The argument above becomes {(x)(Hx ⊃ Mx), Hs / Ms}, which is valid, and {@quantifier-rules} proves it.',
     { h: 'The four basic forms' },
     { list: [
       '“All S are P”: {(x)(Sx ⊃ Px)}.',
@@ -72,8 +71,8 @@ export default {
     title: 'Function and argument',
     body: [
       'For two thousand years logic analysed statements as subject and predicate. Frege’s *Begriffsschrift* (1879) replaced that analysis with one borrowed from mathematics: a statement divides into a *function* (“x is mortal”) and an *argument* (Socrates) that fills its gap. Generality becomes a matter of saying that a function yields truth for every argument, or for some. Peirce and his student O. H. Mitchell introduced quantifiers independently in the early 1880s; Peirce’s 1885 notation, with Σ and Π, is the ancestor of ours.',
-      'The change made relations as natural as properties, and it made “all” and “some” into operators with scope, which is what allows sentences like “everyone loves someone” to be analysed at all (lesson 16).',
-      'It also made existence a matter of quantification. Quine’s slogan, “to be is to be the value of a variable”, holds that what a theory says exists is what its existential quantifiers must range over. On this view “exists” has one sense: whatever exists, exists in the same way, and the quantifier expresses it. Lesson 17 meets the objects that test this: the golden mountain, the round square.',
+      'The change made relations as natural as properties, and it made “all” and “some” into operators with scope, which is what allows sentences like “everyone loves someone” to be analysed at all ({@relations}).',
+      'It also made existence a matter of quantification. Quine’s slogan, “to be is to be the value of a variable”, holds that what a theory says exists is what its existential quantifiers must range over. On this view “exists” has one sense: whatever exists, exists in the same way, and the quantifier expresses it. {@^identity} meets the objects that test this: the golden mountain, the round square.',
     ],
     sources: ['frege1879', 'frege1891', 'peirce1885', 'quine1948', 'vanheijenoort1967', 'hurley2018'],
   },

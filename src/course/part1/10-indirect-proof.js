@@ -1,6 +1,5 @@
 export default {
   id: 'indirect-proof',
-  number: 10,
   title: 'Indirect proof and logical truths',
   hurley: '§§7.6–7.7',
   card: 'Reductio ad absurdum: assume the opposite, derive a contradiction. And proofs with no premises at all.',
@@ -29,14 +28,14 @@ export default {
 4. A ∨ ~A          3, DN` },
     'The assumption in line 1 turns, by DM, straight into a contradiction of the form {q • ~q}, with {~A} for {q}. The law of excluded middle follows from nothing.',
     { h: 'Explosion' },
-    'Lesson 5 observed that inconsistent premises validly imply anything. Here is the proof, which uses no indirect reasoning at all:',
+    '{@^argument-tables} observed that inconsistent premises validly imply anything. Here is the proof, which uses no indirect reasoning at all:',
     { proof: `1. A • ~A          / B
 2. A               1, Simp
 3. ~A • A          1, Com
 4. ~A              3, Simp
 5. A ∨ B           2, Add
 6. B               5, 4, DS` },
-    'This is *ex contradictione quodlibet*: from a contradiction, anything. It is why indirect proof works (a contradiction is the worst thing a set of assumptions can lead to), and it is why classical logic cannot tolerate a single contradiction in a body of beliefs: one would make every statement provable. Part III asks what happens in logics that block this derivation, and which step above they reject.',
+    'This is *ex contradictione quodlibet*: from a contradiction, anything. It is why indirect proof works (a contradiction is the worst thing a set of assumptions can lead to), and it is why classical logic cannot tolerate a single contradiction in a body of beliefs: one would make every statement provable. {@part:beyond} asks what happens in logics that block this derivation, and which step above they reject.',
   ],
   exercises: [
     { id: 'ip-1', type: 'proof', prompt: 'Prove by indirect proof.', argument: 'A ⊃ B, A ⊃ ~B / ~A',
@@ -74,7 +73,7 @@ export default {
     body: [
       'Arguing that a supposition leads to absurdity is older than logic as a discipline. Aristotle, discussing proof “through the impossible” in the *Prior Analytics*, gives the standard example: the diagonal of a square is incommensurable with its side, since if it were commensurable, odd numbers would equal even ones. The Eleatics before him argued this way against motion and plurality.',
       'The derivation of anything from a contradiction by Add and DS appears in C. I. Lewis and Langford’s *Symbolic Logic* (1932), and is sometimes called “Lewis’s independent argument”; versions go back to the twelfth century, to William of Soissons, and to the fourteenth-century author known as Pseudo-Scotus.',
-      'Paraconsistent logics block it, usually by rejecting disjunctive syllogism. Priest, Tanaka and Weber survey the options. Part III of this course lets you test the proof above against a paraconsistent truth table and find the step that fails.',
+      'Paraconsistent logics block it, usually by rejecting disjunctive syllogism. Priest, Tanaka and Weber survey the options. {@part:beyond} of this course lets you test the proof above against a paraconsistent truth table and find the step that fails.',
     ],
     sources: ['aristotlePrA', 'lewisLangford1932', 'paraconsistentSEP', 'kneale1962', 'hurley2018'],
   },

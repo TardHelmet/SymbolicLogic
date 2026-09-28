@@ -6,7 +6,6 @@ const IMPORT = ['(∃x)Sx'];
 
 export default {
   id: 'square',
-  number: 12,
   title: 'Contraries, contradictories and the square',
   hurley: '§§4.2–4.5',
   card: 'The traditional square of opposition, and what happens to it when “all” no longer implies “some”.',

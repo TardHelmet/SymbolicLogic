@@ -1,10 +1,9 @@
 export default {
   id: 'three-values',
-  number: 19,
   title: 'Three truth values',
   hurley: 'beyond Hurley',
   card: 'Gaps and gluts: logics with a third value, and which classical laws they keep.',
-  summary: 'Classical logic has two truth values. Add a third, and read it as “neither”, “both” or “meaningless”, and different laws fail. Testing the forms from Part I against these tables shows exactly what each law commits you to.',
+  summary: 'Classical logic has two truth values. Add a third, and read it as “neither”, “both” or “meaningless”, and different laws fail. Testing the forms from {@part:sentential} against these tables shows exactly what each law commits you to.',
   reading: [
     { h: 'Why a third value?' },
     { list: [
@@ -31,7 +30,7 @@ export default {
       'In LP, **disjunctive syllogism fails** for the same reason: {A ∨ B} and {~A} are both designated when A is B, while B may be F. So does modus ponens.',
       'In weak Kleene, **addition fails**: A true, B meaningless makes {A ∨ B} meaningless.',
     ] },
-    'Go back to the explosion proof in lesson 10: Simp, Com, Simp, Add, DS. Every step but one survives in LP. The step that fails is disjunctive syllogism. That is the paraconsistent diagnosis of explosion: the inference from a contradiction to anything goes through DS, and DS is only safe when the disjunction’s parts are not both true and false.',
+    'Go back to the explosion proof in {@indirect-proof}: Simp, Com, Simp, Add, DS. Every step but one survives in LP. The step that fails is disjunctive syllogism. That is the paraconsistent diagnosis of explosion: the inference from a contradiction to anything goes through DS, and DS is only safe when the disjunction’s parts are not both true and false.',
     { mvtable: ['L ≡ ~L'], logic: 'K3' },
     'The Liar, read in K3, is N when L is N: neither true nor false. Read in LP, the same row is B, both, and designated.',
   ],
@@ -49,7 +48,7 @@ export default {
     { id: 'tv-c2', type: 'matrix', logic: 'LP', question: 'counterexample', prompt: 'Find an LP counterexample to modus ponens.', argument: 'A ⊃ B, A / B' },
     {
       id: 'tv-explosion', type: 'choice',
-      prompt: 'The explosion proof in lesson 10 used Simp, Com, Add and DS. Which rule fails in LP?',
+      prompt: 'The explosion proof in {@indirect-proof} used Simp, Com, Add and DS. Which rule fails in LP?',
       options: ['Simp', 'Com', 'Add', 'DS'],
       answer: 3,
       explain: 'Only disjunctive syllogism. With A both true and false, {A ∨ B} and {~A} are designated while B can be simply false.',

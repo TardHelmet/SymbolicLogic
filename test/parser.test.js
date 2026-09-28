@@ -101,7 +101,7 @@ test('targeted errors', () => {
   assert.match(bad('A B').message, /no connective/);
   assert.match(bad('Fx', { closed: true }).message, /free/);
   assert.match(bad('Fa • F').message, /statement letter/);
-  assert.match(bad('□A').message, /Part III/);
+  assert.match(bad('□A').message, /possible worlds/);
   assert.equal(ok('□A ⊃ ◇A', { modal: true }).type, 'imp');
   assert.equal(ok('[]A -> <>A', { modal: true }).type, 'imp');
 });

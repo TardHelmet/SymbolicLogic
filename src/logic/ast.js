@@ -7,7 +7,7 @@
 //   { type: 'not', arg }
 //   { type: 'and' | 'or' | 'imp' | 'iff', left, right }
 //   { type: 'all' | 'some', v: 'x', body }
-//   { type: 'box' | 'dia', arg }                      modal operators (Part III)
+//   { type: 'box' | 'dia', arg }                      modal operators (possible worlds)
 //   { type: 'meta', name: 'p' }                       formula metavariable (rule schemas only)
 //
 // Terms are strings: variables x y z, constants a–u and w. In schemas a

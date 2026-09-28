@@ -409,7 +409,7 @@ export function diagnoseReplacement(id, s, t) {
 }
 
 // ---------------------------------------------------------------------------
-// Directions of the rules that an intuitionist rejects (Part III). Each entry
+// Directions of the rules that an intuitionist rejects (the lesson on intuitionism). Each entry
 // is a rule and the direction [from, to] as schema strings.
 
 export const INTUITIONISTICALLY_REJECTED = [

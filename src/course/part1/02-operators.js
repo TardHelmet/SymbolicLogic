@@ -3,7 +3,6 @@ const SOUL = { B: 'the soul is a body', A: 'the soul acts', P: 'the soul is acte
 
 export default {
   id: 'operators',
-  number: 2,
   title: 'Operators and symbolization',
   hurley: '§6.1',
   card: 'The five operators, the main operator, brackets, and translating English into symbols.',

@@ -1,6 +1,5 @@
 export default {
   id: 'paradox',
-  number: 18,
   title: 'Paradox',
   hurley: 'beyond Hurley',
   card: 'The Liar, Russell’s barber, Curry’s paradox and the heap: what logic can and cannot settle about them.',
@@ -9,7 +8,7 @@ export default {
     { h: 'Three ways out' },
     'Faced with a paradox, there are only three options: reject a premise, reject the reasoning, or accept the conclusion. The first four parts of this lesson use classical logic to make each paradox exact. Rejecting the reasoning means changing the logic, and the next four lessons look at logics that do.',
     { h: 'The Liar' },
-    '“This sentence is false.” Call it L. If L is true, then what it says holds, so it is false. If it is false, then what it says holds, so it is true. In symbols, L says of itself that it is not true: {L ≡ ~L}. Lesson 4 gives the verdict at once: {L ≡ ~L} is false on every row. In classical logic there can be no such sentence, yet English seems to contain one.',
+    '“This sentence is false.” Call it L. If L is true, then what it says holds, so it is false. If it is false, then what it says holds, so it is true. In symbols, L says of itself that it is not true: {L ≡ ~L}. {@^statement-tables} gives the verdict at once: {L ≡ ~L} is false on every row. In classical logic there can be no such sentence, yet English seems to contain one.',
     'The Liar is ancient. It is credited to Eubulides of Miletus in the fourth century BCE, and Chrysippus wrote several works on it. Modern responses divide by what they give up: Tarski denies that a language can contain its own truth predicate; Kripke lets the Liar fall into a gap, neither true nor false; Priest lets it be both. The next lesson builds the logics behind the last two.',
     { h: 'Russell’s paradox and the barber' },
     'In 1902 Russell wrote to Frege: consider the set of all sets that are not members of themselves. Is it a member of itself? If it is, it is not; if it is not, it is. Frege’s system assumed that every condition defines a set, and so it was inconsistent. Russell later gave a homely version. A village barber shaves all and only those villagers who do not shave themselves. Does he shave himself?',
@@ -85,7 +84,7 @@ export default {
     body: [
       'Quine sorted paradoxes into kinds: *veridical* ones, whose surprising conclusions turn out to be true; *falsidical* ones, which rest on a hidden fallacy; and *antinomies*, which bring an accepted way of reasoning into self-contradiction and force a revision of concepts. The barber is falsidical; Russell’s paradox was an antinomy that reshaped mathematics.',
       'Russell wrote to Frege in June 1902, as the second volume of Frege’s *Grundgesetze* was in the press; Frege replied that arithmetic tottered. Grelling and Nelson’s paradox of “heterological” (a word that does not apply to itself) has the same shape, and Curry published his in 1942.',
-      'Carroll’s Tortoise from lesson 7 returns here. Curry’s paradox shows that a language cannot have both a sentence that says “if I am true then A” and an unrestricted modus ponens with contraction. Something about the link between rules and conditionals has to give, and which thing gives is exactly what logicians still dispute. Sainsbury’s *Paradoxes* is the best guide to the options; the encyclopedia entries go further.',
+      'Carroll’s Tortoise from {@implication-rules} returns here. Curry’s paradox shows that a language cannot have both a sentence that says “if I am true then A” and an unrestricted modus ponens with contraction. Something about the link between rules and conditionals has to give, and which thing gives is exactly what logicians still dispute. Sainsbury’s *Paradoxes* is the best guide to the options; the encyclopedia entries go further.',
     ],
     sources: ['russell1902', 'grelling1908', 'curry1942', 'quine1966', 'sainsbury2009', 'unger1979', 'williamson1994', 'liarSEP', 'russellParadoxSEP', 'currySEP', 'soritesSEP', 'dl7'],
   },

@@ -3,7 +3,6 @@ const DAY = { D: 'it is day', L: 'it is light' };
 
 export default {
   id: 'possible-worlds',
-  number: 20,
   title: 'Possible worlds',
   hurley: 'beyond Hurley',
   card: 'Necessity and possibility, Kripke models, and how properties of a relation fix a modal logic.',
@@ -20,7 +19,7 @@ export default {
     ] },
     'A world that sees nothing makes every {□A} true there (there is no world where A fails) and every {◇A} false.',
     { h: 'Frames and laws' },
-    'Which modal laws hold depends on the relation. You met these properties of relations in lesson 16.',
+    'Which modal laws hold depends on the relation. You met these properties of relations in {@relations}.',
     { list: [
       '**T**: if the relation is **reflexive** (every world sees itself), {□A ⊃ A} holds: what is necessary is true.',
       '**S4**: if it is also **transitive**, {□A ⊃ □□A} holds: what is necessary is necessarily necessary.',
@@ -31,7 +30,7 @@ export default {
     { h: 'Scope' },
     '“If it is day, it must be light” has two readings: {□(D ⊃ L)}, it is necessary that if it is day it is light, and {D ⊃ □L}, if it is day then it is necessarily light. Medieval logicians distinguished the *necessity of the consequence* from the *necessity of the consequent*. Confusing them makes whatever is true look necessary.',
     { h: 'Compossibility again' },
-    'On one reading, Leibniz’s compossibles are possibilities true together at one world. Lesson 4 read compossibility as joint consistency; possible-worlds semantics adds the thought that a world is a complete way things could be. As before, this is one interpretation among several.',
+    'On one reading, Leibniz’s compossibles are possibilities true together at one world. {@^statement-tables} read compossibility as joint consistency; possible-worlds semantics adds the thought that a world is a complete way things could be. As before, this is one interpretation among several.',
     { h: 'The Master Argument' },
     'Epictetus reports an argument of Diodorus Cronus built on three propositions that cannot all be true: (1) every truth about the past is necessary; (2) the impossible does not follow from the possible; (3) something is possible that neither is nor will be true. Diodorus kept the first two and rejected the third, concluding that the possible is what is or will be true. Cleanthes rejected the first; Chrysippus rejected the second. The argument cannot be reconstructed with □ and ◇ alone, because it turns on time; Prior built tense logic partly to reconstruct it.',
   ],

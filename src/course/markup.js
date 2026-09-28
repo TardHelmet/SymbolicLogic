@@ -2,6 +2,7 @@
 // lesson text embeds as {…}. Shared by the renderer and the content tests.
 
 import { parseFormula, parseArgument } from '../logic/parser.js';
+import { LESSONS, PARTS } from './index.js';
 
 const PARSE_ATTEMPTS = [
   (s) => parseFormula(s, { modal: true }),
@@ -19,12 +20,41 @@ export function parseAny(src) {
   return null;
 }
 
-/** Every {formula} in a piece of content text, except {!raw} ones. */
+/** Every {formula} in a piece of content text, except {!raw}, {@ref} and {%dots} ones. */
 export function inlineFormulas(text) {
   const out = [];
   if (!text) return out;
   const re = /\{([^}]+)\}/g;
   let m;
-  while ((m = re.exec(text))) if (!m[1].startsWith('!')) out.push(m[1]);
+  while ((m = re.exec(text))) if (!/^[!@%]/.test(m[1])) out.push(m[1]);
   return out;
+}
+
+/** Every {@ref} in a piece of content text, without the braces. */
+export function inlineRefs(text) {
+  const out = [];
+  if (!text) return out;
+  const re = /\{(@[^}]+)\}/g;
+  let m;
+  while ((m = re.exec(text))) out.push(m[1]);
+  return out;
+}
+
+/**
+ * Cross-references, so that numbers follow the course map:
+ *   {@relations}      lesson 17
+ *   {@^relations}     Lesson 17
+ *   {@part:beyond}    Part IV
+ * Returns { text, href } or null for an unknown id.
+ */
+export function resolveRef(src) {
+  const m = /^@(\^?)(part:)?([a-z0-9-]+)$/.exec(src);
+  if (!m) return null;
+  if (m[2]) {
+    const part = PARTS.find((p) => p.id === m[3]);
+    return part ? { text: `Part ${part.numeral}`, href: `#/lesson/${part.lessons[0].id}` } : null;
+  }
+  const lesson = LESSONS.find((l) => l.id === m[3]);
+  if (!lesson) return null;
+  return { text: `${m[1] ? 'Lesson' : 'lesson'} ${lesson.number}`, href: `#/lesson/${lesson.id}` };
 }

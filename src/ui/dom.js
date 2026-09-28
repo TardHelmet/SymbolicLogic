@@ -1,7 +1,7 @@
 // DOM helpers. All text goes in through textContent or text nodes; no HTML
 // string is ever parsed, so nothing a student types can become markup.
 
-import { parseAny, inlineFormulas } from '../course/markup.js';
+import { parseAny, inlineFormulas, resolveRef } from '../course/markup.js';
 import { printTokens, speak } from '../logic/printer.js';
 import { settings } from './state.js';
 
@@ -81,11 +81,12 @@ export function formulaText(src) {
 }
 
 // --- inline markup ---------------------------------------------------------
-// {formula}  {!raw symbols, not parsed}  **strong**  *emphasis*  [label](https://…)
+// {formula}  {!raw symbols, not parsed}  {@lesson-id} cross-reference
+// **strong**  *emphasis*  [label](https://…)
 
 const INLINE = /\{([^}]+)\}|\*\*(.+?)\*\*|\*(.+?)\*|\[([^\]]+)\]\((https?:[^)\s]+|#[^)\s]*)\)/;
 
-export function inline(text) {
+export function inline(text, opts = {}) {
   const frag = document.createDocumentFragment();
   if (text == null) return frag;
   // A fresh regex per call: inline() recurses for **…** and *…*.
@@ -94,9 +95,15 @@ export function inline(text) {
   let m;
   while ((m = re.exec(text))) {
     if (m.index > last) frag.append(text.slice(last, m.index));
-    if (m[1] !== undefined) frag.append(m[1].startsWith('!') ? h('span', { class: 'f' }, m[1].slice(1)) : formulaText(m[1]));
-    else if (m[2] !== undefined) frag.append(h('strong', {}, inline(m[2])));
-    else if (m[3] !== undefined) frag.append(h('em', {}, inline(m[3])));
+    if (m[1] !== undefined) {
+      if (m[1].startsWith('!')) frag.append(h('span', { class: 'f' }, m[1].slice(1)));
+      else if (m[1].startsWith('@')) {
+        const ref = resolveRef(m[1]);
+        frag.append(!ref ? m[1] : opts.links === false ? ref.text : h('a', { href: ref.href }, ref.text));
+      } else frag.append(formulaText(m[1]));
+    }
+    else if (m[2] !== undefined) frag.append(h('strong', {}, inline(m[2], opts)));
+    else if (m[3] !== undefined) frag.append(h('em', {}, inline(m[3], opts)));
     else {
       const external = m[5].startsWith('http');
       frag.append(h('a', { href: m[5], target: external ? '_blank' : null, rel: external ? 'noopener' : null }, m[4]));

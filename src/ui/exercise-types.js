@@ -1,5 +1,5 @@
-// Exercise widgets beyond the sentential core: countermodels (Part II),
-// many-valued tables and Kripke models (Part III).
+// Exercise widgets beyond the sentential core: countermodels (predicate
+// logic), many-valued tables and Kripke models (the non-classical part).
 
 import { h, clear, formula, formulaText, inline } from './dom.js';
 import { registerType } from './exercise.js';
@@ -169,7 +169,7 @@ registerType('flag-step', 'Find the error', (ex) => {
   };
 });
 
-// --- Part III widgets -----------------------------------------------------------
+// --- Non-classical widgets -----------------------------------------------------------
 
 const SVG = 'http://www.w3.org/2000/svg';
 function s(tag, attrs = {}, ...kids) {

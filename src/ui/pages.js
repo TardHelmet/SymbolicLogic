@@ -35,7 +35,7 @@ export function renderHome(parts) {
       return h('a', { class: 'card', href: `#/lesson/${l.id}` },
         h('span', { class: 'n' }, h('span', {}, `Lesson ${l.number}`), p.total ? h('span', {}, `${p.solved}/${p.total}`) : null),
         h('span', { class: 't' }, l.title),
-        l.card ? h('span', { class: 'd' }, inline(l.card)) : null);
+        l.card ? h('span', { class: 'd' }, inline(l.card, { links: false })) : null);
     }))));
 
   return h('div', { class: 'home' }, hero, notes, h('div', { class: 'parts' }, partEls));

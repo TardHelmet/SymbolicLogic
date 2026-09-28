@@ -27,28 +27,31 @@ import l23 from './part3/23-capstone.js';
 export const PARTS = [
   {
     id: 'sentential',
-    numeral: 'I',
     title: 'Sentential logic',
     blurb: 'Statements, the five truth-functional operators, truth tables, and proofs with Hurley’s eighteen rules, conditional proof and indirect proof. The logic the Stoics built, made exact.',
     lessons: [l01, l02, l03, l04, l05, l06, l07, l08, l09, l10],
   },
   {
     id: 'predicate',
-    numeral: 'II',
     title: 'Predicate logic',
     blurb: 'Names, predicates, relations and the quantifiers “all” and “some”; the square of opposition; proofs with quantifier rules; countermodels; and identity, with Russell’s theory of descriptions.',
     lessons: [l11, l12, l13, l14, l15, l16, l17],
   },
   {
     id: 'beyond',
-    numeral: 'III',
     title: 'Beyond the classical',
-    blurb: 'Paradoxes; logics with a third truth value, where contradictions need not explode; possible worlds; stricter conditionals; and intuitionistic logic, where excluded middle fails. Each is tested against the classical laws of Parts I and II.',
+    blurb: 'Paradoxes; logics with a third truth value, where contradictions need not explode; possible worlds; stricter conditionals; and intuitionistic logic, where excluded middle fails. Each is tested against the classical laws of {@part:sentential} and {@part:predicate}.',
     lessons: [l18, l19, l20, l21, l22, l23],
   },
 ];
 
-PARTS.forEach((part) => part.lessons.forEach((l) => { l.part = part.id; }));
+// Numbers follow position, so lessons can be added without renumbering files.
+const NUMERALS = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+let n = 0;
+PARTS.forEach((part, i) => {
+  part.numeral = NUMERALS[i];
+  part.lessons.forEach((l) => { l.part = part.id; l.number = ++n; });
+});
 
 export const LESSONS = PARTS.flatMap((p) => p.lessons);
 

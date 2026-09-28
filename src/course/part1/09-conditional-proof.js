@@ -2,7 +2,6 @@ const NO_HS = ['MP', 'MT', 'DS', 'CD', 'Simp', 'Conj', 'Add', 'DM', 'Com', 'Asso
 
 export default {
   id: 'conditional-proof',
-  number: 9,
   title: 'Conditional proof',
   hurley: '§7.5',
   card: 'Proving “if p then q” by supposing p and deriving q.',

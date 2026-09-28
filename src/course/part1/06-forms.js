@@ -1,6 +1,5 @@
 export default {
   id: 'argument-forms',
-  number: 6,
   title: 'Argument forms and fallacies',
   hurley: '§6.6',
   card: 'The valid forms that recur everywhere, the two invalid ones that imitate them, and supplying missing premises.',

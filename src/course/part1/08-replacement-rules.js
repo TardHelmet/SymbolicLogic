@@ -1,6 +1,5 @@
 export default {
   id: 'replacement-rules',
-  number: 8,
   title: 'Proofs II: the rules of replacement',
   hurley: '§§7.3–7.4',
   card: 'Ten equivalences that can be used anywhere in a line, and how they put formulas into the shape the other rules need.',

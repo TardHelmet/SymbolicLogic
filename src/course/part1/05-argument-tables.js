@@ -1,6 +1,5 @@
 export default {
   id: 'argument-tables',
-  number: 5,
   title: 'Truth tables for arguments',
   hurley: '§§6.4–6.5',
   card: 'Testing validity with full truth tables, and the faster indirect method that hunts for a counterexample.',
@@ -26,7 +25,7 @@ export default {
     ], stepwise: true },
     'When a value is not forced, you must try each possibility in turn; the argument is valid only if every branch ends in a contradiction. The same method tests a set of statements for consistency: suppose all are true, and see whether a contradiction is forced.',
     { h: 'Two limiting cases' },
-    'If the conclusion is a tautology, no row makes it false, so the argument is valid whatever the premises are. If the premises are inconsistent, no row makes them all true, so again the argument is valid, whatever the conclusion. Both follow directly from the definition. The second, that inconsistent premises validly imply anything at all, is called *explosion*. It is one of the principles Part III questions.',
+    'If the conclusion is a tautology, no row makes it false, so the argument is valid whatever the premises are. If the premises are inconsistent, no row makes them all true, so again the argument is valid, whatever the conclusion. Both follow directly from the definition. The second, that inconsistent premises validly imply anything at all, is called *explosion*. It is one of the principles {@part:beyond} questions.',
   ],
   exercises: [
     { id: 'at-v1', type: 'classify', mode: 'argument', prompt: 'Is the argument valid?', argument: 'A ⊃ B, B ⊃ C / A ⊃ C' },

@@ -1,6 +1,5 @@
 export default {
   id: 'change-of-quantifier',
-  number: 14,
   title: 'Negated quantifiers, CP and IP',
   hurley: '§§8.3–8.4',
   card: 'The change-of-quantifier rule, and conditional and indirect proof with quantifiers.',
@@ -20,7 +19,7 @@ export default {
 7. (∃x)~Fx         6, EG
 8. ~(x)Fx          7, CQ` },
     { h: 'Conditional and indirect proof' },
-    'CP and IP work exactly as before. The only new point is the UG restriction from lesson 13: inside a sequence whose assumption has y free, UG may not generalize on y. After the sequence is closed, it may.',
+    'CP and IP work exactly as before. The only new point is the UG restriction from {@quantifier-rules}: inside a sequence whose assumption has y free, UG may not generalize on y. After the sequence is closed, it may.',
     { proof: `1. (∃x)Fx ⊃ (x)Gx     / (x)(Fx ⊃ Gx)
 2. Fy                 ACP
 3. (∃x)Fx             2, EG
@@ -30,7 +29,7 @@ export default {
 7. (x)(Fx ⊃ Gx)       6, UG` },
     'UG at line 7 is legitimate: the sequence that assumed {Fy} is closed, and {Fy ⊃ Gy} was proved for an arbitrary y.',
     { h: 'An assumption hidden in the rules' },
-    'Classical predicate logic proves {(x)Fx ⊃ (∃x)Fx}: instantiate the universal to any name, then generalize existentially. This is valid because every model is assumed to contain at least one individual. A *free logic* drops that assumption; the margin of lesson 17 returns to it.',
+    'Classical predicate logic proves {(x)Fx ⊃ (∃x)Fx}: instantiate the universal to any name, then generalize existentially. This is valid because every model is assumed to contain at least one individual. A *free logic* drops that assumption; the margin of {@identity} returns to it.',
   ],
   exercises: [
     { id: 'cq-1', type: 'proof', prompt: 'Prove the conclusion.', argument: '~(x)Fx / (∃x)~Fx', solution: [['(∃x)~Fx', '1, CQ']] },

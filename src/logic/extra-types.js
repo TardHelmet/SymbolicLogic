@@ -83,7 +83,7 @@ EXTRA_TYPES['flag-step'] = {
   },
 };
 
-// --- Part III -----------------------------------------------------------------
+// --- Non-classical -----------------------------------------------------------------
 
 const modalArg = (ex) => {
   const r = parseArgument(ex.argument, { closed: true, modal: true });

@@ -2,7 +2,6 @@ const STOA = { S: 'x is a Stoic', R: 'x is Roman', F: 'x founded the Stoa', C: '
 
 export default {
   id: 'identity',
-  number: 17,
   title: 'Identity and descriptions',
   hurley: '§8.7',
   card: 'The identity sign, counting with quantifiers, “the”, and when two things are one.',
@@ -64,9 +63,9 @@ export default {
   margin: {
     title: 'Sense, reference and what there is not',
     body: [
-      'Frege opened “On Sense and Reference” (1892) with the puzzle of informative identities. If “a = b” is true, it seems to say the same as “a = a”; yet one is a discovery and the other trivial. His answer divides what an expression contributes into its *reference* (the object) and its *sense*, the way the object is presented. Sense also carries the Stoic question from lesson 1 into modern logic: what is said, as distinct from what it is said about.',
-      'Russell’s “On Denoting” (1905) took aim at Meinong, who held that “the golden mountain” and even “the round square” denote objects that have properties though they do not exist. Russell’s theory of descriptions paraphrases them away, so that no object is needed. Strawson replied in 1950 that “the present King of France is bald” is neither true nor false but has a failed presupposition, an early argument for truth-value gaps. Part III gives gaps a logic.',
-      'Meinong’s objects have had a revival; Reicher’s entry surveys the theories. *Free logics* drop the assumption that every name refers and every domain is non-empty, which lesson 14 found built into the classical rules.',
+      'Frege opened “On Sense and Reference” (1892) with the puzzle of informative identities. If “a = b” is true, it seems to say the same as “a = a”; yet one is a discovery and the other trivial. His answer divides what an expression contributes into its *reference* (the object) and its *sense*, the way the object is presented. Sense also carries the Stoic question from {@arguments} into modern logic: what is said, as distinct from what it is said about.',
+      'Russell’s “On Denoting” (1905) took aim at Meinong, who held that “the golden mountain” and even “the round square” denote objects that have properties though they do not exist. Russell’s theory of descriptions paraphrases them away, so that no object is needed. Strawson replied in 1950 that “the present King of France is bald” is neither true nor false but has a failed presupposition, an early argument for truth-value gaps. {@part:beyond} gives gaps a logic.',
+      'Meinong’s objects have had a revival; Reicher’s entry surveys the theories. *Free logics* drop the assumption that every name refers and every domain is non-empty, which {@change-of-quantifier} found built into the classical rules.',
       'Leibniz held that no two substances are exactly alike, and told of a gentleman at Herrenhausen who searched the gardens and failed to find two indistinguishable leaves. Black’s 1952 dialogue imagines a universe of just two qualitatively identical iron spheres as a counterexample. Forrest’s entry reviews the debate.',
     ],
     sources: ['frege1892', 'russell1905', 'meinong1904', 'strawson1950', 'descriptionsSEP', 'nonexistentSEP', 'freeLogicSEP', 'leibnizDiscourse', 'leibnizClarke', 'black1952', 'indiscerniblesSEP', 'hurley2018'],
