@@ -290,6 +290,18 @@ export const BIB = {
     kind: 'entry', author: 'Raatikainen, Panu', year: 2013, title: 'Gödel’s Incompleteness Theorems',
     container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/goedel-incompleteness/',
   },
+  russell1914: {
+    kind: 'book', author: 'Russell, Bertrand', year: 1914, title: 'Our Knowledge of the External World as a Field for Scientific Method in Philosophy',
+    publisher: 'Chicago and London: Open Court', note: 'Lecture II, “Logic as the Essence of Philosophy”, contains the passage on form that Langer quotes.',
+  },
+  whitehead1898: {
+    kind: 'book', author: 'Whitehead, Alfred North', year: 1898, title: 'A Treatise on Universal Algebra, with Applications', detail: 'vol. I',
+    publisher: 'Cambridge: Cambridge University Press',
+  },
+  cassirer1910: {
+    kind: 'book', author: 'Cassirer, Ernst', year: 1910, title: 'Substanzbegriff und Funktionsbegriff', publisher: 'Berlin: Bruno Cassirer',
+    note: 'Translated by W. C. and M. C. Swabey as Substance and Function (Chicago: Open Court, 1923).',
+  },
   boole1854: {
     kind: 'book', author: 'Boole, George', year: 1854, title: 'An Investigation of the Laws of Thought',
     detail: 'ch. III (the law x² = x and the principle of contradiction)',

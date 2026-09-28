@@ -1,5 +1,6 @@
 // The course map. Lessons are numbered through the whole course.
 
+import form from './part1/form.js';
 import argumentsLesson from './part1/arguments.js';
 import operators from './part1/operators.js';
 import truthFunctions from './part1/truth-functions.js';
@@ -31,8 +32,8 @@ export const PARTS = [
   {
     id: 'sentential',
     title: 'Sentential logic',
-    blurb: 'Statements, the five truth-functional operators, truth tables, and proofs with Copi’s nineteen rules, conditional proof and indirect proof. The logic the Stoics built, made exact.',
-    lessons: [argumentsLesson, operators, truthFunctions, statementTables, argumentTables, forms, implicationRules, replacementRules, conditionalProof, indirectProof],
+    blurb: 'Logical form, statements, the five truth-functional operators, truth tables, and proofs with Copi’s nineteen rules, conditional proof and indirect proof. The logic the Stoics built, made exact.',
+    lessons: [form, argumentsLesson, operators, truthFunctions, statementTables, argumentTables, forms, implicationRules, replacementRules, conditionalProof, indirectProof],
   },
   {
     id: 'predicate',
