@@ -19,6 +19,7 @@ import relations from './part2/relations.js';
 import identity from './part2/identity.js';
 import classes from './part3/classes.js';
 import postulates from './part3/postulates.js';
+import principia from './part3/principia.js';
 import paradox from './part4/paradox.js';
 import threeValues from './part4/three-values.js';
 import worlds from './part4/worlds.js';
@@ -43,7 +44,7 @@ export const PARTS = [
     id: 'form',
     title: 'Form and system',
     blurb: 'Logic as the study of form, after Langer: classes and their algebra, systems built from postulates, what it means for two systems to share a form, and the axiomatic calculus of Principia Mathematica.',
-    lessons: [classes, postulates],
+    lessons: [classes, postulates, principia],
   },
   {
     id: 'beyond',

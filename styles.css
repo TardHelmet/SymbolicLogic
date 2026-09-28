@@ -519,3 +519,4 @@ table.optable thead th, table.optable tbody th { color: var(--ink-3); font-weigh
 .laws-box summary { cursor: pointer; font-family: var(--font-ui); font-size: 0.9rem; color: var(--ink-2); }
 .laws-box table.laws td.f { white-space: nowrap; }
 .class-argument { margin: 0; padding-left: 1.4rem; font-family: var(--font-formula); }
+table.optable td.designated { font-weight: 700; color: var(--accent); }

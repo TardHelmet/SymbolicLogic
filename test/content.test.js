@@ -40,6 +40,9 @@ const FIELDS = {
   classeq: ['key', 'alternatives', 'dictionary'],
   classvalid: ['premises', 'conclusion', 'dictionary'],
   structure: ['structure', 'statements', 'algebra', 'dictionary'],
+  axiomatic: ['system', 'goal', 'solution', 'mode', 'theorems'],
+  independence: ['system', 'matrix'],
+  polish: ['key'],
 };
 
 const REQUIRED = {
@@ -61,6 +64,9 @@ const REQUIRED = {
   classeq: ['key'],
   classvalid: ['premises', 'conclusion'],
   structure: [],
+  axiomatic: ['system', 'goal', 'solution'],
+  independence: ['system', 'matrix'],
+  polish: ['key'],
 };
 
 const allExercises = LESSONS.flatMap((l) => (l.exercises ?? []).map((ex) => ({ lesson: l, ex })));

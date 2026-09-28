@@ -267,6 +267,29 @@ export const BIB = {
     kind: 'entry', author: 'Reck, Erich, and Georg Schiemer', year: 2019, title: 'Structuralism in the Philosophy of Mathematics',
     container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/structuralism-mathematics/',
   },
+  whiteheadRussell1910: {
+    kind: 'book', author: 'Whitehead, Alfred North, and Bertrand Russell', year: 1910, title: 'Principia Mathematica',
+    detail: 'vol. I', publisher: 'Cambridge: Cambridge University Press',
+    note: 'The primitive propositions *1.1–*1.72 open Part I, section A; the dot notation is explained in the Introduction, ch. I.',
+  },
+  bernays1926: {
+    kind: 'article', author: 'Bernays, Paul', year: 1926, title: 'Axiomatische Untersuchung des Aussagen-Kalküls der „Principia Mathematica“',
+    container: 'Mathematische Zeitschrift', detail: '25: 305–320',
+    note: 'Translated in J.-Y. Béziau (ed.), Universal Logic: An Anthology (Basel: Birkhäuser, 2012), pp. 43–56.',
+    url: 'https://doi.org/10.1007/BF01283841', urlLabel: 'DOI',
+  },
+  rosser1953: {
+    kind: 'book', author: 'Rosser, J. Barkley', year: 1953, title: 'Logic for Mathematicians', publisher: 'New York: McGraw-Hill',
+    note: 'The source of the system R.S. in Copi’s Symbolic Logic.',
+  },
+  principiaSEP: {
+    kind: 'entry', author: 'Linsky, Bernard, and Andrew David Irvine', year: 1996, title: 'Principia Mathematica',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/principia-mathematica/',
+  },
+  godelSEP: {
+    kind: 'entry', author: 'Raatikainen, Panu', year: 2013, title: 'Gödel’s Incompleteness Theorems',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/goedel-incompleteness/',
+  },
   boole1854: {
     kind: 'book', author: 'Boole, George', year: 1854, title: 'An Investigation of the Laws of Thought',
     detail: 'ch. III (the law x² = x and the principle of contradiction)',

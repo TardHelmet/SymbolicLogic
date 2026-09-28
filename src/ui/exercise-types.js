@@ -13,6 +13,10 @@ import { checkProof } from '../logic/proof.js';
 import * as MV from '../logic/manyvalued.js';
 import * as K from '../logic/kripke.js';
 import * as AL from '../logic/algebra.js';
+import * as AX from '../logic/axiomatic.js';
+import * as PL from '../logic/polish.js';
+import { print } from '../logic/printer.js';
+import { settings } from './state.js';
 import { proofEditor } from './proof-editor.js';
 import { palette } from './formula-input.js';
 
@@ -530,4 +534,87 @@ registerType('classvalid', 'Does it follow?', (ex) => {
     h('p', {}, h('span', { class: 'f' }, `∴ ${AL.printEquation(AL.parseEquation(ex.conclusion).eq)}`)));
   const c = choiceBox(`cv-${ex.id}`, [['valid', 'valid'], ['invalid', 'invalid']]);
   return { el: [dictionaryList(ex.dictionary), given, c.el], value: () => c.value()[0] ?? null, show: (a) => c.show([a]) };
+});
+
+// --- Principia and the axiomatic method -------------------------------------------
+
+function axiomTable(ex) {
+  const sys = AX.SYSTEMS[ex.system ?? 'PM'];
+  const rows = [
+    ...Object.entries(sys.axioms).map(([k, ax]) => [k, ax.name, parseFormula(ax.formula, { schema: true }).ast]),
+    ...Object.entries(ex.theorems ?? {}).map(([k, f]) => [k, 'proved earlier', parseFormula(f, { schema: true }).ast]),
+  ];
+  return h('div', { class: 'ref-table-wrap' }, h('table', { class: 'ref laws' },
+    h('thead', {}, h('tr', {}, h('th', {}, 'Cite'), h('th', {}, 'Name'), h('th', {}, 'Formula'))),
+    h('tbody', {}, rows.map(([k, name, f]) => h('tr', {}, h('td', { class: 'abbr' }, k), h('td', {}, name), h('td', {}, formula(f)))))));
+}
+
+registerType('axiomatic', 'Axiomatic proof', (ex, ctx) => {
+  const sys = AX.SYSTEMS[ex.system ?? 'PM'];
+  const goal = parseFormula(ex.goal, { schema: true }).ast;
+  const editor = proofEditor({
+    mode: ex.mode ?? 'full',
+    given: ex.solution,
+    set: 'sentential',
+    parse: (t) => { const r = parseFormula(t, { schema: true }); return r.ok ? { ok: true, value: r.ast } : r; },
+    tidy: (ast) => print(ast, { notation: settings.inputNotation }),
+    layout: () => null,
+    assumptions: false,
+    head: h('div', { class: 'proof-row premise-last' }, h('span', { class: 'n' }, ''),
+      h('span', { class: 'body' }, h('span', { class: 'static' }, h('span', { class: 'concl' }, 'Prove: ⊢ ', formula(goal)))), h('span', {}), h('span', {})),
+    placeholders: { text: 'formula', just: `${Object.keys(sys.axioms)[0]}  or  ${sys.mp} 3, 4` },
+    onEnterLast: () => ctx.check(),
+  });
+  const defs = sys.defs.map(([l, r], i) => `${sys.defNames[i]}: ${l} for ${r}`).join('; ');
+  return {
+    el: [h('details', { class: 'laws-box' }, h('summary', {}, `${sys.name}: axioms and rules`), axiomTable(ex),
+      h('p', { class: 'small muted' }, `Primitive signs: ${sys.primitives}. Definitions (cite as Df): ${defs}. Rules: an instance of an axiom (cite the axiom), Sub (an instance of an earlier line: the same formula for every occurrence of a letter), Df, and modus ponens (${sys.mp}).`)),
+    editor.el],
+    value: () => editor.value(),
+    show: (ans) => (ex.mode === 'justify' ? editor.setJustifications(ans.map((l) => l.just)) : editor.setLines(ans)),
+    mark: (res) => editor.mark(res.result),
+    focus: () => editor.focus(),
+  };
+});
+
+registerType('independence', 'Independence', (ex) => {
+  const m = ex.matrix;
+  const sys = AX.SYSTEMS[ex.system];
+  const key = m.or ? 'or' : 'and';
+  const sign = key === 'or' ? '∨' : '•';
+  const designated = new Set(m.designated);
+  const cell = (v) => h('td', { class: designated.has(v) ? 'designated' : null }, String(v));
+  const tables = h('div', { class: 'given structure' },
+    h('p', {}, `Values: ${m.values.join(', ')}. Designated: ${m.designated.join(', ')} (in bold). ${sys.primitives.replace(' and ', ' and ')} are given by the tables; the other signs are defined as in the system.`),
+    h('div', { class: 'optables' },
+      h('table', { class: 'optable' }, h('thead', {}, h('tr', {}, h('th', {}, 'p'), h('th', {}, '~p'))),
+        h('tbody', {}, m.values.map((v, i) => h('tr', {}, h('th', {}, String(v)), cell(m.not[i]))))),
+      h('table', { class: 'optable' }, h('thead', {}, h('tr', {}, h('th', {}, sign), m.values.map((v) => h('th', {}, String(v))))),
+        h('tbody', {}, m.values.map((v, i) => h('tr', {}, h('th', {}, String(v)), m.values.map((_, j) => cell(m[key][i][j]))))))));
+  const c = choiceBox(`ind-${ex.id}`, Object.entries(sys.axioms).map(([k, ax]) => [k, `${k} ${ax.name}: ${ax.formula}`]));
+  return { el: [axiomTable(ex), tables, c.el], value: () => c.value()[0] ?? null, show: (a) => c.show([a]) };
+});
+
+registerType('polish', 'Polish notation', (ex, ctx) => {
+  const input = h('input', {
+    type: 'text', id: `in-${ex.id}`, autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false',
+    'aria-label': 'Formula in Polish notation', placeholder: 'e.g. CKpqr', 'aria-describedby': `in-${ex.id}-preview`,
+  });
+  const preview = h('div', { class: 'fin-preview', id: `in-${ex.id}-preview`, 'aria-live': 'polite' });
+  const update = () => {
+    clear(preview);
+    preview.classList.remove('error');
+    const r = PL.parsePolish(input.value);
+    if (!input.value.trim()) return;
+    if (r.ok) preview.append('Read as ', formula(r.ast));
+    else { preview.classList.add('error'); preview.append(r.error.message); }
+  };
+  input.addEventListener('input', update);
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); ctx.check(); } });
+  return {
+    el: [h('div', { class: 'given' }, formulaText(ex.key)), h('div', { class: 'fin' }, input, preview)],
+    value: () => input.value,
+    show: (a) => { input.value = a; update(); },
+    focus: () => input.focus(),
+  };
 });

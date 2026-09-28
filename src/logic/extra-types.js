@@ -10,6 +10,9 @@ import * as MV from './manyvalued.js';
 import * as K from './kripke.js';
 import { isSentential, consistency, showRow } from './semantics.js';
 import * as AL from './algebra.js';
+import * as AX from './axiomatic.js';
+import * as PL from './polish.js';
+import * as A from './ast.js';
 
 function goalOf(ex) {
   if (ex.argument) {
@@ -384,4 +387,49 @@ EXTRA_TYPES.classvalid = {
       : { ok: false, message: `Not so: here the premises are true and the conclusion false. ${describeClasses(v.model, ex.dictionary)}` };
   },
   answer: (ex) => (classValidity(ex).valid ? 'valid' : 'invalid'),
+};
+
+// --- Principia and the axiomatic method -------------------------------------------------
+
+EXTRA_TYPES.axiomatic = {
+  check(ex, input) {
+    const goal = parseFormula(ex.goal, { schema: true }).ast;
+    const result = AX.checkAxiomatic({ goal, lines: input ?? [] }, { system: ex.system, theorems: ex.theorems });
+    return {
+      ok: result.complete,
+      result,
+      message: result.complete ? 'The proof is complete and every line checks.' : (result.problems[0] ?? 'Some lines need attention.'),
+    };
+  },
+  answer: (ex) => ex.solution.map(([text, just]) => ({ text, just })),
+};
+
+// Which axiom does a matrix show to be independent?
+EXTRA_TYPES.independence = {
+  check(ex, input) {
+    const want = AX.shownIndependent(ex.matrix, ex.system)[0];
+    const r = AX.matrixReport(ex.matrix, ex.system);
+    if (input == null) return { ok: false, message: 'Choose an axiom.' };
+    if (input === want) return { ok: true, message: `Correct. Every other axiom always takes a designated value, and modus ponens never leads from designated values to an undesignated one, so everything provable without ${want} is designated. ${want} is not, so it cannot be proved from the rest.` };
+    const row = r.axioms[input];
+    return {
+      ok: false,
+      message: row?.always
+        ? `${input} always takes a designated value in this matrix, so the matrix cannot separate it from the others.`
+        : `${input} fails in this matrix, but look at which axioms always hold: only one fails.`,
+    };
+  },
+  answer: (ex) => AX.shownIndependent(ex.matrix, ex.system)[0],
+};
+
+// Writing a formula in Polish notation. The answer must be the same formula.
+EXTRA_TYPES.polish = {
+  check(ex, input) {
+    const r = PL.parsePolish(input ?? '');
+    if (!r.ok) return { ok: false, kind: 'parse', message: r.error.message };
+    const key = parseFormula(ex.key).ast;
+    if (A.equal(r.ast, key)) return { ok: true, message: `Correct: ${PL.printPolish(key)}.` };
+    return { ok: false, message: `That reads as ${print(r.ast)}. Start with the main connective of the whole formula, then write each part the same way.` };
+  },
+  answer: (ex) => PL.printPolish(parseFormula(ex.key).ast),
 };
