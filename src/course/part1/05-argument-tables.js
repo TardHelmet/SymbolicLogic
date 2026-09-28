@@ -1,7 +1,7 @@
 export default {
   id: 'argument-tables',
   title: 'Truth tables for arguments',
-  hurley: '§§6.4–6.5',
+  refs: { copiIL: '§§8.5–8.7, 9.9', copiSL: '§§2.3, 3.8', hurley: '§§6.4–6.5' },
   card: 'Testing validity with full truth tables, and the faster indirect method that hunts for a counterexample.',
   summary: 'An argument is valid when no row makes every premise true and the conclusion false. A truth table can check every row; the indirect method goes straight for the one kind of row that matters.',
   reading: [
@@ -54,6 +54,6 @@ export default {
       'Testing every row is the sentential case of a general definition. Bolzano in 1837 proposed that a proposition follows from others when every way of varying certain of its ideas that makes the premises true also makes the conclusion true. Tarski’s 1936 paper gave the modern version: a conclusion follows from premises when every *model* (every interpretation of the non-logical vocabulary) that makes the premises true makes the conclusion true. A truth-table row is exactly a model for sentential logic.',
       'Etchemendy argued that Tarski’s definition gets consequence right only by luck, since it quantifies over interpretations rather than over what is possible. The debate about what makes an inference *logically* valid, as opposed to merely truth-preserving, is still open. Beall, Restall and Sagi survey it.',
     ],
-    sources: ['bolzano1837', 'tarski1936', 'etchemendy1990', 'consequenceSEP', 'hurley2018'],
+    sources: ['copiIL', 'copiSL', 'bolzano1837', 'tarski1936', 'etchemendy1990', 'consequenceSEP', 'hurley2018'],
   },
 };

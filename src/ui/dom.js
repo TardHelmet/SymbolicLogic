@@ -76,7 +76,7 @@ export function formulaText(src) {
     if (i) span.append(', ');
     span.append(tokenSpan(p, settings.notation));
   });
-  span.append(r.premises.length ? ' / ' : '/ ', tokenSpan(r.conclusion, settings.notation));
+  span.append(r.premises.length ? ' /∴ ' : '/∴ ', tokenSpan(r.conclusion, settings.notation));
   return span;
 }
 

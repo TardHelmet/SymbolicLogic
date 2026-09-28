@@ -4,10 +4,35 @@
 
 export const BIB = {
   // --- textbooks ---
+  copiIL: {
+    kind: 'book', author: 'Copi, Irving M., Carl Cohen and Victor Rodych', year: 2019,
+    title: 'Introduction to Logic', detail: '15th ed.', publisher: 'London and New York: Routledge',
+    note: 'The course’s rules follow chapters 8–10: the nineteen rules of inference (§§9.2, 9.6), conditional and indirect proof (§§9.11–9.12) and the quantification rules (§10.5).',
+    url: 'https://www.routledge.com/Introduction-to-Logic/Copi-Cohen-Rodych/p/book/9781138500860',
+  },
+  copiSL: {
+    kind: 'book', author: 'Copi, Irving M.', year: 1979,
+    title: 'Symbolic Logic', detail: '5th ed.', publisher: 'New York: Macmillan',
+    note: 'Copi’s fuller treatment: relations and identity (ch. 5), deductive systems (ch. 6), class algebra (ch. 7), an axiomatic propositional calculus (ch. 8) and alternative notations, including dots as brackets (ch. 9).',
+    url: 'https://archive.org/details/symboliclogic00copi_0',
+  },
+  langer1937: {
+    kind: 'book', author: 'Langer, Susanne K.', year: 1937,
+    title: 'An Introduction to Symbolic Logic', publisher: 'London: George Allen & Unwin; Boston: Houghton Mifflin',
+    note: 'Logic as the study of form, built around the Boole–Schröder algebra and Principia Mathematica. Revised editions: New York: Dover, 1953 and 1967, with the same pagination and an added appendix on truth tables.',
+    url: 'https://archive.org/details/introductiontosy0000lang',
+  },
+  pelletier2000: {
+    kind: 'chapter', author: 'Pelletier, Francis Jeffry', year: 2000,
+    title: 'A History of Natural Deduction and Elementary Logic Textbooks',
+    container: 'Logical Consequence: Rival Approaches', detail: 'vol. 1, ed. John Woods and Bryson Brown, pp. 105–138', publisher: 'Oxford: Hermes Science',
+    note: 'A revised version of “A Brief History of Natural Deduction”, History and Philosophy of Logic 20 (1999): 1–31. On Copi’s quantifier rules and their corrections, pp. 126–128.',
+    url: 'https://www.sfu.ca/~jeffpell/papers/pelletierNDtexts.pdf',
+  },
   hurley2018: {
     kind: 'book', author: 'Hurley, Patrick J., and Lori Watson', year: 2018,
     title: 'A Concise Introduction to Logic', detail: '13th ed.', publisher: 'Boston: Cengage',
-    note: 'The notation, rule names and order of topics in this course follow chapters 1, 6, 7 and 8.',
+    note: 'Hurley’s system is Copi’s without Absorption, with indirect proof closed by a discharge line; the course cites its sections second.',
   },
   forallx: {
     kind: 'book', author: 'Magnus, P. D., Tim Button, Robert Trueman and Richard Zach', year: null,

@@ -2,7 +2,7 @@
   "name": "symbolic-logic",
   "version": "0.1.0",
   "private": true,
-  "description": "A course in sentential, predicate and non-classical logic, in Hurley notation.",
+  "description": "A course in sentential, predicate and non-classical logic, after Copi and Langer.",
   "type": "module",
   "scripts": {
     "test": "node --test",

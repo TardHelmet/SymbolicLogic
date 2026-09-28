@@ -3,7 +3,7 @@ const PHIL = { P: 'x is a philosopher', S: 'x is a Stoic', E: 'x is an Epicurean
 export default {
   id: 'quantifiers',
   title: 'Predicates and quantifiers',
-  hurley: '§8.1',
+  refs: { copiIL: '§§10.1–10.4', copiSL: '§4.1', langer: 'ch. IV', hurley: '§8.1' },
   card: 'Looking inside simple statements: names, predicates, “all” and “some”, and translating them.',
   summary: 'Sentential logic treats “Socrates is mortal” as an unbreakable unit, so it cannot see why that follows from “all humans are mortal” and “Socrates is human.” Predicate logic looks inside the statement.',
   reading: [
@@ -74,6 +74,6 @@ export default {
       'The change made relations as natural as properties, and it made “all” and “some” into operators with scope, which is what allows sentences like “everyone loves someone” to be analysed at all ({@relations}).',
       'It also made existence a matter of quantification. Quine’s slogan, “to be is to be the value of a variable”, holds that what a theory says exists is what its existential quantifiers must range over. On this view “exists” has one sense: whatever exists, exists in the same way, and the quantifier expresses it. {@^identity} meets the objects that test this: the golden mountain, the round square.',
     ],
-    sources: ['frege1879', 'frege1891', 'peirce1885', 'quine1948', 'vanheijenoort1967', 'hurley2018'],
+    sources: ['copiIL', 'copiSL', 'langer1937', 'frege1879', 'frege1891', 'peirce1885', 'quine1948', 'vanheijenoort1967', 'hurley2018'],
   },
 };

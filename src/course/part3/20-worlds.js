@@ -4,7 +4,6 @@ const DAY = { D: 'it is day', L: 'it is light' };
 export default {
   id: 'possible-worlds',
   title: 'Possible worlds',
-  hurley: 'beyond Hurley',
   card: 'Necessity and possibility, Kripke models, and how properties of a relation fix a modal logic.',
   summary: '“Necessarily” and “possibly” are not truth-functional: whether it is possible that A does not depend only on whether A is true. Possible-worlds semantics evaluates a statement across a family of worlds, and the shape of the family decides which modal laws hold.',
   reading: [

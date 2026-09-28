@@ -1,12 +1,12 @@
 export default {
   id: 'quantifier-rules',
   title: 'Proofs with quantifiers',
-  hurley: '§8.2',
+  refs: { copiIL: '§10.5', copiSL: '§§4.2, 4.5', hurley: '§8.2' },
   card: 'UI, EI, UG and EG: taking quantifiers off, working in sentential logic, and putting them back on.',
   summary: 'Four rules let proofs pass between quantified statements and their instances. The whole difficulty lies in their restrictions, and each restriction blocks a specific bad inference.',
   reading: [
     { h: 'The strategy' },
-    'Remove the quantifiers with the instantiation rules, reason about the instances with the eighteen rules you already know, then put quantifiers back with the generalization rules.',
+    'Remove the quantifiers with the instantiation rules, reason about the instances with the nineteen rules you already know, then put quantifiers back with the generalization rules.',
     { rules: ['UI', 'EI', 'UG', 'EG'] },
     { h: 'Universal instantiation (UI)' },
     'What holds of everything holds of any particular thing. From {(x)(Fx ⊃ Gx)} infer {Fa ⊃ Ga}, or {Fy ⊃ Gy}. Every free x must be replaced by the same name or variable.',
@@ -82,6 +82,6 @@ export default {
       'Berkeley used exactly this point against abstract general ideas. A demonstration about a particular triangle is general, he argued, not because it concerns an abstract triangle that is neither equilateral nor scalene, but because none of the particular features of the drawn triangle were used in the proof.',
       'In a proof with UG, y plays the part of the drawn triangle, and the restrictions make sure that nothing particular about y was used. Kit Fine’s *Reasoning with Arbitrary Objects* took the older idea literally, as a theory of arbitrary objects that have just the properties common to all things of their kind.',
     ],
-    sources: ['berkeley1710', 'fine1985', 'hurley2018'],
+    sources: ['copiIL', 'copiSL', 'berkeley1710', 'fine1985', 'hurley2018'],
   },
 };

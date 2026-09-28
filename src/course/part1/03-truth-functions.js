@@ -1,7 +1,7 @@
 export default {
   id: 'truth-functions',
   title: 'Truth functions',
-  hurley: '§6.2',
+  refs: { copiIL: '§§8.3–8.4', copiSL: '§§2.1–2.2', langer: 'ch. XI', hurley: '§6.2' },
   card: 'The truth tables for the five operators, computing the truth value of any compound, and the puzzle of the horseshoe.',
   summary: 'Each operator is a *truth function*: the truth value of the compound is fixed entirely by the truth values of its parts. Five small tables settle the value of any formula, however long.',
   reading: [
@@ -88,6 +88,6 @@ export default {
       '**Philo** the Dialectician held that a conditional is true unless it begins with a truth and ends with a falsehood. That is exactly the table for the horseshoe; the material conditional is sometimes called the *Philonian* conditional. **Diodorus** Cronus, Philo’s teacher, demanded more: a conditional is true only if it neither was nor is *possible* for it to begin with a truth and end with a falsehood, a criterion involving time and modality. The Stoic **Chrysippus** is associated with a criterion of *connection*: a conditional is true when the contradictory of its consequent conflicts with its antecedent.',
       'The dispute returned in the twentieth century. C. I. Lewis attacked the material conditional in 1912 for its “paradoxes” (a false statement implies anything; a true one is implied by anything) and proposed *strict* implication, a descendant of Diodorus’s criterion; we meet it in {@part:beyond}. Grice defended the material reading of the indicative “if”, arguing that its oddities are matters of what it is misleading to say, not of what is true. Edgington argues that indicative conditionals have no truth conditions at all, and that believing “if A, B” is being confident of B on the supposition that A.',
     ],
-    sources: ['sextusM', 'sextusPH', 'sextusM1', 'kneale1962', 'lewis1912', 'grice1989', 'edgington1995', 'edgingtonSEP', 'hurley2018'],
+    sources: ['copiIL', 'copiSL', 'langer1937', 'sextusM', 'sextusPH', 'sextusM1', 'kneale1962', 'lewis1912', 'grice1989', 'edgington1995', 'edgingtonSEP', 'hurley2018'],
   },
 };

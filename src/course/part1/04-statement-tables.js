@@ -1,12 +1,12 @@
 export default {
   id: 'statement-tables',
   title: 'Truth tables for statements',
-  hurley: '§6.3',
+  refs: { copiIL: '§§8.9–8.11', copiSL: '§2.4', langer: 'ch. XI', hurley: '§6.3' },
   card: 'Tautologies, contradictions and contingencies; equivalence, contradiction and consistency between statements.',
   summary: 'A truth table lists every way the simple statements could be true or false. Reading down the main-operator column tells you what kind of statement you have, and comparing two columns tells you how two statements are related.',
   reading: [
     { h: 'Building a full table' },
-    'A formula with *n* different letters has 2ⁿ rows: 2 for one letter, 4 for two, 8 for three. Hurley’s arrangement is standard: under the first letter write half Ts then half Fs; under the next, alternate in quarters; and so on, until the last letter alternates T, F on every row. Then compute each operator’s column, innermost first, as in {@truth-functions}.',
+    'A formula with *n* different letters has 2ⁿ rows: 2 for one letter, 4 for two, 8 for three. The arrangement Copi and Hurley use is standard: under the first letter write half Ts then half Fs; under the next, alternate in quarters; and so on, until the last letter alternates T, F on every row. Then compute each operator’s column, innermost first, as in {@truth-functions}.',
     { table: ['(A ⊃ B) ∨ ~C'], columns: 'all' },
     { h: 'Three kinds of statement' },
     { def: 'Tautologous', text: 'True on every row. A tautology (a *logically true* statement) is true whatever the facts are, because of its form alone.' },
@@ -22,7 +22,7 @@ export default {
       '**Consistent**: true together on at least one row.',
       '**Inconsistent**: never true together.',
     ] },
-    'These are not four exclusive boxes. Contradictory statements are always inconsistent too, since they are never true together. Equivalent statements are consistent unless both are self-contradictory, in which case they are equivalent *and* inconsistent. Hurley asks first whether a pair is equivalent or contradictory, and only then whether it is consistent or inconsistent. The exercises here ask you to select every relation that holds.',
+    'These are not four exclusive boxes. Contradictory statements are always inconsistent too, since they are never true together. Equivalent statements are consistent unless both are self-contradictory, in which case they are equivalent *and* inconsistent. The course asks first whether a pair is equivalent or contradictory, and only then whether it is consistent or inconsistent. The exercises here ask you to select every relation that holds.',
     { table: ['A ⊃ B', '~B ⊃ ~A', 'A • ~B'] },
     'Consistency extends to any number of statements: a set is consistent when at least one row makes all of them true. An inconsistent set cannot be true as a whole, however plausible each member looks alone. Showing that a set of beliefs is inconsistent is one of the most common moves in philosophical argument.',
   ],
@@ -64,6 +64,6 @@ export default {
       'Leibniz made contradiction and sufficient reason the two great principles of reasoning. His notion of *compossibility*, things that can exist together in one world, is often read as joint consistency: a world is a maximal set of compatible possibilities, and God chooses among consistent sets. Messina and Rutherford survey this logical reading and its rivals, which tie compossibility to the laws of a world rather than to logic alone.',
       'Truth tables in their modern form appear in Wittgenstein’s *Tractatus* and Post’s 1921 paper, which proved that the tables decide every question of sentential validity. Anellis showed that Peirce had drawn truth tables in manuscripts of the 1880s and 1890s. Wittgenstein drew a philosophical moral: a tautology is true whatever the facts, so it says nothing about them.',
     ],
-    sources: ['aristotleMet', 'leibnizMonadology', 'messina2009', 'wittgenstein1922', 'post1921', 'anellis2012', 'hurley2018'],
+    sources: ['copiIL', 'copiSL', 'langer1937', 'aristotleMet', 'leibnizMonadology', 'messina2009', 'wittgenstein1922', 'post1921', 'anellis2012', 'hurley2018'],
   },
 };

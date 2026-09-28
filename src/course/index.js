@@ -28,7 +28,7 @@ export const PARTS = [
   {
     id: 'sentential',
     title: 'Sentential logic',
-    blurb: 'Statements, the five truth-functional operators, truth tables, and proofs with Hurley’s eighteen rules, conditional proof and indirect proof. The logic the Stoics built, made exact.',
+    blurb: 'Statements, the five truth-functional operators, truth tables, and proofs with Copi’s nineteen rules, conditional proof and indirect proof. The logic the Stoics built, made exact.',
     lessons: [l01, l02, l03, l04, l05, l06, l07, l08, l09, l10],
   },
   {

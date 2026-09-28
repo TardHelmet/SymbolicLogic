@@ -1,12 +1,12 @@
 export default {
   id: 'change-of-quantifier',
   title: 'Negated quantifiers, CP and IP',
-  hurley: '§§8.3–8.4',
-  card: 'The change-of-quantifier rule, and conditional and indirect proof with quantifiers.',
-  summary: 'The instantiation rules cannot touch a negated quantifier. The change-of-quantifier rule turns “not every” into “some … not”, and conditional and indirect proof work in predicate logic as they did before.',
+  refs: { copiIL: '§10.4', copiSL: '§§4.4, 4.7', hurley: '§§8.3–8.4' },
+  card: 'Quantifier negation, and conditional and indirect proof with quantifiers.',
+  summary: 'The instantiation rules cannot touch a negated quantifier. Quantifier negation turns “not every” into “some … not”, and conditional and indirect proof work in predicate logic as they did before.',
   reading: [
-    { h: 'Change of quantifier (CQ)' },
-    '“Not everything is F” says the same as “something is not F”, and “nothing is F” says the same as “everything is not F”. CQ is a rule of replacement with four forms:',
+    { h: 'Quantifier negation (Q.N.)' },
+    '“Not everything is F” says the same as “something is not F”, and “nothing is F” says the same as “everything is not F”. Quantifier negation is a rule of replacement with four forms. Copi’s *Introduction to Logic* lists them as logical equivalences; his *Symbolic Logic* names the rule Q.N.; Hurley calls it change of quantifier, CQ. You may cite it as Q.N. or CQ.',
     { rules: ['CQ'] },
     'In words: move a tilde across a quantifier and the quantifier flips. These are the quantifier versions of De Morgan’s rule, and they are the contradictories of the square: {~(x)(Sx ⊃ Px)} is equivalent to {(∃x)~(Sx ⊃ Px)}, and so to {(∃x)(Sx • ~Px)}.',
     'UI and EI apply only to lines whose main operator is a quantifier. A line like {~(x)Fx} must first be turned into {(∃x)~Fx}, and then EI can be used.',
@@ -65,6 +65,6 @@ export default {
       '“All that glisters is not gold,” says the scroll in *The Merchant of Venice*, and means that not everything that glitters is gold. Read literally, the sentence says that nothing that glitters is gold. English lets negation and quantifiers combine ambiguously; predicate logic forces a choice of scope, and CQ records exactly how the choices are related.',
       'Laurence Horn’s *A Natural History of Negation* is the standard account of how negation behaves in natural languages, and of the long philosophical argument, back to Aristotle and the Stoics, over whether negative statements are as basic as affirmative ones. It is also a good guide to why “not all” so often conveys “some are not, and some are”, which logic does not say.',
     ],
-    sources: ['horn1989', 'aristotleDeInt', 'hurley2018'],
+    sources: ['copiIL', 'copiSL', 'horn1989', 'aristotleDeInt', 'hurley2018'],
   },
 };

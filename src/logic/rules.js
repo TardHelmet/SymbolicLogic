@@ -1,6 +1,10 @@
-// Hurley's rules: eight rules of implication (whole lines only), ten rules
-// of replacement plus CQ (anywhere inside a line), and the structural,
-// quantifier and identity rules checked in proof.js.
+// Copi's nineteen rules (Introduction to Logic, 15th ed., §§9.2 and 9.6): nine
+// elementary valid argument forms, or rules of inference, which apply to whole
+// lines only, and ten rules of replacement, plus quantifier negation, which
+// apply anywhere inside a line. The structural, quantifier and identity rules
+// are checked in proof.js. Internal ids are short (MP, DM, CQ); `label` is
+// Copi's abbreviation, shown to students. Hurley's system is the same without
+// Absorption.
 
 import * as A from './ast.js';
 import { schema } from './parser.js';
@@ -16,6 +20,7 @@ export const IMPLICATION = {
   HS: { name: 'Hypothetical syllogism', premises: ['p ⊃ q', 'q ⊃ r'], conclusion: 'p ⊃ r' },
   DS: { name: 'Disjunctive syllogism', premises: ['p ∨ q', '~p'], conclusion: 'q' },
   CD: { name: 'Constructive dilemma', premises: ['(p ⊃ q) • (r ⊃ s)', 'p ∨ r'], conclusion: 'q ∨ s' },
+  Abs: { name: 'Absorption', premises: ['p ⊃ q'], conclusion: 'p ⊃ (p • q)' },
   Simp: { name: 'Simplification', premises: ['p • q'], conclusion: 'p' },
   Conj: { name: 'Conjunction', premises: ['p', 'q'], conclusion: 'p • q' },
   Add: { name: 'Addition', premises: ['p'], conclusion: 'p ∨ q' },
@@ -38,7 +43,7 @@ for (const r of Object.values(IMPLICATION)) {
   r.kind = 'implication';
   r.premisePats = r.premises.map(S);
   r.conclusionPat = S(r.conclusion);
-  r.display = `${r.premises.join(', ')} / ${r.conclusion}`;
+  r.display = `${r.premises.join(', ')} ∴ ${r.conclusion}`;
 }
 for (const r of Object.values(REPLACEMENT)) {
   r.kind = 'replacement';
@@ -59,6 +64,7 @@ REPLACEMENT.CQ = {
   ],
   display: ['(x)ℱx :: ~(∃x)~ℱx', '(∃x)ℱx :: ~(x)~ℱx', '~(x)ℱx :: (∃x)~ℱx', '~(∃x)ℱx :: (x)~ℱx'],
 };
+REPLACEMENT.CQ.name = 'Quantifier negation';
 
 // Symmetry of identity, used when Id cites a single line.
 export const ID_SYMMETRY = {
@@ -71,14 +77,28 @@ export const ID_SYMMETRY = {
 export const OTHER = {
   ACP: { kind: 'structural', name: 'Assumption for conditional proof' },
   AIP: { kind: 'structural', name: 'Assumption for indirect proof' },
+  Asm: { kind: 'structural', name: 'Assumption, discharged by CP or IP' },
   CP: { kind: 'structural', name: 'Conditional proof' },
   IP: { kind: 'structural', name: 'Indirect proof' },
-  UI: { kind: 'quantifier', name: 'Universal instantiation', display: '(x)ℱx / ℱy  or  ℱa' },
-  UG: { kind: 'quantifier', name: 'Universal generalization', display: 'ℱy / (x)ℱx' },
-  EI: { kind: 'quantifier', name: 'Existential instantiation', display: '(∃x)ℱx / ℱa' },
-  EG: { kind: 'quantifier', name: 'Existential generalization', display: 'ℱa  or  ℱy / (∃x)ℱx' },
-  Id: { kind: 'identity', name: 'Identity', display: ['a = a', 'a = b :: b = a', 'ℱa, a = b / ℱb'] },
+  UI: { kind: 'quantifier', name: 'Universal instantiation', display: '(x)ℱx ∴ ℱy  or  ℱa' },
+  UG: { kind: 'quantifier', name: 'Universal generalization', display: 'ℱy ∴ (x)ℱx' },
+  EI: { kind: 'quantifier', name: 'Existential instantiation', display: '(∃x)ℱx ∴ ℱa' },
+  EG: { kind: 'quantifier', name: 'Existential generalization', display: 'ℱa  or  ℱy ∴ (∃x)ℱx' },
+  Id: { kind: 'identity', name: 'Identity', display: ['ℱa, a = b ∴ ℱb  or  ℱb, a = b ∴ ℱa', 'ℱa, ~ℱb ∴ ~(a = b)', 'a = b ∴ b = a', '∴ a = a'] },
 };
+
+// Copi's abbreviations, as they appear in his proofs.
+const LABELS = {
+  MP: 'M.P.', MT: 'M.T.', HS: 'H.S.', DS: 'D.S.', CD: 'C.D.', Abs: 'Abs.', Simp: 'Simp.', Conj: 'Conj.', Add: 'Add.',
+  DM: 'De M.', Com: 'Com.', Assoc: 'Assoc.', Dist: 'Dist.', DN: 'D.N.', Trans: 'Trans.', Impl: 'Impl.', Equiv: 'Equiv.',
+  Exp: 'Exp.', Taut: 'Taut.', CQ: 'Q.N.',
+  ACP: 'Assumption (C.P.)', AIP: 'Assumption (I.P.)', Asm: 'Assumption', CP: 'C.P.', IP: 'I.P.',
+  UI: 'U.I.', UG: 'U.G.', EI: 'E.I.', EG: 'E.G.', Id: 'Id.',
+};
+for (const [id, label] of Object.entries(LABELS)) (IMPLICATION[id] ?? REPLACEMENT[id] ?? OTHER[id]).label = label;
+
+/** Copi's abbreviation for a rule id. */
+export const labelOf = (id) => LABELS[id] ?? id;
 
 export const ALL_RULES = { ...IMPLICATION, ...REPLACEMENT, ...OTHER };
 
@@ -88,6 +108,7 @@ const ALIASES = {
   hs: 'HS', hypotheticalsyllogism: 'HS', hypsyl: 'HS',
   ds: 'DS', disjunctivesyllogism: 'DS', disjsyl: 'DS',
   cd: 'CD', constructivedilemma: 'CD',
+  abs: 'Abs', absorption: 'Abs',
   simp: 'Simp', simplification: 'Simp',
   conj: 'Conj', conjunction: 'Conj',
   add: 'Add', addition: 'Add',
@@ -102,8 +123,10 @@ const ALIASES = {
   exp: 'Exp', exportation: 'Exp',
   taut: 'Taut', tautology: 'Taut',
   acp: 'ACP', aip: 'AIP', cp: 'CP', ip: 'IP',
+  assumptioncp: 'ACP', asscp: 'ACP', assumptionip: 'AIP', assip: 'AIP',
+  assumption: 'Asm', assume: 'Asm', asm: 'Asm', assum: 'Asm',
   ui: 'UI', ug: 'UG', ei: 'EI', eg: 'EG',
-  cq: 'CQ', qn: 'CQ', changeofquantifier: 'CQ',
+  cq: 'CQ', qn: 'CQ', changeofquantifier: 'CQ', quantifiernegation: 'CQ',
   id: 'Id', identity: 'Id',
 };
 
@@ -177,11 +200,11 @@ const FALLACIES = [
   },
   {
     rule: 'Simp', premises: ['p • q'], conclusion: 'q',
-    say: 'Hurley’s Simp yields only the left conjunct. Use Com first to move this conjunct to the left.',
+    say: 'Simp yields only the left conjunct (so in Copi and in Hurley). Use Com first to move this conjunct to the left.',
   },
   {
     rule: 'DS', premises: ['p ∨ q', '~q'], conclusion: 'p',
-    say: 'Hurley’s DS needs the negation of the left disjunct. Use Com on the disjunction first.',
+    say: 'DS needs the negation of the left disjunct (so in Copi and in Hurley). Use Com on the disjunction first.',
   },
   {
     rule: 'DS', premises: ['p ∨ q', 'p'], conclusion: '~q',
@@ -190,6 +213,10 @@ const FALLACIES = [
   {
     rule: 'Add', premises: ['p'], conclusion: 'q ∨ p',
     say: 'Add places the new disjunct on the right (p / p ∨ q). Add first, then use Com.',
+  },
+  {
+    rule: 'Abs', premises: ['p ⊃ q'], conclusion: 'p ⊃ (q • p)',
+    say: 'Absorption puts the antecedent first in the new conjunction: from p ⊃ q, p ⊃ (p • q). Use Com on the consequent afterwards.',
   },
   {
     rule: 'HS', premises: ['p ⊃ q', 'p ⊃ r'], conclusion: 'q ⊃ r',

@@ -3,7 +3,6 @@ const DAY = { D: 'it is day', L: 'it is light' };
 export default {
   id: 'implication',
   title: 'Implication beyond the horseshoe',
-  hurley: 'beyond Hurley',
   card: 'Strict, relevant and connexive conditionals: three attempts to capture “follows from” better than ⊃ does.',
   summary: 'The horseshoe makes a false statement imply anything and a true one follow from anything. Three families of logic try to do better, and each pays a price. The ancient debate from {@truth-functions} was never settled; it moved into these logics.',
   reading: [

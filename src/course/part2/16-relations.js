@@ -3,7 +3,7 @@ const LOVE = { L: 'x loves y' };
 export default {
   id: 'relations',
   title: 'Relations and overlapping quantifiers',
-  hurley: '§8.6',
+  refs: { copiSL: '§§5.1–5.3', langer: 'ch. X', hurley: '§8.6' },
   card: 'Two-place predicates, the order of quantifiers, and properties of relations such as transitivity.',
   summary: 'Much of what we say is about how things stand to one another. Relations need predicates with more than one place, and with them comes a new source of error: the order of quantifiers.',
   reading: [
@@ -50,7 +50,7 @@ export default {
       solution: [['Rxy', 'ACP'], ['Ryx', 'AIP'], ['(y)(z)[(Rxy • Ryz) ⊃ Rxz]', '1, UI'], ['(z)[(Rxy • Ryz) ⊃ Rxz]', '5, UI'], ['(Rxy • Ryx) ⊃ Rxx', '6, UI'],
         ['Rxy • Ryx', '3, 4, Conj'], ['Rxx', '7, 8, MP'], ['~Rxx', '2, UI'], ['Rxx • ~Rxx', '9, 10, Conj'], ['~Ryx', '4–11, IP'], ['Rxy ⊃ ~Ryx', '3–12, CP'],
         ['(y)(Rxy ⊃ ~Ryx)', '13, UG'], ['(x)(y)(Rxy ⊃ ~Ryx)', '14, UG']] },
-    { id: 're-head', type: 'proof', mode: 'justify', prompt: 'De Morgan’s head of an animal. The proof is given; supply the justifications. (It goes by indirect proof, because Hurley’s UG restriction blocks the more obvious route through EI and CP.)',
+    { id: 're-head', type: 'proof', mode: 'justify', prompt: 'De Morgan’s head of an animal. The proof is given; supply the justifications. (It goes by indirect proof, because the restriction on UG blocks the more obvious route through EI and CP.)',
       dictionary: { H: 'x is a man', A: 'x is an animal', T: 'x is the head of y' },
       argument: '(x)(Hx ⊃ Ax) / (x)[(∃y)(Hy • Txy) ⊃ (∃y)(Ay • Txy)]',
       solution: [
@@ -90,6 +90,6 @@ export default {
       'Hume listed seven “philosophical relations” and divided them into those that depend wholly on the ideas compared (resemblance, degrees in quality, proportions in number) and those that can change while the ideas stay the same (identity, relations of time and place, causation). Bradley argued in 1893 that relations are incoherent: to relate A to B, a relation R must itself be related to A and to B, by further relations, and so on without end. It is a cousin of Carroll’s regress in {@implication-rules}.',
       'Russell’s answer, in *The Principles of Mathematics* (1903), rested on logic: asymmetric relations, the ones that generate series, cannot be reduced to properties of their terms, so relations must be accepted as real and irreducible. William James argued from experience to the same end: the “and”, the “with”, the “next to” between things are as directly experienced as the things. Peirce, and De Morgan with the head of an animal, had already shown that logic needed relations to be first-class. The debate over whether relations are external to their terms, or grounded in them, remains open; MacBride’s and Perovic’s encyclopedia entries set out the positions.',
     ],
-    sources: ['mugnai1992', 'leibnizClarke', 'humeTreatise', 'bradley1893', 'bradleySEP', 'russell1903', 'moore1919', 'james1912', 'peirce1870', 'demorganHead', 'relationsSEP', 'hurley2018'],
+    sources: ['copiSL', 'langer1937', 'mugnai1992', 'leibnizClarke', 'humeTreatise', 'bradley1893', 'bradleySEP', 'russell1903', 'moore1919', 'james1912', 'peirce1870', 'demorganHead', 'relationsSEP', 'hurley2018'],
   },
 };

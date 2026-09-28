@@ -3,7 +3,7 @@ const NO_HS = ['MP', 'MT', 'DS', 'CD', 'Simp', 'Conj', 'Add', 'DM', 'Com', 'Asso
 export default {
   id: 'conditional-proof',
   title: 'Conditional proof',
-  hurley: '§7.5',
+  refs: { copiIL: '§9.11', copiSL: '§§3.4, 3.7', hurley: '§7.5' },
   card: 'Proving “if p then q” by supposing p and deriving q.',
   summary: 'To prove a conditional, suppose its antecedent and derive its consequent. This is how people argue for conditionals, and it makes many proofs much shorter.',
   reading: [
@@ -68,6 +68,6 @@ export default {
       'The Stoics tied validity to the conditional directly. Sextus reports their test: an argument is conclusive when the conditional that has the conjunction of its premises as antecedent and its conclusion as consequent is sound. Conditional proof runs this link in the other direction: if the premises plus {p} yield {q}, the premises yield {p ⊃ q}.',
       'In modern logic this is the **deduction theorem**, proved for axiomatic systems by Herbrand in his 1930 thesis and, independently, by Tarski. In natural deduction systems it is built in as a rule, which is what makes those systems “natural”: Jaśkowski’s 1934 paper is titled *On the Rules of Suppositions*.',
     ],
-    sources: ['sextusPH', 'herbrand1930', 'jaskowski1934', 'ndSEP', 'hurley2018'],
+    sources: ['copiIL', 'copiSL', 'sextusPH', 'herbrand1930', 'jaskowski1934', 'ndSEP', 'hurley2018'],
   },
 };

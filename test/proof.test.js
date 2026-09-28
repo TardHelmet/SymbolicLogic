@@ -149,10 +149,51 @@ test('allowed rules', () => {
   ]), 2, /not available/, { allowedRules: ['MP', 'MT', 'Simp'] });
 });
 
-test('one application per line when required', () => {
+test('one application per line, as Copi requires, unless an exercise allows more', () => {
   const p = proof(['A ⊃ B'], '~~A ⊃ ~~B', [['~~A ⊃ ~~B', '1, DN']]);
-  assertComplete(p);
-  assertLineError(p, 2, /once per line/, { maxApps: 1 });
+  assertLineError(p, 2, /once per line/);
+  assertComplete(p, { maxApps: Infinity });
+  assertComplete(proof(['A ⊃ B'], '~~A ⊃ ~~B', [['~~A ⊃ B', '1, DN'], ['~~A ⊃ ~~B', '2, D.N.']]));
+});
+
+test('Absorption', () => {
+  assertComplete(proof(['A ⊃ B'], 'A ⊃ (A • B)', [['A ⊃ (A • B)', '1, Abs.']]));
+  assertLineError(proof(['A ⊃ B'], 'A ⊃ (B • A)', [['A ⊃ (B • A)', '1, Abs']]), 2, /antecedent first/);
+});
+
+test('Copi’s labels and assumption annotations are read', () => {
+  assertComplete(proof(['A ⊃ B', 'B ⊃ C'], 'A ⊃ C', [
+    ['A', 'Assumption (C.P.)'],
+    ['B', '1, 3, M.P.'],
+    ['C', '2, 4, M.P.'],
+    ['A ⊃ C', '3–5, C.P.'],
+  ]));
+  assertComplete(proof(['A ⊃ B', 'B ⊃ C'], 'A ⊃ C', [
+    ['A', '(C.P.)'],
+    ['B', '1, 3, MP'],
+    ['C', '2, 4, MP'],
+    ['A ⊃ C', '3-5, CP'],
+  ]));
+});
+
+test('Copi’s indirect proof ends at the explicit contradiction', () => {
+  const p = proof(['A ∨ B', 'A ⊃ C', 'B ⊃ C'], 'C', [
+    ['~C', 'Assumption (I.P.)'],
+    ['~A', '2, 4, M.T.'],
+    ['B', '1, 5, D.S.'],
+    ['C', '3, 6, M.P.'],
+    ['C • ~C', '7, 4, Conj.'],
+  ]);
+  const r = checkProof(p);
+  assert.ok(r.complete && r.byContradiction, r.problems.join(' '));
+  // Hurley's ending, discharging the sequence, is also accepted.
+  assertComplete(proof(['A ∨ B', 'A ⊃ C', 'B ⊃ C'], 'C', [
+    ['~C', 'AIP'], ['~A', '2, 4, MT'], ['B', '1, 5, DS'], ['C', '3, 6, MP'], ['C • ~C', '7, 4, Conj'],
+    ['~~C', '4–8, IP'], ['C', '9, DN'],
+  ]));
+  // A contradiction under an assumption that does not deny the conclusion proves nothing.
+  const q = checkProof(proof(['A ⊃ B'], 'B', [['A', 'AIP'], ['B', '1, 2, MP'], ['~B', '1, 2, MP']]));
+  assert.ok(!q.complete);
 });
 
 // --- Quantifiers ---------------------------------------------------------
@@ -251,7 +292,15 @@ test('identity: substitution, symmetry, reflexivity', () => {
     ['Fa', '1, 3, Id'],
   ]));
   assertComplete(proof([], 'a = a', [['a = a', 'Id']]));
-  assertLineError(proof(['Fb', 'a = b'], 'Fa', [['Fa', '1, 2, Id']]), 3, /other way/);
+  // Copi substitutes in either direction.
+  assertComplete(proof(['Fb', 'a = b'], 'Fa', [['Fa', '1, 2, Id']]));
+  assertComplete(proof(['Wgf', 'g = m'], 'Wmf', [['Wmf', '1, 2, Id.']]));
+});
+
+test('identity: what differs in a property is not identical', () => {
+  assertComplete(proof(['Fa', '~Fb'], '~(a = b)', [['~(a = b)', '1, 2, Id']]));
+  assertComplete(proof(['~Fb', 'Fa'], '~(b = a)', [['~(b = a)', '1, 2, Id']]));
+  assertLineError(proof(['Fa', '~Gb'], '~(a = b)', [['~(a = b)', '1, 2, Id']]), 3, /negation of the same line/);
 });
 
 test('identity: substitution may replace some occurrences', () => {

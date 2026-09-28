@@ -63,7 +63,7 @@ export function print(n, opts = {}) {
 
 export function printArgument(premises, conclusion, opts = {}) {
   const ps = premises.map((p) => print(p, opts)).join(', ');
-  return ps ? `${ps} / ${print(conclusion, opts)}` : `/ ${print(conclusion, opts)}`;
+  return ps ? `${ps} /∴ ${print(conclusion, opts)}` : `/∴ ${print(conclusion, opts)}`;
 }
 
 // Words for screen readers; symbols like ⊃ are otherwise read as "superset".

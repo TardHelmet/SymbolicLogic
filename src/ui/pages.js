@@ -12,19 +12,20 @@ import { mainOperator, print } from '../logic/printer.js';
 import { isSentential, classifyStatement, validity, showRow } from '../logic/semantics.js';
 import * as FO from '../logic/models.js';
 import { checkProof, hints } from '../logic/proof.js';
+import { IMPLICATION } from '../logic/rules.js';
 
 // --- home ------------------------------------------------------------------------
 
 export function renderHome(parts) {
   const hero = h('header', { class: 'hero' },
     h('h1', {}, 'Symbolic logic, from the Stoics to possible worlds'),
-    h('p', {}, 'A course in sentential and predicate logic in the notation of Hurley and Copi, followed by a short passage into the logics that reject some classical laws. You read, then work: every truth table, translation and proof you enter is checked by a logic engine, and when something is wrong it tells you why.'),
+    h('p', {}, 'A course in sentential and predicate logic in the notation and rules of Copi, with Langer’s account of logical form, classes and the axiomatic method, followed by a short passage into the logics that reject some classical laws. You read, then work: every truth table, translation and proof you enter is checked by a logic engine, and when something is wrong it tells you why.'),
     h('div', { class: 'formula-line', 'aria-label': 'If the first, then the second; the first; therefore the second.' }, formulaText('p ⊃ q, p / q')),
-    h('p', { class: 'small muted' }, 'The first of the Stoic “indemonstrables”, now called modus ponens. It is where the course begins.'));
+    h('p', { class: 'small muted' }, 'The first of the Stoic “indemonstrables”, now called modus ponens. It is the first of Copi’s nine rules of inference.'));
 
   const notes = h('div', { class: 'notes' },
     h('section', {}, h('h2', {}, 'Checked by logic'), h('p', {}, 'Answers are marked by what they mean. Any formula equivalent to the right translation is accepted; a wrong one gets a concrete situation where it and the sentence come apart.')),
-    h('section', {}, h('h2', {}, 'Hurley’s notation'), h('p', {}, inline('Type {!~}, {!•}, {!∨}, {!⊃}, {!≡} with the palette or as ~ . v > <->. The switch at the top shows everything in modern notation instead, as used by most philosophy journals.'))),
+    h('section', {}, h('h2', {}, 'Copi’s notation'), h('p', {}, inline('Type {!~}, {!•}, {!∨}, {!⊃}, {!≡} with the palette or as ~ . v > <->. The switch at the top shows everything in modern notation instead, as used by most philosophy journals.'))),
     h('section', {}, h('h2', {}, 'Margins'), h('p', {}, 'Each lesson has a margin on where its ideas come from and what has been argued about them, with sources you can follow up.')));
 
   const partEls = parts.map((part) => h('section', { class: 'part' },
@@ -118,7 +119,7 @@ function proofPanel() {
   };
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') start(); });
   return h('section', { class: 'panel' }, h('h2', {}, 'A proof'),
-    h('p', { class: 'small muted' }, 'Enter any argument and prove it with Hurley’s rules.'),
+    h('p', { class: 'small muted' }, 'Enter any argument and prove it with Copi’s rules.'),
     h('div', { class: 'fin' }, input), h('div', { class: 'actions' }, h('button', { type: 'button', class: 'btn primary', onclick: start }, 'Start proof')), holder, feedback);
 }
 
@@ -145,7 +146,7 @@ const SYMBOLS = [
 
 export function renderReference() {
   const sym = h('div', { class: 'ref-table-wrap' }, h('table', { class: 'ref' },
-    h('thead', {}, h('tr', {}, ['Hurley', 'Modern', 'Type', 'Name', 'Reading', 'Polish'].map((t) => h('th', {}, t)))),
+    h('thead', {}, h('tr', {}, ['Copi', 'Modern', 'Type', 'Name', 'Reading', 'Polish'].map((t) => h('th', {}, t)))),
     h('tbody', {}, SYMBOLS.map(([hur, mod, type, name, reading, pol]) => h('tr', {},
       h('td', { class: 'f' }, hur), h('td', { class: 'f' }, mod), h('td', {}, h('code', {}, type)), h('td', {}, name), h('td', {}, reading), h('td', { class: 'f' }, pol))))));
   return h('div', { class: 'tool-page' },
@@ -153,25 +154,40 @@ export function renderReference() {
     h('section', { class: 'panel' }, h('h2', {}, 'Symbols'), sym,
       h('p', { class: 'small muted' }, inline('Statement letters are capitals. Predicates are capitals followed by names or variables, as in {Fa} or {Rxy}. Names (individual constants) are a–u and w; lowercase v is always the wedge. Variables are x, y, z, with x₁, x₂… (typed x1, x2) when more are needed. Polish notation, due to Łukasiewicz, writes operators first and needs no brackets: {(A • B) ⊃ C} is CKabc.'))),
     h('section', { class: 'panel' }, h('h2', {}, 'The five truth functions'), staticTable(['~p', 'p • q', 'p ∨ q', 'p ⊃ q', 'p ≡ q'])),
-    h('section', { class: 'panel' }, h('h2', {}, 'Rules of implication'), h('p', { class: 'small muted' }, 'Apply to whole lines only.'), ruleTable(['MP', 'MT', 'HS', 'DS', 'CD', 'Simp', 'Conj', 'Add'])),
+    h('section', { class: 'panel' }, h('h2', {}, 'Rules of inference'), h('p', { class: 'small muted' }, 'Copi’s nine elementary valid argument forms. They apply to whole lines only. Type the abbreviations with or without the dots.'), ruleTable(Object.keys(IMPLICATION))),
     h('section', { class: 'panel' }, h('h2', {}, 'Rules of replacement'), h('p', { class: 'small muted' }, inline('Apply to whole lines or to any part of a line; {!::} means the two forms may replace each other.')), ruleTable(['DM', 'Com', 'Assoc', 'Dist', 'DN', 'Trans', 'Impl', 'Equiv', 'Exp', 'Taut'])),
     h('section', { class: 'panel' }, h('h2', {}, 'Conditional and indirect proof'),
-      renderBlock('**Conditional proof.** Assume the antecedent of the conditional you want (justify it ACP). Derive the consequent. Then write the conditional, citing the whole indented sequence, as in “3–7, CP”.'),
-      renderBlock('**Indirect proof.** Assume the negation of what you want (AIP). Derive a contradiction of the form {p • ~p}. Then write the negation of the assumption, citing the sequence with IP, and use DN if needed.'),
+      renderBlock('**Conditional proof.** Assume the antecedent of the conditional you want (“Assumption (C.P.)”, or ACP). Derive the consequent. Then write the conditional, citing the whole indented sequence, as in “3–7, C.P.”.'),
+      renderBlock('**Indirect proof.** Assume the denial of the conclusion (“Assumption (I.P.)”, or AIP) and derive an explicit contradiction, {p • ~p}. The proof is then complete. Inside a larger proof, discharge the assumption instead: write its negation, citing the sequence with I.P., and use D.N. if needed.'),
       renderBlock('Lines inside an indented sequence cannot be cited once the sequence is closed.')),
     h('section', { class: 'panel' }, h('h2', {}, 'Quantifier and identity rules'), ruleTable(['UI', 'UG', 'EI', 'EG', 'CQ', 'Id']),
       h('ul', { class: 'small' },
-        h('li', {}, inline('**UI**: replace every free occurrence of the quantified variable with the same name or variable, and do not let another quantifier capture it.')),
-        h('li', {}, inline('**EI**: the name must be new to the proof and must not appear in the conclusion.')),
-        h('li', {}, inline('**UG**: generalize only on a variable, never a name; not inside an indented sequence whose first line has that variable free; and not on a variable that is free in a line obtained by EI.')),
-        h('li', {}, inline('**Id**: from nothing, {a = a}; from {a = b}, {b = a}; from a line about a and {a = b}, the same line with b for some occurrences of a.')))),
+        h('li', {}, inline('**U.I.**: replace every free occurrence of the quantified variable with the same name or variable, and do not let another quantifier capture it. Copi instantiates to *y*, “any arbitrarily selected individual”, when he means to generalize again.')),
+        h('li', {}, inline('**E.I.**: the name must be new to the proof and must not appear in the conclusion. Use E.I. before U.I.')),
+        h('li', {}, inline('**U.G.**: generalize only on a variable, never a name; not inside an indented sequence whose first line has that variable free; and not on a variable that is free in a line obtained by E.I.')),
+        h('li', {}, inline('**Q.N.**: a tilde moves across a quantifier and flips it. Hurley calls this CQ; either name is accepted.')),
+        h('li', {}, inline('**Id.** (from Copi’s *Symbolic Logic*, since *Introduction to Logic* has no identity): from a line about a and {a = b}, the same line with b for some occurrences of a, or a for b; from a line about a and the negation of the same line about b, {~(a = b)}; from {a = b}, {b = a}; and {a = a} from nothing.')))),
+    h('section', { class: 'panel' }, h('h2', {}, 'Copi and Hurley compared'),
+      h('p', { class: 'small muted' }, 'The course follows Copi, Cohen and Rodych, Introduction to Logic (15th ed.). Hurley’s Concise Introduction to Logic uses the same notation and nearly the same rules. Where they differ, the checker accepts both unless the difference matters.'),
+      h('div', { class: 'ref-table-wrap' }, h('table', { class: 'ref' },
+        h('thead', {}, h('tr', {}, ['', 'Copi', 'Hurley'].map((t) => h('th', {}, t)))),
+        h('tbody', {}, [
+          ['Rules of inference', 'nine, with Absorption', 'eight: no Absorption'],
+          ['Rules in all', 'nineteen', 'eighteen'],
+          ['Abbreviations', 'M.P., De M., D.N. …', 'MP, DM, DN …'],
+          ['Indirect proof', 'assume the denial of the conclusion; the proof ends at the contradiction', 'the sequence is discharged with IP, giving the negation of the assumption'],
+          ['Negated quantifiers', 'quantifier negation (Q.N.)', 'change of quantifier (CQ)'],
+          ['Identity substitution', 'in either direction (Symbolic Logic)', 'left name to right name only'],
+          ['Instance for U.G.', 'y, “any arbitrarily selected individual”', 'any variable'],
+          ['Categorical propositions', 'the Boolean interpretation', 'the Boolean standpoint'],
+        ].map(([k, a, b]) => h('tr', {}, h('th', { scope: 'row' }, k), h('td', {}, a), h('td', {}, b))))))),
     h('section', { class: 'panel' }, h('h2', {}, 'Strategy'),
       h('ul', {},
         h('li', {}, 'Look at the conclusion’s main operator and work backward from it.'),
         h('li', {}, inline('To prove {p ⊃ q}, assume {p} and derive {q}.')),
         h('li', {}, inline('To prove {~p}, or when stuck, assume {p} and aim for a contradiction.')),
         h('li', {}, 'Break premises down: Simp for conjunctions, MP and MT for conditionals, DS for disjunctions.'),
-        h('li', {}, 'Use replacement rules to put a line into the shape a rule of implication needs.'),
+        h('li', {}, 'Use replacement rules to put a line into the shape a rule of inference needs.'),
         h('li', {}, 'In predicate proofs, do EI before UI, so that the new name can be used when instantiating universals.'))));
 }
 
@@ -185,7 +201,7 @@ export function renderSources(lessons) {
   }
   const ids = Object.keys(BIB).sort((a, b) => BIB[a].author.localeCompare(BIB[b].author) || String(BIB[a].year).localeCompare(String(BIB[b].year)));
   return h('div', { class: 'tool-page' },
-    h('header', {}, h('h1', {}, 'Sources'), h('p', {}, inline('Everything cited in the margins. Open-access texts are linked. The course follows the notation and rules of Hurley & Watson, *A Concise Introduction to Logic*; *forall x: Calgary* is a free textbook covering much of the same ground in modern notation.'))),
+    h('header', {}, h('h1', {}, 'Sources'), h('p', {}, inline('Everything cited in the margins. Open-access texts are linked. The course follows the notation and rules of Copi, Cohen and Rodych, *Introduction to Logic* (15th ed.), with Copi’s *Symbolic Logic* for relations and identity and Langer’s *Introduction to Symbolic Logic* for form, classes and the axiomatic method; Hurley and Watson’s *Concise Introduction to Logic* is cited second. *forall x: Calgary* is a free textbook covering much of the same ground in modern notation.'))),
     h('section', { class: 'panel' }, h('ol', { class: 'bib' }, ids.map((id) => h('li', { id: `src-${id}` }, cite(id),
       usedIn.has(id) ? h('span', { class: 'used' }, 'In: ', usedIn.get(id).map((l, i) => [i ? ', ' : '', h('a', { href: `#/lesson/${l.id}` }, l.title)])) : null)))));
 }

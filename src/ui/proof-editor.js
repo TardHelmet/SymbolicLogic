@@ -30,14 +30,14 @@ export function proofEditor({ premises, conclusion, mode = 'full', given = [], b
     const last = i === premises.length - 1;
     premiseBox.append(h('div', { class: `proof-row${last ? ' premise-last' : ''}` },
       h('span', { class: 'n' }, `${i + 1}.`),
-      h('span', { class: 'body' }, h('span', { class: 'static' }, formula(p), last ? h('span', { class: 'concl' }, '/ ', formula(conclusion)) : null)),
+      h('span', { class: 'body' }, h('span', { class: 'static' }, formula(p), last ? h('span', { class: 'concl' }, '/∴ ', formula(conclusion)) : null)),
       h('span', { class: 'just-static' }, ''),
       h('span', {})));
   });
   if (!premises.length) {
     premiseBox.append(h('div', { class: 'proof-row premise-last' },
       h('span', { class: 'n' }, ''),
-      h('span', { class: 'body' }, h('span', { class: 'static' }, h('span', { class: 'concl' }, '/ ', formula(conclusion)))),
+      h('span', { class: 'body' }, h('span', { class: 'static' }, h('span', { class: 'concl' }, '/∴ ', formula(conclusion)))),
       h('span', {}), h('span', {})));
   }
 
@@ -187,8 +187,8 @@ export function proofEditor({ premises, conclusion, mode = 'full', given = [], b
     tools.append(
       h('span', { class: 'sep', 'aria-hidden': 'true' }),
       h('button', { type: 'button', class: 'btn quiet', onclick: add('') }, '+ Line'),
-      h('button', { type: 'button', class: 'btn quiet', onclick: add('ACP'), title: 'Assume a formula for conditional proof' }, '+ Assume (ACP)'),
-      h('button', { type: 'button', class: 'btn quiet', onclick: add('AIP'), title: 'Assume a formula for indirect proof' }, '+ Assume (AIP)'),
+      h('button', { type: 'button', class: 'btn quiet', onclick: add('ACP'), title: 'Assume a formula for conditional proof' }, '+ Assumption (C.P.)'),
+      h('button', { type: 'button', class: 'btn quiet', onclick: add('AIP'), title: 'Assume a formula for indirect proof' }, '+ Assumption (I.P.)'),
     );
   }
 

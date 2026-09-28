@@ -1,7 +1,7 @@
 export default {
   id: 'replacement-rules',
   title: 'Proofs II: the rules of replacement',
-  hurley: '§§7.3–7.4',
+  refs: { copiIL: '§§9.6–9.8', copiSL: '§3.2', hurley: '§§7.3–7.4' },
   card: 'Ten equivalences that can be used anywhere in a line, and how they put formulas into the shape the other rules need.',
   summary: 'A rule of replacement says that two forms are logically equivalent, so either may replace the other wherever it occurs, even deep inside a line.',
   reading: [
@@ -18,10 +18,10 @@ export default {
     ] },
     { example: 'Replacement inside a line', steps: [
       'From {~(A • B) ⊃ C}, DM gives {(~A ∨ ~B) ⊃ C}: the rule rewrites the antecedent and leaves the rest alone.',
-      'By contrast, from {(A • B) ⊃ C} you cannot get {A ⊃ C} by Simp, because Simp is a rule of implication. (Try A true, B false, C false.)',
+      'By contrast, from {(A • B) ⊃ C} you cannot get {A ⊃ C} by Simp, because Simp is a rule of inference, which applies to whole lines only. (Try A true, B false, C false.)',
     ] },
     { h: 'Using them' },
-    'Replacement rules rarely finish a proof on their own. Their job is to put a line into the shape a rule of implication needs.',
+    'Replacement rules rarely finish a proof on their own. Their job is to put a line into the shape a rule of inference needs.',
     { proof: `1. ~A ∨ B
 2. A          / B
 3. ~~A        2, DN
@@ -68,9 +68,9 @@ export default {
     title: 'An algebra of thought',
     body: [
       'Replacement rules treat logic as algebra: equivalent expressions may be substituted anywhere, as equal quantities may in arithmetic. This way of thinking comes from nineteenth-century Britain. Augustus De Morgan stated the laws that bear his name in his *Formal Logic* of 1847 (versions were known to medieval logicians). George Boole’s *Laws of Thought* (1854) developed a full algebra of classes and propositions.',
-      'Boole derived the principle of contradiction as an algebraic law. Writing *x* for a class and *xx* for “the things that are *x* and *x*”, he noted that *xx* = *x*, and so *x*(1 − *x*) = 0: nothing is both *x* and not *x*. The same idempotence is Hurley’s Taut: {p} may replace, and be replaced by, {p • p}.',
+      'Boole derived the principle of contradiction as an algebraic law. Writing *x* for a class and *xx* for “the things that are *x* and *x*”, he noted that *xx* = *x*, and so *x*(1 − *x*) = 0: nothing is both *x* and not *x*. The same idempotence is Copi’s Taut.: {p} may replace, and be replaced by, {p • p}.',
       'Every replacement rule here can be checked by a truth table, and the course’s tests do exactly that: each pair of forms is verified to agree on every row.',
     ],
-    sources: ['demorgan1847', 'boole1854', 'kneale1962', 'hurley2018'],
+    sources: ['copiIL', 'copiSL', 'demorgan1847', 'boole1854', 'kneale1962', 'hurley2018'],
   },
 };

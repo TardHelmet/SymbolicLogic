@@ -5,7 +5,7 @@ import { renderExercise } from './exercise.js';
 import { cite } from './cite.js';
 import { truthTable, columns } from '../logic/semantics.js';
 import { parseFormula } from '../logic/parser.js';
-import { parseProofText, checkProof } from '../logic/proof.js';
+import { parseProofText, checkProof, formatJustification } from '../logic/proof.js';
 import { IMPLICATION, REPLACEMENT, OTHER } from '../logic/rules.js';
 import * as A from '../logic/ast.js';
 import * as MV from '../logic/manyvalued.js';
@@ -41,7 +41,7 @@ export function staticProof(text) {
   const box = h('div', { class: 'proof', role: 'group', 'aria-label': 'Worked proof' });
   if (!p.premises.length) {
     box.append(h('div', { class: 'proof-row premise-last' }, h('span', { class: 'n' }, ''),
-      h('span', { class: 'body' }, h('span', { class: 'static' }, h('span', { class: 'concl' }, '/ ', formula(p.conclusion)))), h('span', {}), h('span', {})));
+      h('span', { class: 'body' }, h('span', { class: 'static' }, h('span', { class: 'concl' }, '/∴ ', formula(p.conclusion)))), h('span', {}), h('span', {})));
   }
   res.lines.forEach((l, i) => {
     const isLastPremise = i === p.premises.length - 1;
@@ -49,8 +49,8 @@ export function staticProof(text) {
       h('span', { class: 'n' }, `${l.n}.`),
       h('span', { class: 'body' },
         h('span', { class: 'scope', style: `--depth:${l.depth}`, 'aria-hidden': 'true' }),
-        h('span', { class: 'static' }, l.formula ? formula(l.formula) : l.text, isLastPremise ? h('span', { class: 'concl' }, '/ ', formula(p.conclusion)) : null)),
-      h('span', { class: 'just-static' }, l.rule === 'Premise' ? '' : l.just),
+        h('span', { class: 'static' }, l.formula ? formula(l.formula) : l.text, isLastPremise ? h('span', { class: 'concl' }, '/∴ ', formula(p.conclusion)) : null)),
+      h('span', { class: 'just-static' }, l.rule === 'Premise' ? '' : formatJustification(l.just)),
       h('span', {})));
   });
   return box;
@@ -61,7 +61,7 @@ export function ruleTable(ids) {
     const r = IMPLICATION[id] ?? REPLACEMENT[id] ?? OTHER[id];
     const forms = [r.display].flat();
     return h('tr', {},
-      h('td', { class: 'abbr' }, id),
+      h('td', { class: 'abbr' }, r.label ?? id),
       h('td', {}, r.name),
       h('td', {}, forms.map((d, i) => [i ? h('br') : null, schemaText(d)])));
   });
@@ -73,8 +73,8 @@ export function ruleTable(ids) {
 // Rule displays like "p ⊃ q, p / q" or "~(p • q) :: (~p ∨ ~q)", with metavariables in italics.
 function schemaText(d) {
   const span = h('span', { class: 'f' });
-  d.split(/(\s::\s|\s\/\s|,\s|\s{2}or\s{2})/).forEach((part) => {
-    if (/^(\s::\s|\s\/\s|,\s|\s{2}or\s{2})$/.test(part)) { span.append(part); return; }
+  d.split(/(\s::\s|\s∴\s|^∴\s|,\s|\s{2}or\s{2})/).forEach((part) => {
+    if (/^(\s::\s|\s∴\s|∴\s|,\s|\s{2}or\s{2})$/.test(part)) { span.append(part); return; }
     [...part].forEach((ch) => span.append(/[pqrs]/.test(ch) ? h('i', {}, ch) : ch));
   });
   return span;
@@ -115,6 +115,18 @@ export function renderBlock(b) {
   return h('p', {}, JSON.stringify(b));
 }
 
+// "Copi §9.2 (Symbolic Logic §3.1) · Langer ch. XI · Hurley §7.1"
+function refsLine(refs) {
+  if (!refs) return null;
+  const parts = [];
+  if (refs.copiIL && refs.copiSL) parts.push(`Copi ${refs.copiIL} (Symbolic Logic ${refs.copiSL})`);
+  else if (refs.copiIL) parts.push(`Copi ${refs.copiIL}`);
+  else if (refs.copiSL) parts.push(`Copi, Symbolic Logic ${refs.copiSL}`);
+  if (refs.langer) parts.push(`Langer ${refs.langer}`);
+  if (refs.hurley) parts.push(`Hurley ${refs.hurley}`);
+  return parts.length ? h('span', { class: 'refs' }, parts.join(' · ')) : null;
+}
+
 export function renderMargin(margin) {
   if (!margin) return null;
   return h('aside', { class: 'margin', 'aria-label': 'In the margin' },
@@ -128,7 +140,7 @@ export function renderLesson(lesson, { part, prev, next }) {
   const head = h('header', { class: 'lesson-head' },
     h('div', { class: 'eyebrow' },
       h('span', {}, `Part ${part.numeral} · Lesson ${lesson.number}`),
-      lesson.hurley ? h('span', { class: 'hurley' }, `Hurley ${lesson.hurley}`) : null),
+      refsLine(lesson.refs)),
     h('h1', {}, lesson.title),
     lesson.summary ? h('p', { class: 'summary' }, inline(lesson.summary)) : null,
     h('div', { class: 'reading' }, (lesson.reading ?? []).map(renderBlock)));

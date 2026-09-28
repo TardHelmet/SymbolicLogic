@@ -138,12 +138,12 @@ registerType('flag-step', 'Find the error', (ex) => {
   premises.forEach((p, i) => {
     box.append(h('div', { class: `proof-row${i === premises.length - 1 ? ' premise-last' : ''}` },
       h('span', { class: 'n' }, `${i + 1}.`),
-      h('span', { class: 'body' }, h('span', { class: 'static' }, formula(p), i === premises.length - 1 ? h('span', { class: 'concl' }, '/ ', formula(conclusion)) : null)),
+      h('span', { class: 'body' }, h('span', { class: 'static' }, formula(p), i === premises.length - 1 ? h('span', { class: 'concl' }, '/∴ ', formula(conclusion)) : null)),
       h('span', { class: 'just-static' }, ''), h('span', {})));
   });
   if (!premises.length) {
     box.append(h('div', { class: 'proof-row premise-last' }, h('span', { class: 'n' }, ''),
-      h('span', { class: 'body' }, h('span', { class: 'static' }, h('span', { class: 'concl' }, '/ ', formula(conclusion)))), h('span', {}), h('span', {})));
+      h('span', { class: 'body' }, h('span', { class: 'static' }, h('span', { class: 'concl' }, '/∴ ', formula(conclusion)))), h('span', {}), h('span', {})));
   }
   // Depths come from the checker, so the scope lines are drawn correctly.
   const checked = checkProof({ premises, conclusion, lines: ex.lines.map(([text, just]) => ({ text, just })) });

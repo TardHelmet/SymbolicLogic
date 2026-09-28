@@ -10,7 +10,7 @@ export const GLYPH = {
 // Multi-character aliases, longest first.
 const MULTI = [
   ['<->', 'IFF'], ['<=>', 'IFF'], ['->', 'IF'], ['=>', 'IF'], ['==', 'IFF'],
-  ['!=', 'NEQ'], ['[]', 'BOX'], ['<>', 'DIA'], ['//', 'SEP'], ['\\/', 'OR'], ['/\\', 'AND'],
+  ['!=', 'NEQ'], ['[]', 'BOX'], ['<>', 'DIA'], ['/∴', 'SEP'], ['//', 'SEP'], ['\\/', 'OR'], ['/\\', 'AND'],
 ];
 
 const SINGLE = {

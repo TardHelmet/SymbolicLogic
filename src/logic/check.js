@@ -8,7 +8,7 @@ import { print } from './printer.js';
 import {
   isSentential, equivalence, validity, classifyStatement, relations, consistency, truthTable, columns, evaluate,
 } from './semantics.js';
-import { checkProof } from './proof.js';
+import { checkProof, formatJustification } from './proof.js';
 import * as FO from './models.js';
 import * as KR from './kripke.js';
 
@@ -278,7 +278,9 @@ function checkProofExercise(ex, input) {
   return {
     ok: result.complete,
     result,
-    message: result.complete ? 'The proof is complete and every line checks.' : (result.problems[0] ?? 'Some lines need attention.'),
+    message: result.complete
+      ? `The proof is complete and every line checks.${result.byContradiction ? ` ${result.note}` : ''}`
+      : (result.problems[0] ?? 'Some lines need attention.'),
   };
 }
 
@@ -339,7 +341,7 @@ export function modelAnswer(ex) {
       const v = validity(premises, conclusion);
       return v.valid ? { claimValid: true } : { valuation: v.counterexamples[0] };
     }
-    case 'proof': return ex.solution.map(([text, just]) => ({ text, just }));
+    case 'proof': return ex.solution.map(([text, just]) => ({ text, just: formatJustification(just) }));
     case 'enthymeme': return ex.key;
     default: return EXTRA_TYPES[ex.type]?.answer(ex);
   }

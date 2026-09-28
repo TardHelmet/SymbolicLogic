@@ -1,4 +1,4 @@
-/* Symbolic Logic: a course in Hurley notation.
+/* Symbolic Logic: a course in Copi’s notation.
    Palette: cool paper and Prussian-blue ink, with truth values in green/red.
    Type: Source Serif 4 for reading, STIX Two Text for formulas, IBM Plex Sans for controls. */
 
@@ -187,7 +187,7 @@ h1, h2, h3, h4 { line-height: 1.2; text-wrap: balance; margin: 0; font-weight: 6
   font-family: var(--font-ui); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 0.35rem 0.9rem;
 }
-.eyebrow .hurley { text-transform: none; letter-spacing: 0; }
+.eyebrow .refs { text-transform: none; letter-spacing: 0; }
 .lesson-head h1 { font-size: var(--step-3); margin: 0.35rem 0 0.75rem; letter-spacing: -0.01em; }
 .lesson-head .summary { color: var(--ink-2); font-size: var(--step-1); line-height: 1.45; margin: 0 0 1.5rem; }
 
@@ -367,7 +367,7 @@ table.tt .F { color: var(--false); }
 .proof-row .static { padding: 0.35rem 0.6rem; font-size: 1.1rem; white-space: nowrap; overflow-x: auto; }
 .proof-row .concl { color: var(--ink-3); margin-left: 0.75rem; }
 .proof-row input.just { font-family: var(--font-ui); font-size: 0.875rem; }
-.proof-row .just-static { font-family: var(--font-ui); font-size: 0.85rem; color: var(--ink-2); padding-left: 0.6rem; }
+.proof-row .just-static { font-family: var(--font-ui); font-size: 0.85rem; color: var(--ink-2); padding-left: 0.6rem; min-width: 0; overflow-wrap: anywhere; }
 .proof-row .del { font: 1rem var(--font-ui); border: 0; background: transparent; color: var(--ink-3); cursor: pointer; border-radius: 4px; height: 2rem; }
 .proof-row .del:hover { color: var(--false); background: var(--false-bg); }
 .proof-row.premise-last { border-bottom: 1.5px solid var(--rule-strong); padding-bottom: 0.3rem; margin-bottom: 0.3rem; }
@@ -448,7 +448,7 @@ table.ref .abbr { font-family: var(--font-ui); font-weight: 600; white-space: no
   .course-map.open { display: block; }
   .brand-sub { display: none; }
   .proof-row { grid-template-columns: 1.6rem minmax(0, 1fr) 2rem; }
-  .proof-row .just-cell { grid-column: 2 / 3; }
+  .proof-row .just-cell, .proof-row .just-static { grid-column: 2 / 3; }
   .proof-row .del { grid-row: 1; grid-column: 3; }
   .proof-msg { grid-column: 2 / -1; }
 }

@@ -1,7 +1,7 @@
 export default {
   id: 'arguments',
   title: 'Arguments, statements and form',
-  hurley: '§§1.1, 1.4–1.5',
+  refs: { copiIL: '§§1.2, 1.5–1.6', copiSL: '§§1.2–1.3', hurley: '§§1.1, 1.4–1.5' },
   card: 'What logic studies: when a conclusion follows from premises, and why that is a matter of form.',
   summary: 'Logic studies one relation: a conclusion *following from* premises. This lesson defines that relation and shows that whether it holds depends on the form of an argument, not on what the argument is about.',
   reading: [
@@ -141,8 +141,8 @@ export default {
       'Aristotle defined a deduction (*syllogismos*) as a discourse in which, certain things being laid down, something other than them follows of necessity from their being so. His logic studied relations among *terms*: “all A are B”, “some B are not C”.',
       'The Stoics, above all Chrysippus in the third century BCE, built a different logic whose units were whole propositions joined by “if”, “and” and “or”. That is the logic of the first half of this course. Its rediscovery as a logic of propositions, distinct from Aristotle’s, is largely owed to Łukasiewicz (1934) and to Mates’s *Stoic Logic* (1953).',
       'The Stoics also asked what the bearer of truth is. Sextus reports their answer: in speech three things are linked, the sound uttered, the external thing it is about, and what is *said*, the *lekton* or “sayable”. The first two are bodies; the sayable is incorporeal. A complete sayable that is true or false is an *axiōma*, a proposition. Stoic propositions could change their truth value: “it is day” is true now and false tonight.',
-      'Modern logic inherits the question. Hurley speaks of *statements*; others speak of sentences or propositions. For the formal work in this course the choice rarely matters, but it returns when we reach sense and reference in {@part:predicate}.',
+      'Modern logic inherits the question. Copi speaks of *propositions*, Hurley of *statements*, others of sentences. For the formal work in this course the choice rarely matters, but it returns when we reach sense and reference in {@part:predicate}.',
     ],
-    sources: ['aristotlePrA', 'sextusM', 'dl7', 'mates1953', 'lukasiewicz1934', 'bobzienSEP', 'longsedley1987', 'kneale1962', 'hurley2018', 'forallx'],
+    sources: ['copiIL', 'copiSL', 'aristotlePrA', 'sextusM', 'dl7', 'mates1953', 'lukasiewicz1934', 'bobzienSEP', 'longsedley1987', 'kneale1962', 'hurley2018', 'forallx'],
   },
 };

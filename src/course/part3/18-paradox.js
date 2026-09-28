@@ -1,7 +1,6 @@
 export default {
   id: 'paradox',
   title: 'Paradox',
-  hurley: 'beyond Hurley',
   card: 'The Liar, Russell’s barber, Curry’s paradox and the heap: what logic can and cannot settle about them.',
   summary: 'A paradox is an apparently valid argument from apparently true premises to an apparently false conclusion. Logic can show exactly which claims cannot all be true together. It cannot tell you which one to give up; that is where philosophy starts.',
   reading: [
@@ -12,7 +11,7 @@ export default {
     'The Liar is ancient. It is credited to Eubulides of Miletus in the fourth century BCE, and Chrysippus wrote several works on it. Modern responses divide by what they give up: Tarski denies that a language can contain its own truth predicate; Kripke lets the Liar fall into a gap, neither true nor false; Priest lets it be both. The next lesson builds the logics behind the last two.',
     { h: 'Russell’s paradox and the barber' },
     'In 1902 Russell wrote to Frege: consider the set of all sets that are not members of themselves. Is it a member of itself? If it is, it is not; if it is not, it is. Frege’s system assumed that every condition defines a set, and so it was inconsistent. Russell later gave a homely version. A village barber shaves all and only those villagers who do not shave themselves. Does he shave himself?',
-    'In predicate logic, with {Sxy} for “x shaves y”, the barber’s description is {(x)(Sbx ≡ ~Sxx)}. Instantiate x to b and you get {Sbb ≡ ~Sbb}, a Liar-shaped contradiction. So the statement that there is such a barber is refutable, and its negation, {~(∃y)(x)(Syx ≡ ~Sxx)}, is a theorem you can prove with Hurley’s rules. The barber is no paradox: there is simply no such barber. Russell’s set is a paradox because the principle that every condition defines a set seemed as certain as logic itself.',
+    'In predicate logic, with {Sxy} for “x shaves y”, the barber’s description is {(x)(Sbx ≡ ~Sxx)}. Instantiate x to b and you get {Sbb ≡ ~Sbb}, a Liar-shaped contradiction. So the statement that there is such a barber is refutable, and its negation, {~(∃y)(x)(Syx ≡ ~Sxx)}, is a theorem you can prove with Copi’s rules. The barber is no paradox: there is simply no such barber. Russell’s set is a paradox because the principle that every condition defines a set seemed as certain as logic itself.',
     { h: 'Curry’s paradox' },
     'Let C be a sentence that says: *if C is true, then A*, where A is anything at all, say “the moon is made of cheese.” Then {C ≡ (C ⊃ A)}, and from that biconditional A follows, by nothing more than Equiv, Exp, Taut and modus ponens. Curry’s paradox contains no negation. So the gap and glut theories, which tinker with negation, do not by themselves stop it; the pressure falls on the conditional, and in particular on the step (Exp and then Taut) that merges two uses of the assumption C into one, which logicians call *contraction*.',
     { h: 'The heap' },

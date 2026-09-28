@@ -1,7 +1,7 @@
 export default {
   id: 'argument-forms',
   title: 'Argument forms and fallacies',
-  hurley: '§6.6',
+  refs: { copiIL: '§8.8', copiSL: '§2.3', hurley: '§6.6' },
   card: 'The valid forms that recur everywhere, the two invalid ones that imitate them, and supplying missing premises.',
   summary: 'A handful of argument forms turn up again and again. Knowing them by sight, and knowing the invalid forms that look like them, is the working logician’s first skill.',
   reading: [
@@ -89,9 +89,9 @@ export default {
     body: [
       'Chrysippus reduced Stoic logic to five basic argument forms that need no demonstration, the *anapodeiktoi*. The Stoics wrote them with ordinal numbers as variables, “the first” and “the second”, much as we use *p* and *q*:',
       '1. If the first, the second; the first; therefore the second. (MP) 2. If the first, the second; not the second; therefore not the first. (MT) 3. Not both the first and the second; the first; therefore not the second. 4. Either the first or the second; the first; therefore not the second. 5. Either the first or the second; not the first; therefore the second.',
-      'The fourth is affirming a disjunct, which is valid for them because their “either … or” was exclusive. The third, {~(p • q), p / ~q}, has no name in Hurley’s list; it is valid with the dot. Other valid arguments were to be reduced to these by a small set of rules, the *themata*.',
+      'The fourth is affirming a disjunct, which is valid for them because their “either … or” was exclusive. The third, {~(p • q), p / ~q}, has no name in Copi’s list; it is valid with the dot. Other valid arguments were to be reduced to these by a small set of rules, the *themata*.',
       'Sextus reports, to mock the Stoics, that Chrysippus credited even dogs with the fifth: a hound tracking an animal reaches a fork of three roads, sniffs two, and takes the third without sniffing, reasoning that the animal went this way or that way or the other, not this way, not that way, so the other.',
     ],
-    sources: ['dl7', 'sextusPH', 'mates1953', 'bobzien2003', 'bobzienSEP', 'kneale1962', 'hurley2018'],
+    sources: ['copiIL', 'copiSL', 'dl7', 'sextusPH', 'mates1953', 'bobzien2003', 'bobzienSEP', 'kneale1962', 'hurley2018'],
   },
 };

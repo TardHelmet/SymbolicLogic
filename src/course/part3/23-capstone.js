@@ -1,7 +1,6 @@
 export default {
   id: 'capstone',
   title: 'Formalizing philosophy',
-  hurley: 'beyond Hurley',
   card: 'Four arguments from the tradition, taken apart with everything in the course.',
   summary: 'The method of this course, applied to four arguments. Formalize the argument. Decide whether it is valid, with a proof or a countermodel. Find the premise that carries the weight. Then ask which logic, if any, would reject which step.',
   reading: [

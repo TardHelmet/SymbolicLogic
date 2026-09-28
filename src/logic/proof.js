@@ -1,4 +1,6 @@
-// Proof checker for Hurley-style natural deduction.
+// Proof checker for natural deduction in Copi's system (Introduction to
+// Logic, 15th ed., ch. 9–10; identity from Symbolic Logic, 5th ed., §5.4),
+// with Hurley's variants accepted where they differ only in layout.
 //
 // A proof is { premises: [ast], conclusion: ast, lines: [{ text, just }] }.
 // Premises are lines 1..k. Students never indent: block structure comes
@@ -10,18 +12,25 @@ import { parseFormula } from './parser.js';
 import { print } from './printer.js';
 import {
   IMPLICATION, REPLACEMENT, OTHER, resolveRule, fitsImplication, diagnoseImplication,
-  replacementCost, diagnoseReplacement, implicationOutputs,
+  replacementCost, diagnoseReplacement, implicationOutputs, labelOf,
 } from './rules.js';
 
-// Convention switches, pending confirmation against Hurley & Watson 13e.
+// Copi's conventions. Each is a switch, since editions differ.
 export const DEFAULTS = {
-  maxApps: Infinity,              // applications of one replacement rule per line
+  // "Only one Rule of Inference should be applied at a time" (Copi, Symbolic
+  // Logic §3.1): one application of one replacement rule per line.
+  maxApps: 1,
+  // Copi's indirect proof assumes the denial of the conclusion and is complete
+  // once an explicit contradiction is reached. Hurley's form, which closes the
+  // sequence with IP and writes the negation of the assumption, is also
+  // accepted; it is the one that works inside a larger proof.
+  copiIP: true,
   ipDirect: false,                // may IP discharge ~A's assumption as A (skipping DN)?
-  contradictionEitherOrder: true, // accept ~q • q as well as q • ~q to close IP
+  contradictionEitherOrder: true, // accept ~q • q as well as q • ~q as a contradiction
   allowedRules: null,             // restrict the rules an exercise may use
 };
 
-const STRUCTURAL = new Set(['ACP', 'AIP', 'CP', 'IP']);
+const STRUCTURAL = new Set(['ACP', 'AIP', 'Asm', 'CP', 'IP']);
 
 // ---------------------------------------------------------------------------
 // Justifications: "1, 2, MP", "MP 1 2", "3–5 CP", "ACP"
@@ -31,7 +40,7 @@ export function parseJustification(text) {
   if (!src) return { error: 'Give a justification: the line numbers and the rule, as in “1, 2, MP”.' };
   const refs = [];
   const words = [];
-  const re = /(\d+)\s*-\s*(\d+)|(\d+)|([A-Za-z][A-Za-z.'’]*)|([,;\s]+)|(.)/g;
+  const re = /(\d+)\s*-\s*(\d+)|(\d+)|([A-Za-z][A-Za-z.'’]*)|([,;\s()]+)|(.)/g;
   let m;
   while ((m = re.exec(src))) {
     if (m[1]) refs.push({ from: +m[1], to: +m[2] });
@@ -44,7 +53,19 @@ export function parseJustification(text) {
   if (/^(pr|prem|premise|p)$/i.test(name)) return { error: 'Premises are given at the top; new lines need a rule.' };
   const r = resolveRule(name);
   if (r.error) return { error: r.error + (r.suggestion ? ` Did you mean ${r.suggestion}?` : '') };
+  // Copi marks the assumption line itself "(C.P.)" or "I.P.": with no cited
+  // lines, CP and IP open a sequence rather than close one.
+  if (!refs.length && r.id === 'CP') return { rule: 'ACP', refs };
+  if (!refs.length && r.id === 'IP') return { rule: 'AIP', refs };
   return { rule: r.id, refs };
+}
+
+/** A justification rewritten with Copi's abbreviations: "1,2,MP" becomes "1, 2, M.P.". */
+export function formatJustification(text) {
+  const j = parseJustification(text);
+  if (j.error) return text ?? '';
+  const refs = j.refs.map((r) => (r.single ? `${r.from}` : `${r.from}–${r.to}`)).join(', ');
+  return refs ? `${refs}, ${labelOf(j.rule)}` : labelOf(j.rule);
 }
 
 // ---------------------------------------------------------------------------
@@ -191,15 +212,20 @@ function checkIdentity(cited, target, ctx) {
     return ['Id with one cited line is symmetry: from a = b infer b = a (the identity may sit anywhere in the line).'];
   }
   if (cited.length === 2) {
+    // Copi's substitution works in either direction (Symbolic Logic §5.4):
+    // from ℱa and a = b, ℱb; from ℱb and a = b, ℱa.
     for (const [E, P] of [[cited[0], cited[1]], [cited[1], cited[0]]]) {
       if (E.type !== 'eq') continue;
-      if (substitutes(P, target, E.left, E.right) > 0) return [];
+      if (substitutes(P, target, E.left, E.right) > 0 || substitutes(P, target, E.right, E.left) > 0) return [];
     }
-    for (const [E, P] of [[cited[0], cited[1]], [cited[1], cited[0]]]) {
-      if (E.type !== 'eq') continue;
-      if (substitutes(P, target, E.right, E.left) > 0) {
-        return [`Hurley’s substitution rule replaces the left-hand name of the identity with the right-hand one. Your identity runs the other way (${print(E)}); use Id on it first to get ${E.right} = ${E.left}.`];
+    // And from ℱa and ~ℱb, ~(a = b): what differs in a property is not identical.
+    if (target.type === 'not' && target.arg.type === 'eq') {
+      const { left: a, right: b } = target.arg;
+      for (const [P, N] of [[cited[0], cited[1]], [cited[1], cited[0]]]) {
+        if (N.type !== 'not') continue;
+        if (substitutes(P, N.arg, a, b) > 0 || substitutes(P, N.arg, b, a) > 0) return [];
       }
+      return [`To infer ${print(target)}, cite a line about one of the two names and the negation of the same line about the other.`];
     }
     if (!cited.some((c) => c.type === 'eq')) return ['Substitution needs one cited line to be an identity, a = b.'];
     return ['This line does not come from the cited lines by substituting one name for the other.'];
@@ -284,7 +310,7 @@ export function checkProof({ premises, conclusion, lines }, options = {}) {
       info.errors.push(`${j.rule} is not available in this exercise. Allowed: ${opts.allowedRules.join(', ')}.`);
     }
 
-    if (j.rule === 'ACP' || j.rule === 'AIP') {
+    if (j.rule === 'ACP' || j.rule === 'AIP' || j.rule === 'Asm') {
       if (j.refs.length) info.errors.push('An assumption cites no lines.');
       const blk = { id: ++blockId, start: n, kind: j.rule, formula: info.formula };
       stack.push(blk);
@@ -293,14 +319,14 @@ export function checkProof({ premises, conclusion, lines }, options = {}) {
     } else if (j.rule === 'CP' || j.rule === 'IP') {
       const blk = stack.at(-1);
       if (!blk) {
-        info.errors.push(`There is no open assumption for ${j.rule} to discharge. Begin an indented sequence with ${j.rule === 'CP' ? 'ACP' : 'AIP'}.`);
+        info.errors.push(`There is no open assumption for ${j.rule} to discharge. Begin an indented sequence with an assumption: ${j.rule === 'CP' ? 'Assumption (C.P.)' : 'Assumption (I.P.)'}.`);
       } else {
         const r = j.refs;
         if (r.length !== 1 || r[0].from !== blk.start || r[0].to !== n - 1) {
           info.errors.push(`${j.rule} must cite the whole indented sequence: lines ${blk.start}–${n - 1}.`);
         }
-        if (j.rule === 'CP' && blk.kind !== 'ACP') info.errors.push(`Line ${blk.start} was assumed for indirect proof (AIP); close it with IP.`);
-        if (j.rule === 'IP' && blk.kind !== 'AIP') info.errors.push(`Line ${blk.start} was assumed for conditional proof (ACP); close it with CP.`);
+        if (j.rule === 'CP' && blk.kind === 'AIP') info.errors.push(`Line ${blk.start} was assumed for indirect proof; close it with IP.`);
+        if (j.rule === 'IP' && blk.kind === 'ACP') info.errors.push(`Line ${blk.start} was assumed for conditional proof; close it with CP.`);
         stack.pop();
         const assumption = out[blk.start - 1].formula;
         const last = out[n - 2]?.formula;
@@ -374,8 +400,20 @@ export function checkProof({ premises, conclusion, lines }, options = {}) {
     ? `Line${bad.length > 1 ? 's' : ''} ${bad.length > 1 ? `${bad.slice(0, -1).join(', ')} and ${bad.at(-1)}` : bad[0]} ${bad.length > 1 ? 'need' : 'needs'} attention.`
     : null;
   const reached = lines.length > 0 && last.depth === 0 && last.formula && A.equal(last.formula, conclusion);
+  // Copi's indirect proof: the one open assumption denies the conclusion and
+  // the last line is an explicit contradiction.
+  const denial = stack.length === 1 && stack[0].kind !== 'ACP' && stack[0].formula
+    && (A.equal(stack[0].formula, A.not(conclusion)) || (conclusion.type === 'not' && A.equal(stack[0].formula, conclusion.arg)));
+  const byContradiction = Boolean(opts.copiIP && denial && last.formula && isContradiction(last.formula, opts.contradictionEitherOrder));
+  if (byContradiction) {
+    return {
+      lines: out, complete: allOk, byContradiction: true,
+      problems: allOk ? [] : [summary],
+      note: `Indirect proof: the premises together with ${print(stack[0].formula)}, the denial of the conclusion, lead to a contradiction, so they cannot all be true. Wherever the premises are true, the conclusion is.`,
+    };
+  }
   const problems = [];
-  for (const b of stack) problems.push(`The assumption on line ${b.start} is still open; discharge it with ${b.kind === 'ACP' ? 'CP' : 'IP'}.`);
+  for (const b of stack) problems.push(`The assumption on line ${b.start} is still open; discharge it with ${b.kind === 'ACP' ? 'CP' : b.kind === 'AIP' ? 'IP' : 'CP or IP'}${b === stack[0] && stack.length === 1 && denial ? ', or, since it denies the conclusion, derive an explicit contradiction and stop there' : ''}.`);
   if (!reached && allOk && !stack.length) {
     const early = out.find((i) => i.rule !== 'Premise' && i.depth === 0 && i.formula && A.equal(i.formula, conclusion));
     problems.push(early
@@ -430,11 +468,12 @@ export function currentGoal(proof, result) {
   let goal = proof.conclusion;
   const stack = [];
   for (const info of result.lines) {
-    if (info.rule === 'ACP' || info.rule === 'AIP') stack.push(info);
+    if (info.rule === 'ACP' || info.rule === 'AIP' || info.rule === 'Asm') stack.push(info);
     if ((info.rule === 'CP' || info.rule === 'IP') && stack.length) stack.pop();
   }
   for (const blk of stack) {
-    if (blk.rule === 'AIP') return { kind: 'contradiction' };
+    const denies = goal && blk.formula && (A.equal(blk.formula, A.not(goal)) || (goal.type === 'not' && A.equal(blk.formula, goal.arg)));
+    if (blk.rule === 'AIP' || (blk.rule === 'Asm' && denies)) return { kind: 'contradiction' };
     if (goal && goal.type === 'imp' && blk.formula && A.equal(goal.left, blk.formula)) goal = goal.right;
     else return { kind: 'unknown' };
   }
@@ -443,8 +482,8 @@ export function currentGoal(proof, result) {
 
 export function strategyFor(goal) {
   switch (goal.type) {
-    case 'imp': return `The goal ${print(goal)} is a conditional. Try conditional proof: assume the antecedent, ${print(goal.left)} (ACP), and aim for the consequent.`;
-    case 'not': return `The goal ${print(goal)} is a negation. Try indirect proof: assume ${print(goal.arg)} (AIP) and derive a contradiction.`;
+    case 'imp': return `The goal ${print(goal)} is a conditional. Try conditional proof: assume the antecedent, ${print(goal.left)} (Assumption (C.P.), or ACP), and aim for the consequent.`;
+    case 'not': return `The goal ${print(goal)} is a negation. Try indirect proof: assume ${print(goal.arg)} (Assumption (I.P.), or AIP) and derive an explicit contradiction.`;
     case 'and': return `The goal ${print(goal)} is a conjunction. Derive each conjunct on its own line, then use Conj.`;
     case 'or': return `The goal ${print(goal)} is a disjunction. If you can derive ${print(goal.left)}, Add finishes it. Otherwise consider Impl or DM, or indirect proof.`;
     case 'iff': return `The goal ${print(goal)} is a biconditional. Derive both conditionals, conjoin them, and use Equiv.`;

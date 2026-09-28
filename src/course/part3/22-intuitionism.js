@@ -1,9 +1,9 @@
 export default {
   id: 'intuitionism',
   title: 'Excluded middle and constructive proof',
-  hurley: 'beyond Hurley',
+  refs: { copiIL: '§8.11' },
   card: 'Intuitionistic logic: proof as construction, why excluded middle and double negation fail, and Kripke models of growing knowledge.',
-  summary: 'For an intuitionist, asserting a statement means having a proof of it. On that reading most of Hurley’s rules survive, but a few do not, and the ones that fail are exactly the ones that let a proof reach a conclusion without constructing anything.',
+  summary: 'For an intuitionist, asserting a statement means having a proof of it. On that reading most of Copi’s rules survive, but a few do not, and the ones that fail are exactly the ones that let a proof reach a conclusion without constructing anything.',
   reading: [
     { h: 'Proof as construction' },
     'Brouwer held that mathematics is a mental construction and that logic, abstracted from finite reasoning, cannot be trusted over the infinite. Heyting gave the resulting logic its rules. Their reading of the operators, the Brouwer–Heyting–Kolmogorov (BHK) interpretation, explains truth in terms of proof:',
@@ -15,7 +15,7 @@ export default {
     ] },
     'On this reading {A ∨ ~A} would require, for every A, either a proof of A or a refutation of it, which nobody has for unsolved problems. So excluded middle is not a law. And {~~A} only says that A cannot be refuted, which is not the same as having a proof of A. So {~~A} does not yield {A}.',
     { h: 'What survives' },
-    'Most of {@part:sentential} survives: every rule of implication (including DS and MT), Com, Assoc, Dist, Exp, Taut, conditional proof, and indirect proof when its conclusion is a negation. What goes is a handful of replacement directions:',
+    'Most of {@part:sentential} survives: every rule of inference (including DS, MT and Abs), Com, Assoc, Dist, Exp, Taut, conditional proof, and indirect proof when its conclusion is a negation. What goes is a handful of replacement directions:',
     { list: [
       'DN from {~~p} to {p}. The other direction, {p} to {~~p}, is fine.',
       'DM from {~(p • q)} to {~p ∨ ~q}. The other three DM directions are fine.',
@@ -23,7 +23,7 @@ export default {
       'Trans from {~q ⊃ ~p} to {p ⊃ q}.',
       'The second form of Equiv, from {p ≡ q} to {(p • q) ∨ (~p • ~q)}.',
     ] },
-    'Indirect proof for a positive conclusion reaches {~~A} and then uses DN. The IP step itself is intuitionistically acceptable (it proves a negation); the DN step after it is not.',
+    'Indirect proof for a positive conclusion reaches {~~A} and then uses DN. The IP step itself is intuitionistically acceptable (it proves a negation); the DN step after it is not. Copi’s form of indirect proof, which stops at the contradiction, hides that step: refuting {~A} and declaring {A} proved is exactly the inference an intuitionist refuses.',
     { h: 'Kripke models of growing knowledge' },
     'Kripke gave intuitionistic logic a semantics like the modal one. Read worlds as stages of knowledge, and the arrows as ways knowledge can grow. What is known stays known, so a letter true at a stage is true at every later stage. Then:',
     { list: [
@@ -40,7 +40,7 @@ export default {
     { id: 'in-v1', type: 'kripke', logic: 'INT', question: 'validity', prompt: 'Is double negation *introduction* intuitionistically valid?', argument: 'A / ~~A' },
     { id: 'in-v2', type: 'kripke', logic: 'INT', question: 'validity', prompt: 'Is this direction of De Morgan’s rule intuitionistically valid?', argument: '~(A ∨ B) / ~A • ~B' },
     { id: 'in-v3', type: 'kripke', logic: 'INT', question: 'validity', prompt: 'Is disjunctive syllogism intuitionistically valid?', argument: 'A ∨ B, ~A / B' },
-    { id: 'in-f1', type: 'flag-step', logic: 'intuitionistic', prompt: '{@^indirect-proof}’s proof of excluded middle. Every line is classically correct. Which one would an intuitionist reject?',
+    { id: 'in-f1', type: 'flag-step', logic: 'intuitionistic', prompt: '{@^indirect-proof}’s proof of excluded middle, written out with the discharge line so that the last step is explicit. Every line is classically correct. Which one would an intuitionist reject?',
       argument: '/ A ∨ ~A',
       lines: [['~(A ∨ ~A)', 'AIP'], ['~A • ~~A', '1, DM'], ['~~(A ∨ ~A)', '1–2, IP'], ['A ∨ ~A', '3, DN']] },
     { id: 'in-f2', type: 'flag-step', logic: 'intuitionistic', prompt: 'Which line would an intuitionist reject?',
@@ -63,6 +63,6 @@ export default {
       'Dummett turned intuitionism into a general thesis about meaning. If the meaning of a statement is given by what would justify asserting it, then for statements we have no way of deciding, such as some about the remote past or about other minds, we are not entitled to assume that they are determinately true or false. On this view the choice between classical and intuitionistic logic is a choice between theories of meaning, and so between realism and anti-realism.',
       'Moschovakis’s encyclopedia entry gives the technical details; Dummett’s *Elements of Intuitionism* and his essay on its philosophical basis give the arguments.',
     ],
-    sources: ['brouwer1908', 'heyting1930', 'kripke1965', 'dummett1977', 'dummett1973', 'intuitionisticSEP', 'priest2008'],
+    sources: ['copiIL', 'brouwer1908', 'heyting1930', 'kripke1965', 'dummett1977', 'dummett1973', 'intuitionisticSEP', 'priest2008'],
   },
 };

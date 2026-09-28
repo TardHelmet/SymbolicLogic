@@ -1,7 +1,7 @@
 export default {
   id: 'three-values',
   title: 'Three truth values',
-  hurley: 'beyond Hurley',
+  refs: { copiIL: '§8.11' },
   card: 'Gaps and gluts: logics with a third value, and which classical laws they keep.',
   summary: 'Classical logic has two truth values. Add a third, and read it as “neither”, “both” or “meaningless”, and different laws fail. Testing the forms from {@part:sentential} against these tables shows exactly what each law commits you to.',
   reading: [
@@ -61,6 +61,6 @@ export default {
       'Kripke’s 1975 “Outline of a Theory of Truth” built a language containing its own truth predicate by letting the Liar fall into a strong-Kleene gap. Priest’s 1979 “The Logic of Paradox” instead let it be both true and false, and defended the view (*dialetheism*) that some contradictions are true. LP is his logic, and it tolerates contradictions without explosion.',
       'Priest’s *Introduction to Non-Classical Logic* is the standard textbook for everything in this part of the course. Gottwald’s and Priest, Berto and Weber’s encyclopedia entries survey many-valued logic and dialetheism.',
     ],
-    sources: ['lukasiewicz1920', 'aristotleDeInt', 'kleene1952', 'bochvar1938', 'strawson1950', 'kripke1975', 'priest1979', 'priest2008', 'manyValuedSEP', 'dialetheismSEP', 'paraconsistentSEP'],
+    sources: ['copiIL', 'lukasiewicz1920', 'aristotleDeInt', 'kleene1952', 'bochvar1938', 'strawson1950', 'kripke1975', 'priest1979', 'priest2008', 'manyValuedSEP', 'dialetheismSEP', 'paraconsistentSEP'],
   },
 };

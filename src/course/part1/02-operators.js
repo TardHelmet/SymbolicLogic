@@ -4,7 +4,7 @@ const SOUL = { B: 'the soul is a body', A: 'the soul acts', P: 'the soul is acte
 export default {
   id: 'operators',
   title: 'Operators and symbolization',
-  hurley: '§6.1',
+  refs: { copiIL: '§§8.1–8.4', copiSL: '§2.1', langer: 'ch. II', hurley: '§6.1' },
   card: 'The five operators, the main operator, brackets, and translating English into symbols.',
   summary: 'Five operators build every compound statement in sentential logic. Translating English into them is where most of the thinking happens: it forces you to decide exactly what a sentence claims.',
   reading: [
@@ -20,7 +20,7 @@ export default {
     'The tilde attaches to a single statement; the other four join two. On the keyboard, type ~ . v > and <-> for them, or use the symbol buttons.',
     { h: 'Brackets and the main operator' },
     'A string of symbols is a **well-formed formula** when it is built by these rules: a statement letter is well formed; if *p* is well formed, so is {~p}; and if *p* and *q* are well formed, so are {(p • q)}, {(p ∨ q)}, {(p ⊃ q)} and {(p ≡ q)}. The outermost brackets may be dropped.',
-    'The brackets matter. {~(A • B)} denies that A and B are both true; {~A • B} asserts that A is false and B is true. And {!A • B ∨ C} is not a formula at all: it could mean {(A • B) ∨ C} or {A • (B ∨ C)}, and those say different things. Hurley’s notation requires brackets whenever two binary operators could compete, and uses parentheses, then square brackets, then braces as the nesting deepens.',
+    'The brackets matter. {~(A • B)} denies that A and B are both true; {~A • B} asserts that A is false and B is true. And {!A • B ∨ C} is not a formula at all: it could mean {(A • B) ∨ C} or {A • (B ∨ C)}, and those say different things. Copi’s notation (Hurley’s too) requires brackets whenever two binary operators could compete, and uses parentheses, then square brackets, then braces as the nesting deepens.',
     { def: 'Main operator', text: 'The operator whose scope is the whole formula. It determines what kind of statement the formula is: a negation, a conjunction, a disjunction, a conditional or a biconditional.' },
     'A tilde applies to the smallest complete formula to its right. So in {~A • B} the main operator is the dot, while in {~(A • B)} it is the tilde.',
     { h: 'Translating English' },
@@ -73,9 +73,9 @@ export default {
     title: 'How the Stoics built compounds',
     body: [
       'The Stoics sorted non-simple propositions by their connective, much as we do: the conditional (*synēmmenon*) joined by “if”, the conjunction (*sympeplegmenon*) by “both … and”, the disjunction (*diezeugmenon*) by “either … or”. Diogenes Laertius and Aulus Gellius preserve their definitions.',
-      'They were careful about scope. A negation, for them, was formed by putting the negative particle in front of the whole proposition, “Not: it is day”, so that it plainly denies the whole. Hurley’s rule that a tilde governs the smallest formula to its right, and the brackets that extend it, do the same work.',
+      'They were careful about scope. A negation, for them, was formed by putting the negative particle in front of the whole proposition, “Not: it is day”, so that it plainly denies the whole. The modern rule that a tilde governs the smallest formula to its right, and the brackets that extend it, do the same work.',
       'Stoic disjunction was exclusive, and more than that: “either it is day or it is night” was true when, necessarily, exactly one disjunct is true, so it was not truth-functional at all. Gellius also reports two kinds of quasi-disjunction (*paradiezeugmenon*): one true when at most one part is true, the other when at least one part is. The second is the closest ancient relative of the wedge, though neither was defined by a truth table. Textbooks often add that Latin had two words, *vel* for inclusive and *aut* for exclusive “or”, and that the wedge ∨ descends from *vel*. Jennings argues that this tidy story is largely a myth, and that English “or” is not simply ambiguous between two senses. Exercise: is “you may have soup or salad” exclusive because of “or”, or because of what a menu is for?',
     ],
-    sources: ['dl7', 'sextusM', 'gellius', 'bobzien2003', 'mates1953', 'jennings1994', 'kneale1962', 'hurley2018'],
+    sources: ['copiIL', 'copiSL', 'langer1937', 'dl7', 'sextusM', 'gellius', 'bobzien2003', 'mates1953', 'jennings1994', 'kneale1962', 'hurley2018'],
   },
 };

@@ -1,6 +1,6 @@
 # Symbolic Logic
 
-A course in logic in three parts, in the notation and rule system of Hurley and Copi (`~ • ∨ ⊃ ≡`, `(x)`, `(∃x)`, the eighteen rules, CP and IP, UI/UG/EI/EG/CQ and identity):
+A course in logic in the notation and rule system of Copi, Cohen and Rodych, *Introduction to Logic* (15th ed.): `~ • ∨ ⊃ ≡`, `(x)`, `(∃x)`, the nineteen rules, conditional and indirect proof, U.I./U.G./E.I./E.G., quantifier negation, and identity from Copi's *Symbolic Logic*. Susanne Langer's *An Introduction to Symbolic Logic* supplies logical form, classes, Boolean algebra and the axiomatic method. Hurley's *Concise Introduction to Logic* is cited second.
 
 - **Part I, sentential logic** (lessons 1–10): arguments and form, the five operators, truth tables, argument forms and fallacies, and natural-deduction proofs.
 - **Part II, predicate logic** (lessons 11–17): quantifiers and translation, the square of opposition, quantifier rules, countermodels, relations, identity and descriptions.
@@ -48,4 +48,4 @@ needs Playwright with Chromium. It serves the site under `/SymbolicLogic/` as Gi
 
 ## Conventions
 
-A few details of Hurley's system vary between editions. They are switches in `DEFAULTS` in `src/logic/proof.js`. For example, indirect proof ends in the negation of the assumption, with DN applied afterwards, and a line may apply one replacement rule at several places.
+Copi's conventions are switches in `DEFAULTS` in `src/logic/proof.js`: one application of one rule per line; indirect proof complete at the explicit contradiction, with Hurley's discharge form (negation of the assumption, then D.N.) also accepted; identity substitution in either direction.

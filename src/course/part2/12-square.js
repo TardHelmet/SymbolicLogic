@@ -7,7 +7,7 @@ const IMPORT = ['(∃x)Sx'];
 export default {
   id: 'square',
   title: 'Contraries, contradictories and the square',
-  hurley: '§§4.2–4.5',
+  refs: { copiIL: '§§5.5, 5.7', langer: 'app. A', hurley: '§§4.2–4.5' },
   card: 'The traditional square of opposition, and what happens to it when “all” no longer implies “some”.',
   summary: 'Two statements can be opposed in different ways. Contradictories cannot both be true or both be false; contraries cannot both be true but can both be false. The difference matters whenever someone denies a claim and thinks they have thereby asserted its opposite.',
   reading: [
@@ -30,7 +30,7 @@ export default {
     'Contrariety and contradiction are easy to confuse, and the confusion costs arguments. To refute “all S are P” you need only its contradictory, “some S are not P”; you do not need its contrary, “no S are P”, which says much more. And from the falsity of “all S are P” nothing follows about “no S are P”.',
     { h: 'Existential import' },
     'The traditional square assumes that every subject term refers to something: that there are S’s. Without that assumption three of the four relations fail. If there are no unicorns, “all unicorns are white” and “no unicorns are white” are both true (each conditional has a false antecedent for every x), so they are not contraries, and “some unicorns are white” is false, so A does not imply I.',
-    'Modern logic, which Hurley calls the **Boolean standpoint**, does not assume existential import for universal statements: {(x)(Sx ⊃ Px)} is true when nothing is S. Only the contradictories survive, since {(x)(Sx ⊃ Px)} and {(∃x)(Sx • ~Px)} are exact negations of each other. The traditional **Aristotelian standpoint** can be recovered by adding the premise {(∃x)Sx}, and the exercises below let you compare the two.',
+    'Modern logic, the **Boolean interpretation** in Copi’s phrase (Hurley’s “Boolean standpoint”), does not assume existential import for universal statements: {(x)(Sx ⊃ Px)} is true when nothing is S. Only the contradictories survive, since {(x)(Sx ⊃ Px)} and {(∃x)(Sx • ~Px)} are exact negations of each other. The traditional **Aristotelian standpoint** can be recovered by adding the premise {(∃x)Sx}, and the exercises below let you compare the two.',
     'Inferring “some S are P” from “all S are P” without that premise commits the **existential fallacy**.',
     { h: 'Conversion' },
     'Switching subject and predicate preserves truth for E and I (“no S are P” is equivalent to “no P are S”), but not for A: “all Stoics are philosophers” does not mean “all philosophers are Stoics”.',
@@ -68,6 +68,6 @@ export default {
       'The square was first drawn as a diagram in late antiquity, in the Latin tradition that runs through Apuleius and Boethius. Its status has been contested since the Middle Ages, when logicians noticed that empty subject terms break it. Parsons’s encyclopedia entry traces the history and argues that the medieval square, read with its own conventions for negative statements, did not assume that terms are non-empty.',
       'Whether a claim is opposed to its contrary or its contradictory is often the whole question in a philosophical dispute. Much depends on whether “not good” means “bad” or merely “other than good”.',
     ],
-    sources: ['aristotleDeInt', 'aristotleMet', 'squareSEP', 'kneale1962', 'hurley2018'],
+    sources: ['copiIL', 'langer1937', 'aristotleDeInt', 'aristotleMet', 'squareSEP', 'kneale1962', 'hurley2018'],
   },
 };

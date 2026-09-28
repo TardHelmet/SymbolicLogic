@@ -1,28 +1,29 @@
-const IMPL = ['MP', 'MT', 'HS', 'DS', 'CD', 'Simp', 'Conj', 'Add'];
+const IMPL = ['MP', 'MT', 'HS', 'DS', 'CD', 'Abs', 'Simp', 'Conj', 'Add'];
 
 export default {
   id: 'implication-rules',
-  title: 'Proofs I: the rules of implication',
-  hurley: '§§7.1–7.2',
-  card: 'Natural deduction: deriving a conclusion step by step with eight valid argument forms.',
+  title: 'Proofs I: the rules of inference',
+  refs: { copiIL: '§§9.1–9.5', copiSL: '§3.1', hurley: '§§7.1–7.2' },
+  card: 'Natural deduction: deriving a conclusion step by step with Copi’s nine elementary valid argument forms.',
   summary: 'A proof shows that a conclusion follows by deriving it one small, obviously valid step at a time. Each step applies a rule, and each rule is a valid argument form.',
   reading: [
     { h: 'Why proofs' },
     'Truth tables decide validity, but they grow exponentially: an argument with 20 letters has over a million rows. They also do not survive into predicate logic, where there are infinitely many possible situations to check. And they do not show *why* a conclusion follows. A **proof** does: it is a chain of steps, each licensed by a rule whose validity is beyond doubt.',
     { h: 'What a proof looks like' },
-    'The premises are numbered first, and the conclusion is written after a slash on the last premise line. Every further line must follow from earlier lines by a rule, and its **justification** names the lines it uses and the rule, as in “1, 3, MP”. The proof ends when the conclusion appears on a line of its own.',
+    'The premises are numbered first, and the conclusion is written after the sign {!/∴} on the last premise line. Every further line must follow from earlier lines by a rule, and its **justification** names the lines it uses and the rule, as in “1, 3, M.P.” (you may type MP). The proof ends when the conclusion appears on a line of its own. Copi adds one discipline: only one rule is applied at a time, so each line records a single step.',
     { proof: `1. A ⊃ B
 2. B ⊃ C
 3. A          / C
 4. B          1, 3, MP
 5. C          2, 4, MP` },
-    { h: 'The eight rules of implication' },
-    'Each rule is one of the valid forms from {@argument-forms}, or an obvious relative.',
+    { h: 'The nine rules of inference' },
+    'Copi calls these the **elementary valid argument forms**. Each is one of the valid forms from {@argument-forms}, or an obvious relative.',
     { rules: IMPL },
     { list: [
       'The variables match any statement, however complex. {(A • B) ⊃ ~C} and {A • B} give {~C} by MP, with {A • B} for *p*.',
       'These rules apply only to **whole lines**. From {(A • B) ⊃ C} you may not infer {A ⊃ C} by applying Simp inside the line; that inference is not even valid.',
-      'Hurley’s Simp gives only the **left** conjunct, and DS needs the negation of the **left** disjunct. In the next lesson a rule (Com) lets you swap them.',
+      'Simp gives only the **left** conjunct, and DS needs the negation of the **left** disjunct. In the next lesson a rule (Com) lets you swap them.',
+      '**Absorption** looks idle: from {p ⊃ q} it gives {p ⊃ (p • q)}. It is there because without it (or conditional proof, {@conditional-proof}) some valid arguments cannot be proved at all. Hurley, whose system is otherwise Copi’s, drops it and relies on conditional proof instead.',
       'Add lets you add *any* disjunct, which seems like cheating until you notice that a disjunction with one true part is true.',
     ] },
     { h: 'Strategy' },
@@ -85,8 +86,9 @@ export default {
     body: [
       'In 1895 Lewis Carroll published a dialogue in *Mind*. The Tortoise grants Achilles the premises of a valid argument but will not grant the conclusion. Achilles writes down, as a further premise, that if the premises are true the conclusion must be. The Tortoise accepts that too, and asks for the premise that says the conclusion follows from *these* premises, and so on without end.',
       'The standard moral is Ryle’s: a rule of inference is not a premise. “A, so B” is licensed by a rule that says you may pass from A to B; it is not the statement “if A, B” added to the list. A proof system has to contain *rules* as well as statements. Philosophers still argue about what grasping a rule consists in, since it cannot be believing one more proposition.',
-      'Natural deduction, which tries to follow the inferences people actually make, was invented independently by Jaśkowski and Gentzen in 1934. Hurley’s system descends from Copi’s *Symbolic Logic* (1954), which combined natural-deduction methods with rules drawn from the traditional valid forms.',
+      'Natural deduction, which tries to follow the inferences people actually make, was invented independently by Jaśkowski and Gentzen in 1934. The system in this course descends from Copi’s *Symbolic Logic* (1954), which combined natural-deduction methods with rules drawn from the traditional valid forms; Hurley’s textbook later took it over almost unchanged.',
+      'Copi’s nine rules have their own history. The first edition of his *Introduction to Logic* (1953) listed Destructive Dilemma among them; later editions put Absorption in its place. *Symbolic Logic* kept Destructive Dilemma and showed, in an appendix, that its nineteen rules cannot prove {!A ⊃ B / A ⊃ (A • B)} without conditional proof, which is Absorption itself. Getting the quantifier rules right took longer: Kalish found the 1954 rules unsound, and Copi revised them in 1956, in the second edition (1965) and again in the third (1967). Pelletier tells the story.',
     ],
-    sources: ['carroll1895', 'ryle1950', 'gentzen1935', 'jaskowski1934', 'ndSEP', 'hurley2018'],
+    sources: ['copiIL', 'copiSL', 'pelletier2000', 'carroll1895', 'ryle1950', 'gentzen1935', 'jaskowski1934', 'ndSEP', 'hurley2018'],
   },
 };
