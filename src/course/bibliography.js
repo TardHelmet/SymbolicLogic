@@ -29,6 +29,15 @@ export const BIB = {
     note: 'A revised version of “A Brief History of Natural Deduction”, History and Philosophy of Logic 20 (1999): 1–31. On Copi’s quantifier rules and their corrections, pp. 126–128.',
     url: 'https://www.sfu.ca/~jeffpell/papers/pelletierNDtexts.pdf',
   },
+  langer1942: {
+    kind: 'book', author: 'Langer, Susanne K.', year: 1942,
+    title: 'Philosophy in a New Key: A Study in the Symbolism of Reason, Rite, and Art', publisher: 'Cambridge, MA: Harvard University Press',
+    note: 'Ch. IV, “Discursive Forms and Presentational Forms”.',
+  },
+  langerSEP: {
+    kind: 'entry', author: 'Floyd, Juliet', year: 2026, title: 'Susanne Langer',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/langer/',
+  },
   hurley2018: {
     kind: 'book', author: 'Hurley, Patrick J., and Lori Watson', year: 2018,
     title: 'A Concise Introduction to Logic', detail: '13th ed.', publisher: 'Boston: Cengage',
@@ -204,6 +213,59 @@ export const BIB = {
   demorgan1847: {
     kind: 'book', author: 'De Morgan, Augustus', year: 1847, title: 'Formal Logic: or, The Calculus of Inference, Necessary and Probable',
     publisher: 'London: Taylor and Walton', url: 'https://archive.org/details/formallogicorthe00demouoft', urlLabel: 'Internet Archive',
+  },
+  algebraLogicSEP: {
+    kind: 'entry', author: 'Burris, Stanley, and Javier Legris', year: 2009, title: 'The Algebra of Logic Tradition',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/algebra-logic-tradition/',
+  },
+  mereologySEP: {
+    kind: 'entry', author: 'Varzi, Achille', year: 2003, title: 'Mereology',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/mereology/',
+  },
+  lesniewskiSEP: {
+    kind: 'entry', author: 'Simons, Peter', year: 2007, title: 'Stanisław Leśniewski',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/lesniewski/',
+  },
+  euler1768: {
+    kind: 'book', author: 'Euler, Leonhard', year: 1768, title: 'Lettres à une princesse d’Allemagne sur divers sujets de physique et de philosophie',
+    detail: 'vol. 2', publisher: 'Saint Petersburg: Imperial Academy of Sciences',
+    note: 'The letters on the syllogism draw concepts as circles.', url: 'https://zenodo.org/records/7421191', urlLabel: 'Zenodo',
+  },
+  venn1880: {
+    kind: 'article', author: 'Venn, John', year: 1880, title: 'On the Diagrammatic and Mechanical Representation of Propositions and Reasonings',
+    container: 'The London, Edinburgh, and Dublin Philosophical Magazine and Journal of Science', detail: '5th ser., 10 (59): 1–18',
+    url: 'https://doi.org/10.1080/14786448008626877', urlLabel: 'DOI',
+  },
+  huntington1904: {
+    kind: 'article', author: 'Huntington, Edward V.', year: 1904, title: 'Sets of Independent Postulates for the Algebra of Logic',
+    container: 'Transactions of the American Mathematical Society', detail: '5 (3): 288–309',
+    url: 'https://doi.org/10.1090/S0002-9947-1904-1500675-4', urlLabel: 'DOI',
+  },
+  sheffer1913: {
+    kind: 'article', author: 'Sheffer, Henry M.', year: 1913, title: 'A Set of Five Independent Postulates for Boolean Algebras, with Application to Logical Constants',
+    container: 'Transactions of the American Mathematical Society', detail: '14 (4): 481–488',
+    url: 'https://doi.org/10.1090/S0002-9947-1913-1500960-1', urlLabel: 'DOI',
+  },
+  hilbert1899: {
+    kind: 'book', author: 'Hilbert, David', year: 1899, title: 'Grundlagen der Geometrie', publisher: 'Leipzig: Teubner',
+    note: 'Translated as The Foundations of Geometry (Chicago: Open Court, 1902).',
+  },
+  fregeHilbertSEP: {
+    kind: 'entry', author: 'Blanchette, Patricia', year: 2007, title: 'The Frege–Hilbert Controversy',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/frege-hilbert/',
+  },
+  bourbaki1950: {
+    kind: 'article', author: 'Bourbaki, Nicolas', year: 1950, title: 'The Architecture of Mathematics',
+    container: 'The American Mathematical Monthly', detail: '57 (4): 221–232',
+    url: 'https://doi.org/10.1080/00029890.1950.11999523', urlLabel: 'DOI',
+  },
+  lautman1938: {
+    kind: 'book', author: 'Lautman, Albert', year: 1938, title: 'Essai sur les notions de structure et d’existence en mathématiques', publisher: 'Paris: Hermann',
+    note: 'Translated in Mathematics, Ideas and the Physical Real, trans. Simon B. Duffy (London: Continuum, 2011).',
+  },
+  structuralismSEP: {
+    kind: 'entry', author: 'Reck, Erich, and Georg Schiemer', year: 2019, title: 'Structuralism in the Philosophy of Mathematics',
+    container: 'Stanford Encyclopedia of Philosophy', url: 'https://plato.stanford.edu/entries/structuralism-mathematics/',
   },
   boole1854: {
     kind: 'book', author: 'Boole, George', year: 1854, title: 'An Investigation of the Laws of Thought',

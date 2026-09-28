@@ -363,3 +363,25 @@ EXTRA_TYPES.structure = {
   },
   answer: structureAnswer,
 };
+
+// Is an argument in class equations valid? Decided by model search.
+export function classValidity(ex) {
+  const F = (s) => AL.classFormula(AL.parseEquation(s).eq);
+  const v = FO.validity(ex.premises.map(F), F(ex.conclusion));
+  return v;
+}
+
+EXTRA_TYPES.classvalid = {
+  check(ex, input) {
+    if (!input) return { ok: false, message: 'Choose valid or invalid.' };
+    const v = classValidity(ex);
+    const valid = v.valid;
+    if ((input === 'valid') === valid) {
+      return { ok: true, message: valid ? 'Correct: every universe that makes the premises true makes the conclusion true.' : `Correct. For instance: ${describeClasses(v.model, ex.dictionary)}` };
+    }
+    return valid
+      ? { ok: false, message: 'Look again: no universe makes the premises true and the conclusion false. Try to build one and see where it fails.' }
+      : { ok: false, message: `Not so: here the premises are true and the conclusion false. ${describeClasses(v.model, ex.dictionary)}` };
+  },
+  answer: (ex) => (classValidity(ex).valid ? 'valid' : 'invalid'),
+};

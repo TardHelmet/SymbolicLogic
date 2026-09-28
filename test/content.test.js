@@ -36,6 +36,10 @@ const FIELDS = {
   kripke: ['logic', 'question', 'model', 'formula', 'world', 'argument', 'dictionary'],
   deny: ['premises', 'statements', 'notes', 'dictionary'],
   'flag-step': ['argument', 'lines', 'dictionary', 'logic'],
+  equational: ['goal', 'laws', 'solution', 'mode', 'maxApps'],
+  classeq: ['key', 'alternatives', 'dictionary'],
+  classvalid: ['premises', 'conclusion', 'dictionary'],
+  structure: ['structure', 'statements', 'algebra', 'dictionary'],
 };
 
 const REQUIRED = {
@@ -53,6 +57,10 @@ const REQUIRED = {
   matrix: ['logic', 'question'],
   kripke: ['question'],
   deny: ['premises', 'notes'],
+  equational: ['goal', 'solution'],
+  classeq: ['key'],
+  classvalid: ['premises', 'conclusion'],
+  structure: [],
 };
 
 const allExercises = LESSONS.flatMap((l) => (l.exercises ?? []).map((ex) => ({ lesson: l, ex })));
@@ -218,7 +226,7 @@ test('every formula in the text parses', () => {
 test('translation keys use only their dictionary', () => {
   for (const { lesson, ex } of allExercises.filter(({ ex }) => ex.type === 'translate')) {
     const letters = Object.keys(ex.dictionary).filter((k) => /^[A-Z]$/.test(k));
-    const r = parseFormula(ex.key, { closed: true, letters, modal: !!ex.modal });
+    const r = parseFormula(ex.key, { closed: true, letters: letters.length ? letters : undefined, modal: !!ex.modal });
     assert.ok(r.ok, `${lesson.id}/${ex.id}: key “${ex.key}” — ${r.error?.message}`);
   }
 });

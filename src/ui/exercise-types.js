@@ -523,3 +523,11 @@ registerType('structure', 'In this system', (ex) => {
     show: (ans) => inputs.forEach((i) => { i.checked = ans.map(String).includes(i.value); }),
   };
 });
+
+registerType('classvalid', 'Does it follow?', (ex) => {
+  const given = h('div', { class: 'given' },
+    h('ol', { class: 'class-argument' }, ex.premises.map((p) => h('li', {}, h('span', { class: 'f' }, AL.printEquation(AL.parseEquation(p).eq))))),
+    h('p', {}, h('span', { class: 'f' }, `∴ ${AL.printEquation(AL.parseEquation(ex.conclusion).eq)}`)));
+  const c = choiceBox(`cv-${ex.id}`, [['valid', 'valid'], ['invalid', 'invalid']]);
+  return { el: [dictionaryList(ex.dictionary), given, c.el], value: () => c.value()[0] ?? null, show: (a) => c.show([a]) };
+});

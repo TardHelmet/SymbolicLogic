@@ -17,6 +17,8 @@ import changeOfQuantifier from './part2/change-of-quantifier.js';
 import invalidity from './part2/invalidity.js';
 import relations from './part2/relations.js';
 import identity from './part2/identity.js';
+import classes from './part3/classes.js';
+import postulates from './part3/postulates.js';
 import paradox from './part4/paradox.js';
 import threeValues from './part4/three-values.js';
 import worlds from './part4/worlds.js';
@@ -36,6 +38,12 @@ export const PARTS = [
     title: 'Predicate logic',
     blurb: 'Names, predicates, relations and the quantifiers “all” and “some”; the square of opposition; proofs with quantifier rules; countermodels; and identity, with Russell’s theory of descriptions.',
     lessons: [quantifiers, square, quantifierRules, changeOfQuantifier, invalidity, relations, identity],
+  },
+  {
+    id: 'form',
+    title: 'Form and system',
+    blurb: 'Logic as the study of form, after Langer: classes and their algebra, systems built from postulates, what it means for two systems to share a form, and the axiomatic calculus of Principia Mathematica.',
+    lessons: [classes, postulates],
   },
   {
     id: 'beyond',

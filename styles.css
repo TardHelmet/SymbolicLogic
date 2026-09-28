@@ -506,3 +506,16 @@ table.tt .v05, table.tt button.v05 { color: var(--warn); }
 table.tt .v1 { color: var(--true); }
 table.tt .v0 { color: var(--false); }
 .valuation .tv button[aria-pressed="true"].u { background: var(--warn-bg); color: var(--warn); border-color: var(--warn); }
+
+/* Form and system: operation tables, structures and laws. */
+.optables { display: flex; flex-wrap: wrap; gap: 1rem 1.75rem; align-items: flex-start; margin-top: 0.5rem; }
+table.optable { border-collapse: collapse; font-family: var(--font-formula); font-size: 1.05rem; }
+table.optable th, table.optable td { padding: 0.2rem 0.6rem; text-align: center; border: 1px solid var(--rule); }
+table.optable thead th:first-child { color: var(--accent); }
+table.optable thead th, table.optable tbody th { color: var(--ink-3); font-weight: 500; background: var(--surface-2, transparent); }
+.structure ul { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+.choices label strong { margin-right: 0.6em; }
+.laws-box { margin: 0.25rem 0 0.75rem; }
+.laws-box summary { cursor: pointer; font-family: var(--font-ui); font-size: 0.9rem; color: var(--ink-2); }
+.laws-box table.laws td.f { white-space: nowrap; }
+.class-argument { margin: 0; padding-left: 1.4rem; font-family: var(--font-formula); }

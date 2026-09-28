@@ -1,0 +1,128 @@
+const PENTAGON = {
+  elements: ['0', 'p', 'q', 'r', '1'], zero: '0', one: '1',
+  plus: [
+    ['0', 'p', 'q', 'r', '1'],
+    ['p', 'p', 'q', '1', '1'],
+    ['q', 'q', 'q', '1', '1'],
+    ['r', '1', '1', 'r', '1'],
+    ['1', '1', '1', '1', '1'],
+  ],
+  times: [
+    ['0', '0', '0', '0', '0'],
+    ['0', 'p', 'p', '0', 'p'],
+    ['0', 'p', 'q', '0', 'q'],
+    ['0', '0', '0', 'r', 'r'],
+    ['0', 'p', 'q', 'r', '1'],
+  ],
+  comp: ['1', 'r', 'r', 'p', '0'],
+};
+
+const THREE = {
+  elements: ['0', '½', '1'], zero: '0', one: '1',
+  plus: [['0', '½', '1'], ['½', '½', '1'], ['1', '1', '1']],
+  times: [['0', '0', '0'], ['0', '½', '½'], ['0', '½', '1']],
+  comp: ['1', '½', '0'],
+};
+
+const P = ['IIa', 'IIb', 'IIIa', 'IIIb', 'IVa', 'IVb', 'V'];
+
+export default {
+  id: 'postulates',
+  title: 'Postulates, proof and interpretation',
+  refs: { copiSL: 'ch. 6, §7.2', langer: 'chs. VIII–XI' },
+  card: 'Huntington’s postulates for the algebra of logic, proofs from them, duality, and the many systems that share one form.',
+  summary: 'A deductive system starts from postulates and derives everything else from them by rule. Langer’s lesson is that the postulates do not say what the system is about: they describe a form, and classes, areas in a plane and the truth values of propositions are all interpretations of it.',
+  reading: [
+    { h: 'From axioms to postulates' },
+    'Euclid began geometry with “axioms”, truths so evident that nobody sane could doubt them. Langer is unimpressed: “the self-evidence of any proposition turns out, on closer scrutiny, to be a very questionable affair”. A carpenter cannot doubt that a whole is greater than any of its parts, but a mathematician can. Modern deductive systems therefore begin with **postulates**: assumptions laid down, not claimed to be self-evident, whose consequences are then traced. The question becomes whether a theorem *follows* from the postulates, not whether it is true.',
+    { h: 'Huntington’s postulates' },
+    'In 1904 E. V. Huntington gave several sets of postulates for the algebra of logic. Langer uses his first set. The primitive ideas are a collection K of elements, two operations + and ×, and identity =. The postulates, with a, b, c for any elements:',
+    { list: [
+      '**Ia, Ib**: a + b and a × b are elements of K.',
+      '**IIa**: there is an element 0 such that {!a + 0 = a}. **IIb**: there is an element 1 such that {!a × 1 = a}.',
+      '**IIIa**: {!a + b = b + a}. **IIIb**: {!a × b = b × a}.',
+      '**IVa**: {!a + (b × c) = (a + b) × (a + c)}. **IVb**: {!a × (b + c) = (a × b) + (a × c)}.',
+      '**V**: for every a there is an element −a such that {!a + −a = 1} and {!a × −a = 0}.',
+      '**VI**: there are at least two distinct elements.',
+    ] },
+    'Nothing is said about what the elements are. That is the point.',
+    { h: 'Proof' },
+    'Langer names three principles that every proof in the algebra uses. **Substitution**: whenever two terms are identical, either may be written for the other. **Application**: what is granted of any element holds of each element, so {!a + b = b + a} holds with {!a × c} for a. **Inference**: if a proposition is granted and it implies another, the other may be asserted.',
+    'In this course a derivation is a list of equations. Each line either follows from a postulate or theorem in one step (one side becomes the other by one application of it), or rewrites one side of an earlier line once (“3, V”). Two more rules join equations: **Sym** turns s = t around, **Trans** joins s = t and t = u. Here is Langer’s own proof that a × a = a, her Theorem 2b:',
+    { list: [
+      '1. {!a = a × 1}   IIb',
+      '2. {!a = a × (a + −a)}   1, V',
+      '3. {!a = (a × a) + (a × −a)}   2, IVb',
+      '4. {!a = (a × a) + 0}   3, V',
+      '5. {!a = a × a}   4, IIa',
+    ] },
+    'The trick, which Langer points out, is to write 1 as {!a + −a} when that is useful: the postulates license replacing either side by the other, and a proof often goes the long way round to find the shape the next postulate needs.',
+    { h: 'Duality' },
+    'Every postulate comes in a pair, IIa with IIb, IIIa with IIIb, IVa with IVb, and V states both halves at once. Exchange + with × and 0 with 1 in any postulate and you get its partner. So the same exchange turns any proof into a proof of the **dual** theorem: from a × a = a, a + a = a, by the same steps with each postulate replaced by its partner. De Morgan’s laws, which Langer calls “the law of duality”, say how the two operations are tied together through complements: {!−(a + b) = −a × −b}.',
+    { h: 'One form, many systems' },
+    '“Postulates are formal definitions of relations”, Langer writes; in an abstract system “this is absolutely all that the postulates tell us. The result is an empty form, or pattern of relationships.” Anything that satisfies the postulates is an **interpretation** of that form:',
+    { list: [
+      '**Classes**: + is the sum of classes, × the product, − the complement, 0 the null class and 1 the universe class. This is {@classes}.',
+      '**Areas in a plane**: + joins two regions, × takes their overlap. That is why Euler’s circles work.',
+      '**Truth values**: the postulates need only two elements, and if there are only two they must be 0 and 1. Read 1 as truth and 0 as falsity, + as ∨, × as the dot and − as ~, and the algebra becomes the calculus of propositions. Langer defines {!p ⊃ q} as {!p ∨ q = q}. The truth tables of {@truth-functions} are the tables of this two-element algebra.',
+    ] },
+    'The same postulates can also be tested against a system that is *not* Boolean, to see which ones fail. That is how Huntington showed his postulates **independent**: for each one, he gave a system satisfying all the others but not it. So no postulate can be proved from the rest. A set of postulates is **consistent** if some system satisfies them all, since then no contradiction follows from them.',
+  ],
+  exercises: [
+    { id: 'po-1', type: 'equational', prompt: 'Prove Theorem 2b, as Langer does.', goal: 'a × a = a', laws: P,
+      solution: [['a = a × 1', 'IIb'], ['a = a × (a + −a)', '1, V'], ['a = (a × a) + (a × −a)', '2, IVb'], ['a = (a × a) + 0', '3, V'], ['a = a × a', '4, IIa']] },
+    { id: 'po-2', type: 'equational', prompt: 'Now its dual, Theorem 2a. Replace each postulate by its partner.', goal: 'a + a = a', laws: P,
+      solution: [['a = a + 0', 'IIa'], ['a = a + (a × −a)', '1, V'], ['a = (a + a) × (a + −a)', '2, IVa'], ['a = (a + a) × 1', '3, V'], ['a = a + a', '4, IIb']] },
+    { id: 'po-3', type: 'equational', mode: 'justify', prompt: 'Theorem 3a: anything added to the universe class gives the universe class. The equations are Langer’s; supply the justifications.', goal: 'a + 1 = 1', laws: P,
+      solution: [['a + 1 = (a + 1) × 1', 'IIb'], ['a + 1 = 1 × (a + 1)', '1, IIIb'], ['a + 1 = (a + −a) × (a + 1)', '2, V'], ['a + 1 = a + (−a × 1)', '3, IVa'], ['a + 1 = a + −a', '4, IIb'], ['a + 1 = 1', '5, V']] },
+    { id: 'po-4', type: 'equational', prompt: 'Theorem 4b, absorption: the common part of a and (a + b) is a. You may use Theorem 3b, a × 0 = 0.', goal: 'a × (a + b) = a', laws: [...P, '3b'],
+      solution: [['a × (a + b) = (a + 0) × (a + b)', 'IIa'], ['a × (a + b) = a + (0 × b)', '1, IVa'], ['a × (a + b) = a + (b × 0)', '2, IIIb'], ['a × (a + b) = a + 0', '3, Th. 3b'], ['a × (a + b) = a', '4, IIa']] },
+    { id: 'po-5', type: 'equational', prompt: 'Theorem 5a, which Langer calls the law of expansion.', goal: '(a + b) × (a + −b) = a', laws: P,
+      solution: [['(a + b) × (a + −b) = a + (b × −b)', 'IVa'], ['(a + b) × (a + −b) = a + 0', '1, V'], ['(a + b) × (a + −b) = a', '2, IIa']] },
+    { id: 'po-6', type: 'equational', prompt: 'Double negation, Theorem 8. It needs the fact that a has only one complement (Theorem 6), which the rule Compl expresses: from {!a + x = 1} and {!a × x = 0}, infer {!x = −a}. Show that a is the complement of −a.', goal: 'a = −(−a)', laws: P,
+      solution: [['a + −a = 1', 'V'], ['−a + a = 1', '1, IIIa'], ['a × −a = 0', 'V'], ['−a × a = 0', '3, IIIb'], ['a = −(−a)', 'Compl 2, 4']] },
+    {
+      id: 'po-dual', type: 'choice', prompt: 'What is the dual of Theorem 4b, {!a × (a + b) = a}?',
+      options: ['{!a + (a × b) = a}', '{!a + (a + b) = a}', '{!−a × (−a + −b) = −a}', '{!a × (a × b) = a}'],
+      answer: 0,
+      explain: 'Exchange + and ×: a + (a × b) = a, which is Theorem 4a, the other law of absorption.',
+    },
+    { id: 'po-three', type: 'structure', prompt: 'A system with three elements: + takes the larger, × the smaller, and −a is 1 − a. Which of Huntington’s postulates fail?', algebra: THREE,
+      explain: 'Only V fails: ½ + −½ is ½, not 1. So V is independent of the others: they all hold here, and it does not. This system is the strong Kleene logic of the lesson on three truth values, where excluded middle fails for exactly this reason.' },
+    { id: 'po-pentagon', type: 'structure', prompt: 'A system with five elements, ordered 0 < p < q < 1 and 0 < r < 1, with r beside p and q: + gives the least element above both, × the greatest below both. Which postulates fail?', algebra: PENTAGON,
+      explain: 'The distributive laws fail: p + (r × q) = p + 0 = p, but (p + r) × (p + q) = 1 × q = q. Every element still has a complement. A system can satisfy V and not IV.' },
+    {
+      id: 'po-serial', type: 'structure', prompt: 'Postulates as definitions of a relation. Here R is “is older than” among three Stoic scholarchs. Which of these properties does it have? (Langer calls a relation that is irreflexive, transitive and connected **serial**.)',
+      structure: { individuals: ['Zeno', 'Cleanthes', 'Chrysippus'], relations: { R: [['Zeno', 'Cleanthes'], ['Zeno', 'Chrysippus'], ['Cleanthes', 'Chrysippus']] }, glosses: { R: 'x is older than y' } },
+      statements: ['(x)~Rxx', '(x)(y)(z)[(Rxy • Ryz) ⊃ Rxz]', '(x)(y)[~(x = y) ⊃ (Rxy ∨ Ryx)]', '(x)(y)(Rxy ⊃ Ryx)'],
+      explain: 'Irreflexive, transitive and connected: a series. Not symmetric.',
+    },
+    {
+      id: 'po-interp', type: 'choice', prompt: 'In the two-element algebra read as a calculus of propositions (1 truth, 0 falsity, + as ∨), what does the equation {!p + q = q} say?',
+      options: ['That p ⊃ q is true.', 'That p and q are both true.', 'That q is true.', 'That p ≡ q is true.'],
+      answer: 0,
+      explain: 'p ∨ q = q fails only when p is 1 and q is 0, that is, exactly when p ⊃ q is false. Langer takes it as the definition of ⊃ in the algebra.',
+    },
+    {
+      id: 'po-indep', type: 'choice', prompt: 'How does one show that a postulate is independent of the others, that is, cannot be proved from them?',
+      options: [
+        'Give a system in which all the other postulates hold and this one fails.',
+        'Try to prove it from the others and fail.',
+        'Show that it is not self-evident.',
+        'Show that its dual is also a postulate.',
+      ],
+      answer: 0,
+      why: [null, 'Failing to find a proof shows nothing: the proof may exist.', 'Self-evidence has nothing to do with it.', 'Its dual being a postulate says nothing about whether it can be proved from the rest.'],
+      explain: 'If it followed from the others, it would hold wherever they hold. A system where they hold and it fails proves that it does not follow.',
+    },
+  ],
+  margin: {
+    title: 'What a postulate is',
+    body: [
+      'Langer’s view, that postulates define a form and say nothing about what satisfies it, had been fought over. In 1899 Hilbert axiomatized geometry so that “point”, “line” and “plane” could be anything satisfying the axioms; he is said to have remarked that one must be able to say “tables, chairs, beer mugs” instead. Frege objected in letters that axioms must be true statements about points and lines already understood, and that Hilbert’s were not statements at all but definitions of a second-order concept. Blanchette’s encyclopedia entry lays out the exchange.',
+      'Huntington’s paper of 1904 is a small monument of the new style: several sets of postulates for the same algebra, each proved independent by models. Langer’s teacher Sheffer showed in 1913 that one operation, the stroke, suffices for the whole algebra, and Langer built her book around the idea that the same form can be found in classes, spaces and propositions.',
+      'The mathematicians who wrote as Bourbaki later made structure the organizing idea of all mathematics: algebraic structures, order structures and topological structures, each defined by axioms and combined. Lautman, writing in 1938, argued that such structures show mathematics participating in a dialectic of ideas (the local and the global, the continuous and the discontinuous) that no single theory exhausts. Reck and Schiemer survey the structuralist positions that followed.',
+    ],
+    sources: ['langer1937', 'huntington1904', 'copiSL', 'hilbert1899', 'fregeHilbertSEP', 'sheffer1913', 'bourbaki1950', 'lautman1938', 'structuralismSEP'],
+  },
+};
