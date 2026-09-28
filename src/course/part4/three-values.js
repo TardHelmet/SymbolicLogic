@@ -25,7 +25,7 @@ export default {
     ] },
     { h: 'What fails where' },
     { list: [
-      'In K3, {A ∨ ~A} can be N, so **excluded middle** is not a law. Explosion is still valid: {A • ~A} is never designated.',
+      'In K3, {A ∨ ~A} can be N, so **excluded middle** is not a law. Explosion is still valid: {A • ~A} is never designated. In the terms of {@postulates}, the K3 tables satisfy every one of Huntington’s postulates except V, the law of complements: that is the one law of Boolean algebra that a third value breaks.',
       'In LP, {A ∨ ~A} is always designated, but **explosion fails**: with A both true and false and B false, {A • ~A} is designated (B) and B is not.',
       'In LP, **disjunctive syllogism fails** for the same reason: {A ∨ B} and {~A} are both designated when A is B, while B may be F. So does modus ponens.',
       'In weak Kleene, **addition fails**: A true, B meaningless makes {A ∨ B} meaningless.',

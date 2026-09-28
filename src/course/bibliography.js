@@ -229,7 +229,7 @@ export const BIB = {
   euler1768: {
     kind: 'book', author: 'Euler, Leonhard', year: 1768, title: 'Lettres à une princesse d’Allemagne sur divers sujets de physique et de philosophie',
     detail: 'vol. 2', publisher: 'Saint Petersburg: Imperial Academy of Sciences',
-    note: 'The letters on the syllogism draw concepts as circles.', url: 'https://zenodo.org/records/7421191', urlLabel: 'Zenodo',
+    note: 'The letters on the syllogism draw concepts as circles. The linked scan is of an early printing held by the ETH-Bibliothek Zürich.', url: 'https://zenodo.org/records/7421191', urlLabel: 'Zenodo',
   },
   venn1880: {
     kind: 'article', author: 'Venn, John', year: 1880, title: 'On the Diagrammatic and Mechanical Representation of Propositions and Reasonings',
